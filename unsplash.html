@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <h1>Random Unsplash Image</h1>
+
+    <div class="imageContainer">
+        <a href="#" id="imageLink">
+            <img src="" alt="" id="unsplashImage">
+        </a>
+        <p class="imageDetails">Photo by <a id="creator" href="#">NAME</a> on <a
+                href="https://www.unsplash.com">Unsplash</a>!</p>
+    </div>
+
+
+    <script>
+        let clientID = '0Tsyiwfdad6FQvKtY-CPdI-m9BPibFozm5qrg-6wQ7I';
+        let ApiUrl = `https://api.unsplash.com/photos/random?client_id=${clientID}`;
+
+        let imageElement = document.querySelector('#unsplashImage');
+        let imageLink = document.querySelector('#imageLink');
+        let creator = document.querySelector('#creator');
+        // const response = fetch(ApiUrl)
+        //     .then((response) => response.json())
+        //     .then((data) => console.log(data))
+
+
+        async function showRandomImg() {
+            const response = await fetch(ApiUrl);
+            const data = await response.json();
+            console.log(data);
+            imageElement.src = data.urls.regular;
+            imageElement.alt = data.alt_description;
+            imageLink.setAttribute('href', data.links.html);
+
+            creator.innerText = data.user.name;
+            creator.setAttribute('href', data.user.portfolio_url);
+        }
+        showRandomImg()
+    </script>
+</body>
+</body>
+
+</html>
