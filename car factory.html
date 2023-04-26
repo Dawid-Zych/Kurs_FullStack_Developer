@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let carFactory = {
+            name: 'Factory',
+            city: 'Krakow',
+            employees: [],
+            brand: 'Ford',
+            addEmployees: function (name, surrname) {
+                const obj = {
+                    name: name,
+                    surrname: surrname,
+                    email: `${name.toLowerCase()}.${surrname.toLowerCase()}@example.com`,
+                };
+                let i = this.employees.length;
+                this.employees[i] = obj;
+                i++;
+            },
+            showEmployees: function () {
+                for (let i = 0; i < this.employees.length; i++) {
+                    const e = this.employees[i];
+                    console.log(e.name, e.surrname, e.email);
+                }
+            },
+            makeCar: function (model, color) {
+                return {
+                    brand: this.brand,
+                    model: model,
+                    color: color,
+                };
+            },
+        };
+
+        carFactory.addEmployees('Dawid', 'Zych');
+        carFactory.addEmployees('Marek', 'Hajduk');
+        carFactory.addEmployees('Anna', 'Mrowca');
+
+        carFactory.employees.remove;
+        console.log(carFactory);
+        carFactory.showEmployees();
+
+        let car1 = carFactory.makeCar('mustang', 'red');
+        console.log(car1);
+
+        carFactory.name = 'Factory Ltd."';
+
+        console.log(carFactory);
+
+        carFactory['name'] = 'Transformersi';
+        console.log(carFactory);
+
+    </script>
+</body>
+
+</html>
