@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background: black;
+            color: white;
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <script>
+
+        /*
+            Number - metody i właściwości
+        */
+
+        let num = 123.12; // number
+
+        let num2 = new Number(234.23);
+
+        console.log(Number.MAX_SAFE_INTEGER);
+        console.log(Number.MIN_SAFE_INTEGER);
+
+        console.log(Number.MAX_VALUE);
+        console.log(Number.MIN_VALUE);
+
+        console.log(Number.parseInt("123") + 1000); // 1123
+        console.log(Number.parseFloat("123.678") + 1000); // 1123
+        console.log(Number.isInteger(6875)); // true
+        console.log(Number.isInteger(6875.685)); // false
+
+        let a = 1 / 0; // Infinity
+        console.log(a);
+        console.log(Number.isFinite(a)); // false
+        console.log(Number.isFinite(34)); // true
+
+        console.log(Math.round(12.56)); // 13
+        console.log(Math.round(12.16)); // 12
+        console.log(Math.floor(12.96)); // 12 
+        console.log(Math.ceil(12.01)); // 13 
+        console.log(Math.random()); // 
+        console.log(Math.random() * 5); // 0 < x < 5
+        console.log(Math.sqrt(16)); // 4
+
+        console.log(123.456789.toFixed(2));
+        console.log(123.456789.toFixed(3));
+        console.log(123.456789.toFixed(4));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
