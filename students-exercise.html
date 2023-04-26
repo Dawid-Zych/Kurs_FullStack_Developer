@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>const school = {
+            name: 'Szkola Podstawowa nr 40',
+            city: 'Krakow',
+            students: [],
+            addStudent: function (name, surrname) {
+                let student = {
+                    name: name,
+                    surrname: surrname,
+                };
+                let i = this.students.length;
+                this.students[i] = student;
+            },
+            showStudents: function () {
+                if (this.students.length == 0) {
+                    console.log('szkoła nie ma studentów');
+                    return;
+                } else {
+                    console.log('%cStudenci tego roku to:', 'font-size:24px');
+                    for (let i = 0; i < this.students.length; i++) {
+                        console.log(`%c${this.students[i].name} ${this.students[i].surrname},`, 'color:tomato;font-size:20px');
+                    }
+                }
+            },
+            getNumStudents: function () {
+                return console.log(`Mamy ${this.students.length} studentów`);
+            },
+            resetStudents: function () {
+                this.students = [];
+            },
+        };
+
+        school.addStudent('Dawid', 'Zych');
+        school.addStudent('Robert', 'Makłowicz');
+        school.addStudent('Anna', 'Mrowca');
+        school.addStudent('Cezary', 'Nazar');
+        console.log(school.students);
+
+        school.showStudents();
+        school.getNumStudents();
+
+        school.resetStudents();
+        school.showStudents();
+        console.log(school);
+    </script>
+</body>
+
+</html>
