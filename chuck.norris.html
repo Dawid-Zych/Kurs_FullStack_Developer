@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        .imgChack {
+            max-width: 400px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Chuck norris Api</h1>
+    <div class="chuck-box">
+        <img src="" class="imgChack" alt="">
+        <p class="joke"></p>
+
+    </div>
+
+
+    <script>
+        const url = 'https://api.chucknorris.io/jokes/random'
+        const joke = document.querySelector('.joke');
+        const imgChack = document.querySelector('.imgChack')
+
+        const api = async () => {
+            const response = await fetch(url);
+            const data = await response.json()
+            console.log(data);
+            imgChack.src = 'https://api.chucknorris.io/img/chucknorris_logo_coloured_small@2x.png'
+            joke.innerText = data.value
+
+        }
+
+        api()
+
+
+    </script>
+</body>
+
+</html>
