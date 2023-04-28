@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: black;
+            color: white
+        }
+
+        textarea {
+            width: 90%;
+            height: 50px;
+            background-color: silver;
+        }
+    </style>
+</head>
+
+<body>
+    <textarea name="" id="area"></textarea>
+    <div>
+        <p>Ilość znaków: <span id="characters"></span></p>
+        <p>Ilość znaków bez spacji: <span id="characters-no-spaces"></span></p>
+        <p>Ilość słów: <span id="words"></span></p>
+        <p>Ilość zdań: <span id="sentences"></span></p>
+    </div>
+    <script>
+
+        const numChar = document.querySelector('#characters');
+        const charNoSpaces = document.querySelector('#characters-no-spaces');
+        const words = document.querySelector('#words');
+        const sentences = document.querySelector('#sentences');
+        const textarea = document.querySelector('textarea');
+
+        const onChange = e => {
+            let text = e.target.value;
+            numChar.textContent = text.length;
+            charNoSpaces.textContent = text.replace(/[\r\n\t\f\v ]/g, '').length;
+            words.textContent = text.trim().split(/\s+/).length;
+            sentences.textContent = text.split('.').length;
+        };
+
+        textarea.addEventListener('input', onChange);
+    </script>
+</body>
+
+</html>
