@@ -1,0 +1,44 @@
+* {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	display: flex;
+	justify-content: center;
+}
+
+.gallery {
+	padding: 20px;
+	width: 100vw;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+	gap: 15px;
+}
+
+.gallery img {
+	width: 100%;
+	cursor: pointer;
+}
+
+#lightbox {
+	position: fixed;
+	display: none;
+	z-index: 100;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.75);
+}
+
+#lightbox.active {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#lightbox img {
+	width: 80%;
+}
