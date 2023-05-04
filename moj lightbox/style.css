@@ -1,0 +1,27 @@
+* {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+
+.gallery {
+	height: 100vh;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+	align-content: center;
+	justify-content: center;
+}
+
+img {
+	cursor: pointer;
+	width: 200px;
+	object-fit: contain;
+}
+
+.lightbox-img {
+	position: fixed;
+	width: 100vw;
+	background-color: rgba(0, 0, 0, 0.6);
+	height: 100vh;
+}
