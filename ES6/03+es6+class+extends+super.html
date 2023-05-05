@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body> 
+
+    <script> 
+        
+        class Animal {
+            constructor(name) {
+                this.name = name;
+
+                if (Animal.count === undefined) Animal.count = 0;
+                this.id = Animal.count;
+                Animal.count++;
+
+                this._type = "animal";
+            }
+
+            set type(str) {
+                if (typeof str === "string") {
+                    this._type = str;
+                }
+            }
+
+            get type() {
+                return this._type;
+            }
+
+            printData() {
+                console.log(this.id, this.name, this._type);
+            }
+        }
+
+        const animal1 = new Animal("cat");
+
+
+        class Dog extends Animal {
+            constructor(name) {
+                super(name); // wywołanie konstruktora Animal
+                this._type = "Dog";
+            }
+
+            bark() {
+                console.log(this.name, ": ", "is barking!");
+            }
+
+            printData() {
+                console.log("Dog id:", this.id, " is barking!");
+            }
+        }
+
+        const dog1 = new Dog("Szarik");
+        dog1.bark(); // Szarik is barking!
+        dog1.printData(); // 1 "Szarik" "Dog"
+                          // po przesłonięciu metody printData()
+                          // Dog id: 1  is barking!
+
+        
+        
+        
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+    
+</body>
+</html>
