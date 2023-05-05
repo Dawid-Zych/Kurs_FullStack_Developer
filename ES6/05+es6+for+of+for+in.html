@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body> 
+
+    <script> 
+        
+        const arr = [5, 10, 15, 20];
+        delete arr[2];
+
+        for (const v of arr) console.log(v);
+
+        for (const k in arr) console.log(k); // indeksy tablicy
+
+        const str = "text";
+        for (const v of str) console.log(v);
+
+        for (const k in str) console.log(k); // indeksy w string
+
+
+        const obj = {
+            a: 10,
+            str: "text",
+            print: function(){}
+        };
+
+        Object.defineProperty(obj, "test", {
+            value: 111,
+            configurable: false, // czy można skasować
+            writable: false, // czy można nadpisać
+            enumerable: false // czy można enumerować
+        });
+
+        obj.test = 56;
+        delete obj.test;
+        console.log(obj.test); // 111
+
+        //for (const v of obj) console.log(v); // Błąd
+                                    // obj is not iterable
+        for (const v of Object.values(obj)) console.log(v);
+        
+        for (const k in obj) console.log(k);  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+    
+</body>
+</html>
