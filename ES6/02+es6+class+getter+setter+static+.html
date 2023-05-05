@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body> 
+
+    <script> 
+        
+        /*
+            Od specyfikacji ES6 czyli ECMAScript2015 możemy
+            korzystać z słowa kluczowego class do utworzenia
+            klas w JS, pamiętajmy że to jednak cukier składniowy
+            bo pod spodem i tak będą bazowały na prototypach.
+        */  
+
+        let Person = class BasicPerson {
+            constructor(name) {
+                this.name = name;
+                this._age = 30;
+
+                if (Person.count === undefined) {
+                    Person.count = 0; // emulujemy statyczne property
+                }
+
+                Person.count++;
+            }
+
+            set age(value) {
+                if (value >= 18) {
+                    console.log("Age ok: ", value );
+                    this._age = value;
+                }
+            }
+
+            get age() {
+                return this._age;
+            }
+
+            static getPerson() {
+                return new Person("unknown_" 
+                    + Math.floor(Math.random()*1000));
+            }
+
+            static getPersonCount() {
+                return Person.count;
+            }
+        };
+
+        const randPerson = Person.getPerson();
+        console.log(randPerson);
+
+        const person1 = new Person();
+        person1.age = 24;
+        console.log(person1.age); // 24
+
+        console.log(Person.count); // 2
+
+        const person3 = new Person("Ala");
+        console.log(Person.getPersonCount()); // 3
+
+        //const person2test = new BasicPerson(); // błąd
+
+        
+        
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+    
+</body>
+</html>
