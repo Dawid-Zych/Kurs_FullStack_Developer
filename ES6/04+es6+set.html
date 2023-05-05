@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body> 
+
+    <script> 
+        
+        /*
+            Set - zbiór unikalnych prymitywów oraz referencji
+                  do obiektów
+        */
+
+        const set = new Set();
+        set.add(1);
+        set.add(2);
+        set.add(2);
+        set.add(2);
+        set.add("Ania");
+        set.add("Ania");
+
+        let obj = { a: 12 };
+        set.add(obj);
+        set.add(obj);
+
+        set.delete(1);
+
+        for (const item of set) {
+            console.log(item);
+        }
+
+        console.log( set.has(2) ); // true
+        console.log( set.size ); // 4
+        
+        const arr = Array.from(set);
+        console.log(arr);
+
+        const set2 = new Set([1, 3, ...set, -9, [], {}, function(){} ]);
+        console.log(set2);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+    
+</body>
+</html>
