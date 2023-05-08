@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body> 
+
+    <script> 
+        
+        fetch("https://api.chucknorris.io/jokes/random")
+        .then( response => response.json() )
+        .then( data => console.log(data) )
+        .catch( err => console.error(err) );
+        
+
+        function getJoke() {
+            return new Promise(function (resolve, reject) {
+                const request = new XMLHttpRequest();
+                const url = "https://api.chucknorris.io/jokes/random";
+                request.open("GET", url);
+                request.onload = function() {
+                    if (request.status === 200) {
+                        resolve(request.response);
+                    } else {
+                        reject(request.responseText);
+                    }
+                }               
+
+                request.onerror = function () {
+                    reject( new Error("Błąd serwera") );
+                }
+
+                request.send();
+            });
+        }
+
+        getJoke()
+        .then( data => {
+            let json = JSON.parse(data);
+            console.log(json);
+        } );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+    
+</body>
+</html>
