@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body> 
+
+    <script> 
+        
+        /*
+            Reflect api pozwala na manipulowanie, konstruowanie oraz
+            przeglądanie obiektów oraz ich składowych.
+        */ 
+
+        const user = {
+            name: "Asia",
+            city: "Wawa",
+            printInfo: function() {
+                console.log(this.name, this.city);
+            }
+        }
+
+        console.log( Reflect.has(user, "name") ); // true
+        console.log( Reflect.has(user, "brand") ); // false
+        console.log( Reflect.has(user, "printInfo") ); // true
+
+        Reflect.set(user, "name", "Kasia");
+        console.log(user);
+
+        console.log( Reflect.ownKeys(user) ); // ['name', 'city', 'printInfo']
+
+        Reflect.set(user, "surname", "Kowalska");
+        console.log(user);
+
+        Reflect.deleteProperty(user, "surname");
+        console.log(user);
+
+        Reflect.apply(user.printInfo, user, []); // Kasia Wawa
+
+        function Test(a) {
+            this.a = a;
+        }
+
+        const obj = Reflect.construct(Test, [4]);
+        console.log(obj); // {a: 4}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+    
+</body>
+</html>
