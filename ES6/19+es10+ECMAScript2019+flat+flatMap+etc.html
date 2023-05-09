@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body>       
+    
+    <script>
+        
+        // ES10 - ECMAScript 2019
+
+        // tbalice możemy spłaszczyć, domyślnie pierwszy pozim
+        const arr = [0,1,2, [5,6,7, [11,12,13,14] ]];
+        console.log( arr.flat() ); // [0, 1, 2, 5, 6, 7, Array(4)]
+        console.log( arr.flat(2) ); //  [0, 1, 2, 5, 6, 7, 11, 12, 13, 14]
+
+        // [1, 2, 3, 2, 4, 6, 3, 6, 9]
+        console.log( [1,2,3].flatMap( v => [v, v*2, v*3] ) );
+
+
+        const entries = new Map([
+            ["a", 23], ["str", "text"], ["obj", {data: 123}]
+        ]);
+
+        // obiekt z par właściwość-wartość z mapy
+        const obj = Object.fromEntries(entries);
+        console.log(obj); // {a: 23, str: 'text', obj: {'data':123}}
+
+        console.log( "  Hello!".trimStart() );
+        console.log( "  Hello!    ".trimEnd() );
+
+        try {
+            ertyutu
+        } catch {  // nie jest już wymagane catch(err)
+            
+        }
+
+        const symbol = Symbol("symbol information");
+        console.log(symbol.toString()); // Symbol(symbol information)
+        console.log(symbol.description); // symbol information
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </script>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+    
+</body>
+</html>
