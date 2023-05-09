@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body> 
+
+    <script> 
+        
+        /*
+            Symbol to prymityw, który można utworzyć za pomocą
+            tzw fabryki, nie da się użyć konstruktora. Jako
+            argument można przekazać nazwę symbolu, w praktyce
+            symbol wygeneruje nam unikatową wartość. Ze względu
+            na tą właściwość świetnie nadają się jako unikalna
+            nazwa właściwości obiektu.
+        */ 
+
+        let symbol1 = Symbol("Symbol1");
+        let symbol2 = Symbol("Symbol1");
+
+        console.log(symbol1 === symbol2); // false
+        console.log(symbol1 == symbol2); // false
+
+        let obj = {
+            a: 10
+        };
+
+        obj[symbol1] = 1000;
+
+        console.log(obj[symbol1]); // 1000
+
+        for (const v in obj) console.log(v); // a
+
+        console.log( Object.getOwnPropertySymbols(obj) );
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+    
+</body>
+</html>
