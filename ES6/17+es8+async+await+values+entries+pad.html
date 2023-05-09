@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body>       
+    
+    <script>
+        
+        // ES8 - ECMAScript 2017
+
+        let obj = {
+            a: 10,
+            str: "Hello",
+            data: {
+                b: 23
+            }
+        };
+
+        console.log( Object.values(obj) );
+        console.log( Object.entries(obj) );
+
+        for (const [k, v] of Object.entries(obj)) 
+            console.log(k, v);
+
+        function foo(a, b, ) {}
+
+        const bar = (a,b,) => a + b;
+
+        async function getData() {
+            const response = await fetch("https://api.chucknorris.io/jokes/random");
+            const data = await response.json();
+            console.log(data);
+        }
+
+        getData();
+
+
+        let txt = "Hello World".padStart(20, "_");
+        console.log(txt); // _________Hello World
+
+        console.log("Hello World".padEnd(20, "_")); // Hello World_________
+
+        console.log( Object.getOwnPropertyDescriptors(obj) );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </script>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+    
+</body>
+</html>
