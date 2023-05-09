@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body>       
+    
+    <script>
+        
+        // ES12 - ECMAScript 2021
+
+        let num = 100_000_000_000.123_45;
+        console.log(num); // 100000000000.12344
+        // #nia #nia Kasia Ola
+        console.log("Ania Ania Kasia Ola".replaceAll("A", "#"));
+
+        let obj = new WeakRef({
+            data: 10
+        });
+
+        console.log( obj.deref() ); // {data: 10}
+        console.log( obj.deref() ); // jeśli undefined to sam
+                                    // skasował obiekt
+
+        const promises = [
+            Promise.reject(new Error("Error")),
+            Promise.resolve("ok"),
+            Promise.reject("not ok")
+        ]; 
+
+        let result = Promise.any(promises) // zwraca pierwszy
+        .then( res => console.log(res) ) // resolved albo error
+        .catch(err => console.log(err)); // jeśli żaden nie jest
+        console.log(result);             // resolved
+
+        // logical assignment operators
+        let a = 10;
+        let b = 15;
+        //if (a) a = b;
+        a &&= b;
+        console.log(a); // 15
+
+        let c = null;
+        let d = 22;
+        //if (!c) c = d;
+        c ||= d; // jeśli w c falsy value przypisz d do c
+        console.log(c); // 22
+
+
+        let e = undefined;
+        let f = 67;
+        e ??= f; // nullish assignment operator, jeśli null czy
+                 // undefined w e to przypisz do e wartość z f
+        console.log(e); // 67
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+    </script>
+</body>
+</html>
