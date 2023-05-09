@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body>       
+    
+    <script>
+        
+        // ES9 - ECMAScript 2018
+
+        async function *getData() {
+            yield await Promise.resolve("ok 1");
+            yield await Promise.resolve("ok 2");
+            yield await Promise.resolve("ok 3");
+        }
+
+        let dataIter = getData();
+        dataIter.next().then(a => console.log(a));
+        dataIter.next().then(a => console.log(a));
+        dataIter.next().then(a => console.log(a));
+
+        async function iter() {
+            let dataIter = getData();
+
+            for await (const v of dataIter) {
+                console.log(v);
+            }
+        }
+
+        iter();
+
+
+        let obj = {
+            name: "Kasia",
+            city: "Krk",
+            country: "Poland",
+            favColor: "red"
+        }
+
+        const {name, city, ...data} = obj;
+        console.log(name); // Kasia
+        console.log(city); // Krk
+        console.log(data); // {country: 'Poland', favColor: 'red'}
+
+
+        let user = {
+            name: "Asia",
+            ...obj,
+            age: 26,
+            favColor: "green"
+        };
+
+        console.log(user);
+
+
+        fetch("https://api.chucknorris.io/jokes/random")
+        .then(response => response.json())
+        .then(v => console.log(v))
+        .catch(err => console.log(err))
+        .finally( () => {
+            console.log("Zawsze się wykona");
+        } );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </script>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+    
+</body>
+</html>
