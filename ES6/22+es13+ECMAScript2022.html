@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background: black;
+            color: white;
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <script>
+
+        // ES13 - ECMAScript 2022
+
+        class Car {
+            constructor(brand, name) {
+                this.brand = brand;
+                this.name = name;
+                this.#initData();
+            }
+
+            color = "blue"
+            topSpeed = 290
+
+            static someStaticVar = "test";
+
+            static getNewCar() {
+                return new Car("Ford", "Mustang");
+            }
+
+            #somePrivData = 123
+
+            #initData = function () {
+                console.log("init data!");
+            }
+
+            printInfo = () => {
+                console.log(this.color);
+                console.log(this.#somePrivData);
+                console.log(Car.someStaticVar);
+            }
+        }
+
+        const car1 = new Car("Dodge", "Viper");
+        console.log(Car.someStaticVar); // test
+        console.log(car1.somePrivData); // undefined
+        car1.printInfo();
+
+        const car2 = Car.getNewCar();
+        console.log(car2);
+
+
+        console.log(Object.hasOwn(car1, "color")); // true
+
+        console.log("test".at(0)); // t
+        console.log("test"[0]); // t
+        console.log("test".at(-1)); // t
+        console.log("test".at(-2)); // s
+
+    </script>
+
+    <script type="module">
+        const response = await fetch("https://api.chucknorris.io/jokes/random");
+        const data = await response.json();
+        console.log(data);
+
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>
