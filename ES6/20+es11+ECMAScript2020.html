@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body>       
+    
+    <script>
+        
+        // ES11 - ECMAScript 2020
+
+        let num = 9007199254740991;
+        let bigInt = 90071992547409999n * 10n;
+        console.log(bigInt); // 900719925474099990n
+
+        if ( 1 == 1 ) {
+            import("./es6 modules/test-modules.js")
+            .then( v => console.log(v) )
+            .catch( err => console.log(err) )
+        }
+
+
+        async function loadCode() {
+            let {add} = await import("./es6 modules/test-modules.js");
+            let result = add(5, 10);
+            console.log(result); // 15
+        }
+
+        loadCode();
+
+        // nullish operator - ?? sprawdza czy null lub undefined
+        let a = null ?? 12;
+        console.log(a); // 12
+
+        let b = undefined ?? 15;
+        console.log(b); // 15
+
+        let c = null || 23;
+        console.log(c); // 23, teraz lepiej stosować ??
+
+        const obj = {
+            a: 12,
+            data: {
+                str: "text",
+                obj: {
+                    c: 111
+                }
+            }
+        };
+
+        // optional chaining
+        console.log(obj?.test?.m?.str); // undefined
+        console.log(obj?.data?.obj?.c); // 111
+
+
+        const promiseArr = [
+            Promise.resolve(1),
+            Promise.reject(null),
+            Promise.resolve({data: 12})
+        ];
+
+        Promise.allSettled(promiseArr)
+        .then(result => {
+            result.forEach( r => console.log(r) );
+        });
+
+
+        let str = "Hello Ania, Antonina, Kasia, Anna, Ola";
+        const regexp = new RegExp("An[a-z]*", "g");
+
+        const results = str.matchAll(regexp); 
+        let data = [...results];
+        console.log(data);
+
+        console.log( globalThis === window ); // true
+
+        
+        </script>
+
+        <script type="module">
+            console.log(import.meta);
+
+            import * as utils from "./es6 modules/test-modules.js";
+            export {utils}
+        </script>
+
+
+
+
+
+
+
+
+
+        <script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </script>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+    
+</body>
+</html>
