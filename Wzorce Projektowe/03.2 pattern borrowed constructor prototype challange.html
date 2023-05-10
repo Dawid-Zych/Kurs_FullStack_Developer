@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body>       
+    
+    <script>
+        
+    /*
+        Prototype - Wzorce konstrukcyjne - Creational Pattern 
+        
+        Zadanie:
+        1) Zrób Dwie funkcje konstruujące Telephone z parametrami:
+            brand i name, dodatkowo instancja będzie posiadała tablicę
+            contacts. 
+        2) Dodaj do prototypu Telephone funkcję 
+            addContact(name, telephone) która dodaje obiekt z nazwą
+            użytkownika i telefonem do tablicy contacts
+        3) Stwórz funkcję konstruującą Smartphone która przyjmuje 
+            parametry: brand, name, appsArr. 
+            Wywołuje dodaktowo konstruktor Telephone na
+            własnym this przekazując do niego brand i name.
+            Dodatkowo w instancji zapisana jest przekazana tablica
+            nazw aplikacji appsArr. Popraw konstruktor Smartphone
+        4) Dodaj do prototypu Smartphone funkcję showContacts
+            pokazującą w konsoli kontakty w telefonie. W ten sam sposób
+            dodaj funkcję showApps. Dodatkowo do prototypu zapisz
+            funkcję addApp(name) która doda kolejną apkę do tablicy
+        5) Stwórz nową instancję Smartfona z kilkoma aplikacjami,
+            dodaj 3 kontakty. Dodaj aplikację YouTube z funkcją
+            addApp(). Pokaż w konsoli wszystkie kontakty
+            oraz aplikacje na telefonie.
+    */ 
+
+    function Telephone(brand, name) {
+        this.brand = brand;
+        this.name = name;
+        this.contacts = [];
+    }
+
+    Telephone.prototype.addContact = function(name, telephone) {
+        this.contacts.push( { name: name, telephone: telephone } );
+    }
+
+    function Smartphone(brand, name, appsArr) {
+        Telephone.call(this, brand, name);
+        this.appsArr = appsArr;
+    }
+        
+    Smartphone.prototype = Object.create(Telephone.prototype);
+    Smartphone.prototype.constructor = Smartphone;
+    Smartphone.prototype.showContacts = function () {
+        this.contacts.forEach( c => {
+            console.log("contact: ", c.name, c.telephone);
+        });
+    }
+    Smartphone.prototype.showApps = function () {
+        this.appsArr.forEach( a => {
+            console.log("app: ", a);
+        });
+    }    
+    Smartphone.prototype.addApp = function(appName) {
+        this.appsArr.push(appName);
+    }
+
+
+    const smartphone = new Smartphone(
+        "Nokia", "Lumia", 
+        ["Fb", "Insta", "Chat"]
+    );
+
+    smartphone.addContact("Ania", 15243615243);
+    smartphone.addContact("Kasia", 45243615765);
+    smartphone.addContact("Adam", 782436187865);
+    smartphone.showContacts();
+
+    smartphone.addApp("YouTube");
+    smartphone.showApps();
+        
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+    
+
+
+    </script>
+</body>
+</html>
