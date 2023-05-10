@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body>       
+    
+    <script>
+        
+        /*
+            Constructor - Wzorce konstrukcyjne - Creational Pattern
+            Konstruktor to funkcja wywoływana wraz z użyciem słowa 
+            kluczowego new co pozwala na powstanie nowej instancji 
+            obiektu oraz wypełnienie jej właściwościami.
+
+            Zadanie:
+            1. Napisz funkcję konstruującą o nazwie Product która
+               reprezentuje produkt do sprzedaży w sklepie
+            2. Konstruktor przyjmuje 4 parametry:
+               - brand
+               - name
+               - productionDate
+               - price
+            3. Dodaj metodę printInfo prezentującą w konsoli 
+               dane produktu
+        */
+
+        function Product(brand, name, productionDate, price) {
+            this.brand = brand;
+            this.name = name;
+            this.productionDate = productionDate;
+            this.price = price;
+
+            this.printInfo = function() {
+                console.log(
+                    this.brand,
+                    this.name,
+                    this.productionDate,
+                    this.price
+                );
+            }
+        }
+
+        const computer = new Product("Dell", "Inspiron", 2023, 5000);
+        computer.printInfo();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+    </script>
+</body>
+</html>
