@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body>       
+    
+    <script>
+        
+        /*
+            Prototype - Wzorce konstrukcyjne - Creational Pattern 
+            Dziedziczenie prototypowe pozwala na współdzielenie 
+            funkcji oraz zmiennych w JavaScript pomiędzy instancjami
+            obiektów co zmniejsza zapotrzebowanie na pamięć, 
+            nie muszą być przechowywane w każdej instancji.
+            Często korzysta się z porzyczonego konstruktora do 
+            utworzenia nowej instancji co ułatwia dziedziczenie
+            prototypowe.
+        */ 
+
+        function Shop(name, address) {
+            this.name = name;
+            this.address = address;
+            this.shoppingCart = [];
+        }
+
+        Shop.prototype.addToCart = function(name, price) {
+            this.shoppingCart.push({name: name, price:price});
+        }
+
+        function Pharmacy(name, address, brand) {
+            Shop.call(this, name, address);
+            this.brand = brand;
+        }
+
+        Pharmacy.prototype = Object.create(Shop.prototype);
+        Pharmacy.prototype.constructor = Pharmacy; // prawidłowy
+        Pharmacy.prototype.showCart = function() {
+            console.log(this.shoppingCart);
+        }
+
+        const pharmacy = new Pharmacy("Apteka", "Wawa", "MegaApteka");
+        console.log(pharmacy);
+
+        pharmacy.addToCart("Witaminy", 30);
+        pharmacy.addToCart("Minerały", 40);
+        pharmacy.showCart();
+
+        
+
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+    </script>
+</body>
+</html>
