@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body>       
+    
+    <script>
+        
+        /*
+        Singleton pattern - połaczenie  zbazą danych w ES6
+
+        1. Napisz Singleton jako klasę ES6  który przechowa wiadomości 
+           w tablicy messages oraz udostępnij metodę log(msg, 
+           type = “normal”) która przyjmie dwa parametry: msg to 
+           wiadomość natomiast type to typ wiadomości który wpłynie 
+           na jej kolor w konsoli JavaScript. Wiadomości będą miały jeden 
+           z czterech typów: normal czyli domyślny zwykły kolor wiadomości,
+           warning to kolor żółty, error to kolor czerwony, a success 
+           to jasnozielony.
+        2. Metoda log(msg, type = "normal") zapisuje do tablicy messages 
+           obiekt razem z wiadomością jako msg i jej typem który określa 
+           kolor. 
+        3. Pamiętaj aby w konstruktorze tego singletona sprawdzić 
+           czy zwracasz zawsze tą jedną instancję  na bazie klasy Logger.
+        4. Napisz metodę printMsg(msg)  która przyjmie obiekt 
+           z wiadomością oraz typem wiadomości i następnie wewnątrz 
+           za pomocą switcha sprawdź jaki to jest typ wiadomości 
+           i jeżeli jest  to warning to wyświetl wiadomość w kolorze 
+           żółtym w konsoli, jeśli error to w kolorze czerwonym, 
+           jeśli sucess to w kolorze jasno zielonym. 
+           Wykorzystaj poniższy kod który pokoloruje wiadomość 
+           w konsoli chrome:
+           console.log("%c" + msg.msg,”color: red”);
+        5. Dodaj metodę showLogs() która wyświetli wszystkie wiadomości 
+        z logera w konsoli i każdą wiadomość wyświetl za pomocą wcześniej 
+          utworzonej metody printMsg(). Na koniec utwórz dwie instancje 
+          na bazie tego Loggera i sprawdź czy w praktyce otrzymujesz 
+          tą samą instancję singletona.  Wywołaj kilka razy metodę log() 
+          z różnymi wiadomościami oraz typami wiadomości takimi jak “succes” 
+          “warning” i “error”
+          console.log("%c" + someText, "color: red");
+        */ 
+ 
+        
+        class Logger {
+            messages = [];
+            warningColor = "color: yellow";
+            errorColor = "color: red";
+            successColor = "color: lightgreen";
+
+            constructor() {
+                if (Logger.exists) {
+                    return Logger.instance;
+                }
+
+                Logger.exists = true;
+                Logger.instance = this;
+
+                return this;
+            }
+
+            log(msg, type = "normal") {
+                this.messages.push({
+                    msg,
+                    type
+                });
+            }
+
+            printMsg(msg) {
+                let msgStyle = "";
+
+                switch(msg.type.toLowerCase()) {
+                    case "warning":
+                        msgStyle = this.warningColor;
+                        break;
+                    case "error":
+                        msgStyle = this.errorColor;
+                        break;
+                    case "success":
+                        msgStyle = this.successColor;
+                        break;
+                }
+
+                console.log("%c" + msg.msg, msgStyle);
+            }
+
+            showLogs() {
+                console.log("Logged messages:");
+                this.messages.forEach( msg => {
+                    this.printMsg(msg);
+                });
+            }
+        }
+
+
+        const Logger1 = new Logger();
+        const Logger2 = new Logger();
+
+        console.log( Logger1 === Logger2 ); // true
+
+        Logger1.log("Message #1");
+        Logger1.log("Message #2", "success");
+        Logger1.log("Message #3", "warning");
+        Logger1.log("Message #4", "error");
+
+        Logger2.showLogs();
+
+
+
+        
+        
+
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+    </script>
+</body>
+</html>
