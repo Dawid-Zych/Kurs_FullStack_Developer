@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background: black;
+            color: white;
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <script>
+
+        /*
+            M0dule pattern = Creational Pattern
+
+            Moduł jest samodzielną jednostką kodu, zwykle odpowiedzialną
+            za pojedyńczą funkcjonalność Programu. Wiele modułów może 
+            komunikować się ze sobą wykorzystując udostępnione publicznie
+            metody  zmienne.
+
+            Prywatne funkcje oraz zmienne mogą być wyłącznie używane
+            za pośrednictwem publiczego API modułu.
+
+            Moduł jest konstrukcyjnym oraz strukturalnym wzorem projektowym
+            i najczęściej w JavaScript. Tworzy się go z wykorzystaniem 
+            funkcji natychmiastowej zwracającej obiekt z publicznym API
+
+          */
+
+        const Module = ((function () {
+            let privData = 123;
+            return {
+                getData: function () {
+                    return privData
+                },
+
+                setData: function (data) {
+                    privData = data
+                }
+            }
+        }()))
+
+        Module.setData(99)
+        Module.getData()
+
+    </script>
+</body>
+
+</html>
