@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body>       
+    
+    <script>
+        
+        /*
+            Singleton pattern - Creational Pattern
+            
+            Zadanie: 
+            1. Stwórz Singleton o nazwie AppSettings  który przechowa 
+               prywatne wartości odnośnie nazwy aplikacji jako 
+               “Application #1” oraz  motywu aplikacji z wartością 
+               początkową “night mode”.  
+               Udostępnij funkcje które pozwolą na zmianę tych zmiennych 
+               oraz pobranie aktualnej wartości czyli napisz implementacji 
+               poniższych funkcji:
+               - getAppName() i setAppName() 
+               - getAppTheme() i setAppTheme()
+               Przy ustawieniu wartości motywu sprawdź czy przekazana jest 
+               prawidłowa wartość, jedna z dwóch “night mode” albo 
+               “light mode”
+
+            2. Wykorzystaj napisany Singleton i pobierz aktualną nazwę 
+               aplikacji i pokaż ją w konsoli. Następnie zmień ją za pomocą
+               funkcji setAppName() i ponownie pokaż nową wartość. 
+               To samo zrób z motywem aplikacji. 
+        */ 
+ 
+        let AppSettings = (function (){
+            let instance = null;
+            let appName = "Application #1";
+            let appTheme = "night mode";
+
+            function Configuration() {
+                this.getAppName = function() {
+                    return appName;
+                }
+
+                this.setAppName = function(name) {
+                    appName = name;
+                }
+
+                this.getAppTheme = function() {
+                    return appTheme;
+                }
+
+                this.setAppTheme = function (theme) {
+                    if (theme !== "night mode"
+                        && theme !== "light mode") return;
+                    appTheme = theme;
+                }
+            }
+
+            return {
+                getInstance: function() {
+                    if (!instance) {
+                        instance = new Configuration();
+                    }
+
+                    return instance;
+                }
+            }
+        })();
+        
+        const settings = AppSettings.getInstance();
+        console.log(settings);
+
+        console.log(settings.getAppName());
+        settings.setAppName("App #1");
+        console.log(settings.getAppName());
+
+        console.log(settings.getAppTheme());
+        settings.setAppTheme("light mode");
+        console.log(settings.getAppTheme());
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+    </script>
+</body>
+</html>
