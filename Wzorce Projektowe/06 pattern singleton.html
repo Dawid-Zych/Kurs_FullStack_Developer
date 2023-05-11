@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body>       
+    
+    <script>
+        
+        /*
+             Singleton pattern - Creational Pattern
+            
+            Jest to wzorzec ograniczający utworzenie tylko jednej 
+            instancji obiektu. Raz stworzona instancja już zawsze 
+            będzie zwracana jako referencja np. przy próbie 
+            stworzenia kolejnej.
+
+            Zwykle stosuje się singleton przy:
+            - obiektach konfiguracyjnych, będących zbiorem 
+              podstawowych danych dla całej aplikacji
+
+            - połączeniach np z bazą danych, zwykle jedno jest 
+              wystarczające 
+        */ 
+
+        let Singleton  = (function(){
+            let instance = null; 
+            let privAppName = "Test App";
+
+            function Configuration() {
+                this.getAppName = function() {
+                    return privAppName;
+                }
+                this.setAppName = function(appName) {
+                    privAppName = appName;
+                }
+            }
+
+            return {
+                getInstance: function () {
+                    if (!instance) {
+                        instance = new Configuration();
+                    }
+
+                    return instance;
+                },
+                data: "test"
+            }
+        })();
+
+        console.log(Singleton);
+
+        const config = Singleton.getInstance();
+        console.log(config);
+        console.log(config.getAppName()); // Test App
+
+        
+        
+
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+    </script>
+</body>
+</html>
