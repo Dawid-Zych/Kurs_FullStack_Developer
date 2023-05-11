@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body>       
+    
+    <script>
+        
+        /*
+             Singleton pattern - Logger
+        */ 
+
+        let Logger = (function () {
+            let instance = null;
+            let logData = [];
+
+            function log(str, type) {
+                logData.push({
+                    str: str,
+                    type: type,
+                    date: new Date()
+                });
+            }
+
+            function initLogger() {
+                return {
+                    log: log,
+                    getLogLength: function() {
+                        return logData.length;
+                    }
+                }
+            }
+
+            return {
+                getInstance: function() {
+                    if (!instance) {
+                        instance = initLogger();
+                    }
+
+                    return instance;
+                }
+            }
+        })();
+
+        const logger1 = Logger.getInstance();
+        logger1.log("Hello", "warning");
+        logger1.log("Hello", "warning");
+        logger1.log("Hello", "warning");
+        console.log(logger1.getLogLength()); // 3
+
+        const logger2 = Logger.getInstance();
+        console.log(logger2.getLogLength()); // 3
+
+
+
+
+
+        
+        
+
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+    </script>
+</body>
+</html>
