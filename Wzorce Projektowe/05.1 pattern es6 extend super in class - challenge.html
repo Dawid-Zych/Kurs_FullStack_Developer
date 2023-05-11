@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background: black;
+            color: white;
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <script>
+
+        /*
+            Constructor w ES6 - Creational Pattern 
+            Zadanie:   
+            1. Napisz klasę Candidate, konstruktor przyjmuje name oraz
+               surname i ustawia te wartości wewnątrz instancji. Do klasy Candidate dodaj 
+               metodę toString()  zwracającą łańcuch znaków z wartościami które są ustawione 
+               w klasie.  Zapisz również metodę showInfo() która pokaże w konsoli wynik zwrócony
+               przez metodę toString(). Stwórz jedną instancję kandydata z dowolnymi danymi 
+               i pokaż informacje w konsoli używając showInfo().
+            2. Napisz klasę Employee która rozszerza klasę Candidate i w konstruktorze przyjmie 
+               te same parametry co bazowa klasa oraz dodatkowo parametr occupation. Wewnątrz 
+               konstruktora wywołaj nadrzędny konstruktor Candidate i przekaż do niego parametry 
+               z imieniem i nazwiskiem. Stwórz e-mail pracownika z przekazanego imienia i nazwiska. Pamiętaj aby zastosować małe litery w e-mailu 
+               Domena adresu email może być jako example.com. Nadpisz metodę toString() 
+               w Employee i wywołaj w niej nadrzędne toString() oraz zwróć łańcuch 
+               znaków który również uwzględnia zawód oraz e-mail pracownika. 
+               Następnie stwórz dwóch pracowników i pokaż ich informacje w konsoli.
+            3. Stwórz kolejną klasę o nazwie Manager która rozszerza klasę Employee. 
+               W konstruktorze dodatkowo Zapisz parametr teamName czyli nazwę grupy 
+               którą przewodzi Manager, wywołaj nadrzędny konstruktor oraz zapisz 
+               wewnątrz wszystkie informacje takie jak teamName oraz pustą tablicę 
+               employees. Następnie dodaj do klasy manager metodę addEmployee() 
+               która wrzuci do tablicy employees pracownika. Kolejną metodą będzie 
+               showTeam() która pokaże informacje o całym  zespole którym przewodzi Manager 
+               w konsoli.  Pokaż w konsoli nazwę teamu oraz menadżera i wszystkich jego 
+               pracowników którzy są w tablicy employees.  Nadpisz jeszcze metodę toString() 
+               aby zwracała oprócz informacji o pracowniku dodatkowo nazwę teamu tego menadżera. 
+               Stwórz jedną instancję menadżera i dodaj do niej dwóch wcześniej utworzonych 
+               pracowników w konsoli. Pokaż cały Team z wykorzystaniem metody showTeam().
+    
+        */
+
+        class Candidate {
+            constructor(name, surname) {
+                this.name = name;
+                this.surname = surname;
+            }
+
+            toString() {
+                return this.constructor.name + " " + this.name + " " + this.surname;
+            }
+
+            showInfo() {
+                console.log(this.toString());
+            }
+        }
+
+        const candidate1 = new Candidate("Ola", "Kowalska");
+        candidate1.showInfo();
+
+
+        class Employee extends Candidate {
+            constructor(name, surname, occupation) {
+                super(name, surname);
+                this.occupation = occupation;
+                this.email = `${name.toLowerCase()}.${surname.toLowerCase()}@example.com`;
+            }
+
+            toString() {
+                return super.toString() +
+                    " " + this.occupation +
+                    " " + this.email;
+            }
+        }
+
+        const employee1 = new Employee("Kasia", "Kowalska", "Programistka");
+        employee1.showInfo();
+
+        const employee2 = new Employee("Adam", "Adamski", "Tester");
+        employee2.showInfo();
+
+
+        class Manager extends Employee {
+            constructor(name, surname, occupation, teamName) {
+                super(name, surname, occupation);
+                this.teamName = teamName;
+                this.employees = [];
+            }
+
+            addEmployee(employee) {
+                this.employees.push(employee);
+            }
+
+            toString() {
+                return super.toString() + " " + this.teamName;
+            }
+
+            showTeam() {
+                console.log("Team: ", this.teamName);
+                console.log(" - manager: ", this.toString());
+                this.employees.forEach(e => {
+                    console.log(" - employee: ", e.toString());
+                });
+            }
+        }
+
+
+        const manager = new Manager("Zuza", "Zuzińska", "Team Lead", "Team #1");
+        manager.addEmployee(employee1);
+        manager.addEmployee(employee2);
+
+        manager.showInfo();
+        manager.showTeam();
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>
