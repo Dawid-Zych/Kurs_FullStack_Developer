@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body>       
+    
+    <script>
+        
+        /*
+            Constructor w ES6 - Creational Pattern 
+            Klasy możemy łatwo rozszerzać dzięki extends, dodatkowo
+            możemy wywołać nadrzędny konstruktor klasy z której 
+            dziedziczymy za pomocą super()
+        */ 
+
+        class Album {
+            constructor(band, name) {
+                this.band = band;
+                this.name = name;
+            }
+
+            showInfo() {
+                console.log(this.band, this.name);
+            }
+        }
+
+        const theSeatbelts = new Album("The Seatbelts", "Cowboy Bebop Vol 1");
+        theSeatbelts.showInfo();
+        
+
+        class DigitalAlbum extends Album {
+            constructor(band, name, url) {
+                super(band, name);
+                this.url = url;
+            }
+
+            showInfo() {
+                super.showInfo(); // wywołanie metody z bazowej klasy
+                console.log("Digital album: ", this.band, this.name, this.url );
+            }
+        }
+
+        const band = new DigitalAlbum("RHCP", "Californication", "https://rhcp.com");
+        band.showInfo();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+    </script>
+</body>
+</html>
