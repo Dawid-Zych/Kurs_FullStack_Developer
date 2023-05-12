@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body>       
+    
+    <script>
+        
+        /* 
+            Factory method - Creational Pattern  
+            1. Stwórz funkcję konstruującą Vehicle z parametrami brand
+               oraz name, których wartości ustawisz gdy będzie powołana
+               nowa instancja.
+            2. Napisz funkcję konstruującą Car z parametrami brand, name
+               i color. Wywołaj na nowej instancji konstruktor Vehicle.
+            3. Zapisz funkcję konstruującą Truck przyjmującą brand, name,
+               color oraz capacity. Wywołaj konstruktor Car na nowej 
+               instancji.
+            4. Utwórz obiekt fabryki VehicleFactory wraz z metodą
+               getVehicle(type). Dodaj switch sprawdzający type i jeśli
+               ma wartość "car" to zwróć nową instancję samochodu
+               z dowolnymi danymi. W przypadku "truck" zwróć ciężarówkę.
+               Do instancji dopisz metodę toString() 
+               zwracającą nazwę konstruktora, brand, name i color.
+            5. Stwórz po jednej instancji samochodu i ciężarówki, użyj
+               toString() aby pokazać informacje o nich w konsoli.
+        */ 
+
+        
+        function Vehicle(brand, name) {
+            this.brand = brand;
+            this.name = name;
+        }
+
+        function Car(brand, name, color) {
+            Vehicle.call(this, brand, name);
+            this.color = color;
+        }
+
+        function Truck(brand, name, color, capacity) {
+            Car.call(this, brand, name, color);
+            this.capacity = capacity;
+        }
+
+
+        const VehicleFactory = {
+            getVehicle: function(type) {
+                let vehicle = null;
+
+                switch(type.toLowerCase()) {
+                    case "car":
+                        vehicle = new Car("Ford", "Mustang", "red");
+                    break;
+                    case "truck":
+                        vehicle = new Truck("Kenworth", "t800", "blue", "20000");
+                    break;
+                }
+
+                vehicle.toString = function() {
+                    return this.constructor.name +
+                        " " + this.brand +
+                        " " + this.name +
+                        " " + this.color 
+                }
+
+                return vehicle;
+            }
+        };
+
+
+        const car = VehicleFactory.getVehicle("car");
+        console.log(car.toString());
+
+        const truck = VehicleFactory.getVehicle("Truck");
+        console.log(truck.toString());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        
+
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+    </script>
+</body>
+</html>
