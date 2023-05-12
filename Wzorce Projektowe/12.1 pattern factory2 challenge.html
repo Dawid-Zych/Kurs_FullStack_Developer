@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body>       
+    
+    <script>
+        
+        /*
+        Simple factory - Creational Pattern 
+        1. Napisz funkcję konstruującą Shape która przyjmuje dwa parametry posX
+           oraz posY które będą oznaczały pozycję danego kształtu na ekranie. 
+           Ustaw obie wartości w instancji powstałej na bazie wywołania tego 
+           konstruktora. Dodatkowo napisz metodę setPos() która umożliwi zmianę
+           pozycji koordynatów kształtu.
+        2. Napisz kolejną funkcję konstruującą Circle która będzie reprezentowała 
+           kształt okręgu, również przyjmuje pozycję posX oraz posY oraz 
+           dodatkowo promień czyli radius. W funkcji konstruującej wywołaj 
+           konstruktor Shape na instancji Circle i przekaż posX oraz posY. 
+           Zapisz w instancji promień który był przekazany do konstruktora 
+           oraz dodaj metodę getSurfaceArea() która pozwoli na obliczenie pola 
+           powierzchni koła na bazie wzoru Math.PI * radius * radius.
+        3. Kolejną funkcją konstruującą będzie Square która reprezentuje  
+           prostokąt, oprócz pozycji w układzie współrzędnych przyjmuje również
+           długość dwóch boków. Tutaj również dodaj metodę która obliczy 
+           powierzchnię tego prostokąta (bok1 * bok2)
+        4. Ostatnia funkcja konstruująca będzie reprezentowała trójkąt czyli 
+           triangle i również oprócz koordynatów na ekranie przyjmie wysokość
+           trójkąta oraz długość podstawy. Zapisz te wartości w instancji oraz
+           udostępnij metodę getSurfaceArea() która zwróci powierzchnię 
+           trójkąta czyli wartość iloczynu wysokości trójkąta oraz szerokości jego 
+           podstawy i wynik ten podziel przez 2.
+        5. Na koniec stwórz obiekt shapesFactory który udostępnia metody getCircle()
+           getSquare() oraz getTriangle() i każda z nich zwraca nową instancję na bazie 
+           wcześniej utworzonych funkcji konstruujących.
+        6. Przetestuj działanie poszczególnych funkcji konstruujących tworząc po jednym 
+           egzemplarzu kształtu i dla każdego przedstaw w konsoli jego powierzchnię.
+
+        */ 
+
+
+        function Shape(posX, posY) {
+            this.posX = posX;
+            this.posY = posY;
+
+            this.setPos = function(posX, posY) {
+                this.posX = posX;
+                this.posY = posY;
+            }
+        }
+
+        function Circle(posX, posY, radius) {
+            Shape.call(this, posX, posY);
+            this.radius = radius;
+
+            this.getSurfaceArea = function() {
+                return Math.PI * this.radius * this.radius;
+            }
+        }
+
+        function Square(posX, posY, side1Length, side2Length) {
+            Shape.call(this, posX, posY);
+            this.side1Length = side1Length;
+            this.side2Length = side2Length;
+
+            this.getSurfaceArea = function() {
+                return this.side1Length * this.side2Length;
+            }
+        }
+
+        function Triangle(posX, posY, hLength, baseLength) {
+            Shape.call(this, posX, posY);
+            this.hLength = hLength;
+            this.baseLength = baseLength;
+
+            this.getSurfaceArea = function() {
+                return (this.hLength * this.baseLength) / 2;
+            }
+        }
+
+
+        const ShapesFactory = {
+            getCircle: function(posX, posY, radius) {
+                return new Circle(posX, posY, radius);
+            },
+            getSquare: function(posX, posY, side1Length, side2Length) {
+                return new Square(posX, posY, side1Length, side2Length);
+            },
+            getTriangle: function(posX, posY, hLength, baseLength) {
+                return new Triangle(posX, posY, hLength, baseLength);
+            }
+        }
+
+
+        const circle = ShapesFactory.getCircle(0,0, 10);
+        console.log(circle.getSurfaceArea());
+        
+        const square = ShapesFactory.getSquare(10, -10, 20, 30);
+        console.log(square.getSurfaceArea());
+        
+        const triangle = ShapesFactory.getTriangle(23, 56, 15, 20);
+        console.log(triangle.getSurfaceArea());
+
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+    </script>
+</body>
+</html>
