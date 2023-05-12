@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body>       
+    
+    <script>
+        
+        /*
+            Simple factory - Creational Pattern
+            Prosta fabryka to obiekt, który zawiera w sobie funkcję 
+            tworzącą instancje obiektu, oddzielając ją od reszty 
+            kodu aplikacji. Funkcje fabryk nie wymagają również 
+            użycia słowa kluczowego new co dodatkowo upraszcza 
+            cały proces. 
+        */ 
+
+        function BasicUser(email, password) {
+            this.email = email;
+            this.password = password;
+            this.rank = "user";
+        }
+
+        function AdminUser(email, password) {
+            BasicUser.call(this, email, password);
+            this.rank = "admin";
+        }
+
+        let UserFactory = {
+            getUser: function(email) {
+                return new BasicUser(email, "123435");
+            }, 
+            getAdmin: function(email) {
+                return new AdminUser(email, "323423");
+            }
+        }
+        
+        let user1 = UserFactory.getUser();
+        console.log(user1);
+
+        let admin1 = UserFactory.getAdmin();
+        console.log(admin1);
+
+
+
+
+
+        
+        
+
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+    </script>
+</body>
+</html>
