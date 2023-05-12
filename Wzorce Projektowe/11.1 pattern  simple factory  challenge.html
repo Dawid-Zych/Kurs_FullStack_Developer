@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body>       
+    
+    <script>
+        
+        /*
+            Simple factory - Creational Pattern
+            Prosta fabryka to obiekt, który zawiera w sobie funkcję 
+            tworzącą instancje obiektu, oddzielając ją od reszty 
+            kodu aplikacji. Funkcje fabryk nie wymagają również 
+            użycia słowa kluczowego new co dodatkowo upraszcza 
+            cały proces. 
+
+            1. Stwórz prostą fabrykę komputerów, która przyjmie 
+               następujące parametry:
+               - brand
+               - name
+               - price
+               Zostaną zapisane w zwracanym obiekcie wraz z uniklanym,
+               losowym id.
+            2. Zwracany obiekt komputera musi mieć metodę showInfo()
+               pokazującą w konsoli wartości poszczególnych właściwości
+               obiektu.
+            3. Stwórz dwie instancje komputerów i użyj na nich showInfo()
+        */ 
+
+
+        function computerFactory(brand, name, price) {
+            let randomId = Math.round(Math.random() * 1000);
+
+            return {
+                brand: brand,
+                name: name,
+                price: price,
+                id: randomId,
+                showInfo: function() {
+                    console.log(
+                        this.brand,
+                        this.name,
+                        this.price,
+                        this.id
+                    );
+                }
+            };
+        }
+
+        const computer1 = computerFactory("Dell", "Inspiron", 5000);
+        computer1.showInfo();
+
+        const computer2 = computerFactory("Lenovo", "Thinkpad", 6000);
+        computer2.showInfo();
+
+
+
+
+        
+        
+
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+    </script>
+</body>
+</html>
