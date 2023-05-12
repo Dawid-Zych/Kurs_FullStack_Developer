@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body>       
+    
+    <script>
+        
+        /*
+            Factory method - Creational Pattern 
+            Factory mehtod tworzy nowy obiekt według wymagań 
+            użytkownika, zwykle udostępniając metodę zwracającą 
+            obiekt, która sama na podstawie przekazanych 
+            argumentów zwraca odpowiednią instancję. 
+        */ 
+
+        function BasicUser(email, password) {
+            this.email = email;
+            this.password = password;
+            this.rank = "user";
+        }
+
+        function AdminUser(email, password) {
+            BasicUser.call(this, email, password);
+            this.rank = "admin";
+        }
+
+        let UserFactory = {
+            getUser: function(rank) {
+                let user = null;
+                let email = rank + (Math.round(Math.random()*100)) + "@example.com";
+                
+                switch(rank) {
+                    case "user":
+                        user = new BasicUser(email, "12345");
+                        break;
+                    case "admin":
+                        user = new AdminUser(email, "fsdfsdf");
+                        break;
+                }
+
+                user.trainingRequired = true;
+                user.showInfo = function() {
+                    console.log(this.name, this.rank);
+                }
+
+                return user;
+            }
+        };
+
+        const user1 = UserFactory.getUser("user");
+        console.log(user1);
+
+        const admin1 = UserFactory.getUser("admin");
+        console.log(admin1);
+
+        
+
+
+
+        
+        
+
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+    </script>
+</body>
+</html>
