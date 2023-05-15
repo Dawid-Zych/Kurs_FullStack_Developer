@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body>       
+    
+    <script>
+        
+        /*
+            Decorator - Wzorce strukturalne - Structural Pattern
+            Jest jednym z najpopularniejszych wzorców projektowych. 
+            Pozwala na dynamiczną zmianę zachowania aplikacji, 
+            rozszerza jej możliwości dekorując obiekty nowymi 
+            właściwościami. Javascript to dynamiczny język, więc 
+            z łatwością możemy rozszerzać właściwości obiektów 
+            co czasem jest łatwiejsze niż pisanie wielu 
+            konstruktorów dla każdego potencjalnego przypadku.
+        */  
+
+        function User(name, address, email) {
+            this.name = name;
+            this.address = address;
+            this.email = email;
+        }
+
+        function decorateToEmployee(employee, data) {
+            employee.company = (data.company || "Example Ltd.");
+            employee.salary = data.salary || 6000;
+            employee.tasks = [];
+
+            employee.addTask = function(task) {
+                this.tasks.push(task);
+            };
+            employee.clearTasks = function() {
+                this.tasks = [];
+            }
+
+            return employee;
+        }
+
+        let user1 = new User("Kasia", "Wawa", "kasia@gmail.com");
+        let employee1 = decorateToEmployee(user1, {
+            salary: 10000
+        });
+
+        console.log(employee1);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+    
+
+
+    </script>
+</body>
+</html>
