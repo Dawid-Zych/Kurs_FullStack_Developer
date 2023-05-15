@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background: black;
+            color: white;
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <script>
+
+        /*
+            Adapter - Wzorce strukturalne - Structural Patterns
+            Adapter to wzorzec pozwalający na połączenie 
+            niekompatybilnych interfejsów. Typowym scenariuszem 
+            jest sytuacja, gdzie np nowe komponenty muszą być 
+            zintegrowane z aktualnymi, przez co trzeba napisać 
+            adapter, który umożliwia im komunikację.
+        */
+
+        // stary interfejs
+        function Transport(credentials) {
+            this.send = function (address, weight) {
+                return 140;
+            }
+        }
+
+        let address = { country: "DE" };
+        let credentials = { token: "12345" };
+        let oldTransport = new Transport(credentials);
+        let oldPrice = oldTransport.send(address, 10);
+
+        // nowe api transportu
+        function NewTransport() {
+            return {
+                login: function (credentials) {
+                    console.log("Logged in");
+                },
+                setPriority: function (priority) {
+                    console.log("Priority:", priority);
+                },
+                setDestination: function (address) {
+                    console.log("Destination:", address);
+                },
+                getPrice: function (weight) {
+                    return 120;
+                }
+            };
+        }
+
+
+        function TransportAdapter(credentials) {
+            let shipping = new NewTransport();
+            shipping.login(credentials);
+
+            return {
+                send: function (address, weight) {
+                    shipping.setPriority("standard");
+                    shipping.setDestination(address);
+                    return shipping.getPrice(weight);
+                }
+            };
+        }
+
+        let adapter = new TransportAdapter(credentials);
+        let newPrice = adapter.send(address, 10);
+        console.log(newPrice); // 120
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>
