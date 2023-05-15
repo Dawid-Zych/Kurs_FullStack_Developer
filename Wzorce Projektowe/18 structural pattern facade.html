@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background: black;
+            color: white;
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <script>
+
+        /*
+            Facade - Wzorce strukturalne - Structural Pattern
+            Fasada jest to wzorzec projektowy oddzielający klienta 
+            od kompleksowej funkcjonalności dostarczanej przez 
+            jedną lub wiele części skomplikowanego systemu. 
+
+            Zwykle jest to obiekt udostępniający interfejs 
+            do większego zbioru kodu, dzięki czemu:
+            - upraszczamy korzystanie z gotowych kawałków kodu 
+              np bibliotek
+            - część skomplikowanego kodu może być ukryta za fasadą
+              co nie wymaga wiedzy aby skorzystać z danego 
+              rozwiązania, często korzystające z wielowarstwowego 
+              systemu. Szczególnie, gdy wymaga to interakcji 
+              np z bazami danych czy z dodatkowej logiki 
+              np do określenia oceny kredytowej itd.
+        */
+
+        function CreditRequest(data) {
+            this.data = data;
+        }
+
+        function BackgroundCheck() {
+            this.check = function (creditRequest, amount) {
+                return true;
+            }
+        }
+
+        function RiskCheck() {
+            this.check = function (creditRequest, amount) {
+                return true;
+            }
+        }
+
+        function BIKCheck() {
+            this.check = function (creditRequest, amount) {
+                return true;
+            }
+        }
+
+        CreditRequest.prototype.applyFor = function (creditRequest, amount) {
+            let result = {
+                result: false,
+                error: null
+            };
+
+            let riskCheck = new RiskCheck();
+            let backgroundCheck = new BackgroundCheck();
+            let bikCheck = new BIKCheck();
+
+            if (!riskCheck.check(creditRequest, amount)) {
+                result.result = false;
+                result.error = "Not approved by Risk Department";
+            }
+
+            if (!backgroundCheck.check(creditRequest, amount)) {
+                result.result = false;
+                result.error = "Not approved by Back. Department";
+            }
+
+            if (!bikCheck.check(creditRequest, amount)) {
+                result.result = false;
+                result.error = "Not approved by BIK";
+            }
+
+            if (!result.error) {
+                result.result = true;
+            }
+
+            return result;
+        }
+
+        const person = {
+            name: "Adam",
+            salary: 8000,
+            documents: []
+        };
+
+        let creditRequest = new CreditRequest();
+        let result = creditRequest.applyFor(person, 20000);
+        console.log(result);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>
