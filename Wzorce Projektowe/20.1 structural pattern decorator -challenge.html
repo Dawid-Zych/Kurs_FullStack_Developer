@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background: black;
+            color: white;
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <script>
+
+        /*
+            Decorator - Wzorce strukturalne - Structural Pattern
+            Jest jednym z najpopularniejszych wzorców projektowych. 
+            Pozwala na dynamiczną zmianę zachowania aplikacji.
+
+            1. Napisz funkcję konstruującą Car(brand, name, topSpeed)
+               i ustaw właściwości nowej instancji samochodu.
+            2. Zapisz funkcję decorateToSuperCar(car, data) która przyjmie
+               obiekt zwykłego samochodu oraz obiekt data z danymi
+               ulepszeń auta, które zwiększą jego prędkość. W data powinny
+               znajdować się właściwości liczbowe: turbo, spoiler i exhaust.
+               Przykładowo turbo o wartości 0.15 oznacza że zwiększy o 
+               15% prędkość maksymalną auta. Sprawdź czy ustawione są 
+               wartości turbo, spoiler i exhaust, jeśli nie użyj domyślnej
+               wartości 0 czyli że dany element nie wpływa na szybkość
+               auta. Zaktualizuj prędkość maksymalną auta z uwzględnieniem
+               zmian w turbo, spoiler oraz exhaust czyli dodaj wpływ tych
+               elementów na prędkość maksymalną.
+               Dodatkowo dodaj dla zwracanego supr auta dodatkową metodę
+               drift() pokazującą w konsoli że auto driftuje.
+            3. Stwórz instancję samochodu i następnie użyj funkcji
+               decorateToSuperCar() aby zmienić prędkość maksymalną auta,
+               w data przeka obiekt z właściwościami turbo: 0.15,
+               spoiler: 0.05, exhaust: 0.1. Pokaz w konsoli zmodyfikowany
+               obiekt auta i jego prędkość maksymalną. Wywołaj metodę 
+               drift()
+        */
+
+        function Car(brand, name, topSpeed) {
+            this.brand = brand;
+            this.name = name;
+            this.topSpeed = topSpeed;
+        }
+
+        function decorateToSuperCar(car, data) {
+            car.turbo = data.turbo || 0;
+            car.spoiler = data.spoiler || 0;
+            car.exhaust = data.exhaust || 0;
+
+            car.topSpeed += car.topSpeed * data.turbo;
+            car.topSpeed += car.topSpeed * data.spoiler;
+            car.topSpeed += car.topSpeed * data.exhaust;
+
+            car.drift = function () {
+                console.log("Car is drifting");
+            };
+
+            return car;
+        }
+
+        let car = new Car("Ford", "Mustang", 230);
+        let superCar = decorateToSuperCar(car, {
+            turbo: 0.15,
+            spoiler: 0.05,
+            exhaust: 0.1
+        });
+
+        console.log(superCar);
+        console.log("superCar topSpeed:", superCar.topSpeed);
+        superCar.drift();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>
