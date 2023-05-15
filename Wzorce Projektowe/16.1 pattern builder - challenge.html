@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body>       
+    
+    <script>
+        
+        /*
+            Builder - Creational Pattern
+            Builder jest to elastyczny wzorzec mający na celu 
+            budowanie skomplikowanych obiektów krok po kroku.
+
+            1. Stwórz funkcję konstruującą opisującą pracownika z parametrami:
+               name, surname, occupation, dodaj firmowy email i metodę toString()
+            2. Zapisz funkcję EmployeeBuilder() która pozwoli na budowę
+               pracownika krok po kroku z metodami setName(), setSurname(),
+               setOccupation() oraz build() która zwróci nową instancję.
+            3. Firmę stworzysz z pomocą funkcji konstruującej Company która
+               przyjmie dwa parametry name i employees z domyślną wartością jako
+               pustą tablicą. Dodaj również do instancji metodę toString() która
+               zwróci informację o firmie oraz pracownikach.
+            4. Napisz funkcję CompanyBuilder za pomocą której krok po kroku
+               zbudujesz firmę wraz z pracownikami. Builder będzie miał
+               funkcje: setName(), setEmployees(), build() oraz dodatkową
+               addEmployee() która doda nowego pracownika do tablicy
+            5. Stwórz dwóch pracowników przy pomocy EmployeeBuilder
+            6. Dodaj nową instancję firmy wykorzystując CompanyBuilder,
+               dodaj pracowników używając metody addEmployee(). Na koniec
+               wyświetl za pomocą metody firmy toString() informacje o firmie 
+               i jej pracownikach.
+        */ 
+
+
+        function Employee(name, surname, occupation) {
+            this.name = name;
+            this.surname = surname;
+            this.email = name.toLowerCase() + "."
+                         + surname.toLowerCase() + "@example.com";
+            this.occupation = occupation;
+
+            this.toString = function () {
+                return this.constructor.name + 
+                        " " + this.name + " " + this.surname +
+                        " " + this.email + " " + this.occupation;
+            }
+        }
+
+        function EmployeeBuilder() {
+            let emplName, emplSurname, emplOccupation;
+
+            return {
+                setName: function(name) {
+                    emplName = name;
+                    return this;
+                },
+                setSurname: function(surname) {
+                    emplSurname = surname;
+                    return this;
+                },
+                setOccupation: function(occupation) {
+                    emplOccupation = occupation;
+                    return this;
+                },
+                build: function() {
+                    return new Employee(emplName, emplSurname, emplOccupation);
+                }
+            };
+        }
+
+
+        function Company(name, employees = []) {
+            this.name = name;
+            this.employees = employees;
+
+            this.toString = function() {
+                return this.constructor.name + " " + this.name +
+                        "\n Employees:\n"
+                        + this.employees.map(e => "- " + e.toString()).join("\n")
+            }
+        }
+
+
+        function CompanyBuilder() {
+            let companyName, companyEmployees = [];
+
+            return {
+                setName: function (name) {
+                    companyName = name;
+                    return this;
+                },
+                setEmployees: function (employees) {
+                    companyEmployees = employees;
+                    return this;
+                },
+                addEmployee: function(employee) {
+                    companyEmployees.push(employee);
+                    return this;
+                },
+                build: function() {
+                    return new Company(companyName, companyEmployees);
+                }
+            };
+        }
+
+
+        const employeeBuilder = new EmployeeBuilder();
+        const employee1 = employeeBuilder.setName("Ola")
+                            .setSurname("Kowalska")
+                            .setOccupation("Programistka")
+                            .build();
+        console.log(employee1);
+
+        const employee2 = employeeBuilder.setName("Adam")
+                            .setSurname("Adamski")
+                            .setOccupation("Tester")
+                            .build();
+        console.log(employee2);
+
+
+        const company = (new CompanyBuilder()).setName("Example Ltd.")
+                            .addEmployee(employee1)
+                            .addEmployee(employee2)
+                            .build();
+        console.log(company);
+
+        console.log(company.toString());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+    </script>
+</body>
+</html>
