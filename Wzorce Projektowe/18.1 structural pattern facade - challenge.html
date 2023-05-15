@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body>       
+    
+    <script>
+        
+        /*
+            Facade - Wzorce strukturalne - Structural Pattern
+            Fasada jest to wzorzec projektowy oddzielający klienta 
+            od kompleksowej funkcjonalności dostarczanej przez 
+            jedną lub wiele części skomplikowanego systemu. 
+
+            1. Stwórz fasadę sprawdzającą czy prawidłowo jest wykonane
+               zadanie programistyczne. Zacznij od definicji funckji
+               TaskMaker(programmerName) gdzie parametr wskazuje imię
+               programisty wykonującego zadanie.
+            2. Stwórz 3 funkcje reprezentujące kolejne kroki sprawdzające
+               rezultat wykonanego taska:
+               - DescriptionCheck() to funkcja konstruująca z metodą 
+                 check(codingTask) zwracająca true że opis zadania jest ok
+               - CodingCheck() to funkcja konstruująca z check(codingTask)
+                 zwracajacy true wskazując że dobrze jest wszystko zakodowane
+               - TestsCheck() to kolejna funkcja konstruująca z check(codingTask)
+                 zwracająca true wskazując że testy kodu przeszły prawidłowo
+            3. Dodaj do prototypu TaskMaker metodę finish(codingTask) która
+               sprawdzi jako fasada czy poszczególne elementy wykonanego zadania
+               programistycznego są zrobione prawidłowo. Stwórz instancje:
+               DescriptionCheck(), CodingCheck() i TestsCheck() i wywołaj na nich
+               metodę check() i sprawdż rezultat dla każdego elementu, a na koniec
+               zwróć rezultat.
+        */  
+
+        function TaskMaker(programmerName) {
+            this.programmerName = programmerName;
+        }
+
+        function DescriptionCheck() {
+            this.check = function(codingTask) {
+                return true;
+            }
+        }
+
+        function CodingCheck() {
+            this.check = function (codingTask) {
+                return true;
+            }
+        }
+
+        function TestsCheck() {
+            this.check = function(codingTask) {
+                return true;
+            }
+        }
+
+
+        TaskMaker.prototype.finish = function(codingTask) {
+            let result = {
+                result: false,
+                error: null
+            };
+
+            const descriptionCheck = new DescriptionCheck();
+            const codingCheck = new CodingCheck();
+            const testsCheck = new TestsCheck();
+
+            if (!descriptionCheck.check(codingTask)) {
+                result.result = false;
+                result.error = "Errors in task description";
+            }
+
+            if (!codingCheck.check(codingTask)) {
+                result.result = false;
+                result.error = "Coding errors.";
+            }
+
+            if (!testsCheck.check(codingTask)) {
+                result.result = false;
+                result.error = "Tests showed errors in code";
+            }
+
+            if (!result.error) {
+                result.result = true;
+            }
+
+            return result;
+        }
+
+
+        const codingTask = {
+            title: "Task #1",
+            description: "Task description"
+        };
+
+        const taskMaker = new TaskMaker("Ania");
+        const result = taskMaker.finish(codingTask);
+        console.log(result);
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+    </script>
+</body>
+</html>
