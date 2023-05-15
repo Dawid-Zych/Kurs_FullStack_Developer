@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body>       
+    
+    <script>
+        
+        /*
+            Builder - Creational Pattern
+            Builder jest to elastyczny wzorzec mający na celu 
+            budowanie skomplikowanych obiektów, krok po kroku 
+            co upraszcza cały proces. Wszelkie detale tworzenia 
+            obiektu są ukryte przed klientem.  Wzorzec ten
+            pozwala na utworzenie obiektu w etapach.
+        */ 
+
+        function Task(name, description, isDone) {
+            this.name = name;
+            this.description = description;
+            this.isDone = isDone;
+        }
+
+        function TaskBuilder() {
+            let name, description, isDone;
+
+            return {
+                setName: function(name) {
+                    this.name = name;
+                    return this;
+                },
+                setDescription: function(description) {
+                    this.description = description;
+                    return this;
+                },
+                setDone: function(isDone) {
+                    this.isDone = isDone;
+                    return this;
+                },
+                build: function () {
+                    return new Task(this.name, this.description, this.isDone);
+                }
+            };
+        }
+
+        let task = (new TaskBuilder()).setName("Task #1")
+        .setDescription("Description for task #1")
+        .setDone(false)
+        .build();
+
+        console.log(task);
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+    </script>
+</body>
+</html>
