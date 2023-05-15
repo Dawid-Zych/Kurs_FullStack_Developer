@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body>       
+    
+    <script>
+        
+        /*   
+            Adapter - Wzorce strukturalne - Structural Patterns
+            Adapter to wzorzec pozwalający na połączenie 
+            niekompatybilnych interfejsów. 
+
+            1. Stwórz obiekt w zmiennej paymentData z właściwością amount 
+               jako wartość 100.12 oraz recipient jako "ola@example.com"
+            2. Zapisz obiekt w zmiennej credentials z tokenem z dowolną
+               wartością.
+            3. Napisz funkcję konstruującą PaymentApi(credentials) której 
+               instancja posiada metodę sendMoney(paymentData) przyjmująca
+               obiekt paymentData. Metoda ta zwraca obiekt z właściwością
+               result jako true oraz właściwością fee, która jest obliczona
+               jako 5% z kwoty przelewu. Stwórz instancję tego api oraz
+               prześlij kwotę do odbiorcy. Podaj kwotę obliczonej opłaty
+               za przelew.
+            4. Napisz funkcję konstruującą nowego api jako NewPaymentApi()
+               zwracającą obiekt z metodami:
+               - login(credentials) która pokazuje informację o zalogowaniu
+               - setPriority(priority) ustawia przekazany priorytet np "high"
+               - setRecipient(recipient) to odbiorca np jego email
+               - sendMoney(money) pozwala na wysyłkę pieniędzy z podstawową
+                 opłatą 2% przesyłanej kwoty, ale jeśli priority jest "high"
+                 to opłata wynosi 3%. Zwróć obiekt z właściwością result 
+                 jako true oraz fee z wartością opłaty z kwoty transakckji
+            5. Napisz funkcję PaymentAdapter(credentials) która zwraca 
+               obiekt z metodą sendMoney(paymentData) i wykorzystującą
+               nowe api płatności. W metodzie zaloguj użytkownika oraz
+               ustaw priorytet na high, ustaw odbiorcę i zwróć rezultat
+               wysłania płatności z nowym api.
+        */ 
+       
+        const paymentData = {
+            amount: 100.12,
+            recipient: "ola@example.com"
+        };
+
+        const credentials = { token: "12345" };
+
+        function PaymentApi(credentials) {
+            this.sendMoney = function(paymentData) {
+                return {
+                    result: true,
+                    fee: paymentData.amount * 0.05
+                };
+            }
+        }
+
+
+        const oldPaymentApi = new PaymentApi(credentials);
+        const oldFee = oldPaymentApi.sendMoney(paymentData);
+        console.log("oldFee:", oldFee);
+
+
+        function NewPaymentApi() {
+            return {
+                login: function(credentials) {
+                    console.log("Logged in");
+                },
+                setPriority: function(priority) {
+                    this.priority = priority;
+                    console.log("Priority set to: ", this.priority);
+                },
+                setRecipient: function(recipient) {
+                    this.recipient = recipient;
+                    console.log("Recippient set to: ", this.recipient);
+                },
+                sendMoney: function(amount) {
+                    let feePercentage = 0.02;
+
+                    if (this.priority === "high") feePercentage = 0.03;
+
+                    return {
+                        result: true,
+                        fee: amount * feePercentage
+                    };
+                }
+            }
+        }
+
+
+        function PaymentAdapter(credentials) {
+            const paymentApi = new NewPaymentApi();
+            paymentApi.login(credentials);
+
+            return {
+                sendMoney: function(paymentData) {
+                    paymentApi.setPriority("high");
+                    paymentApi.setRecipient(paymentData.recipient);
+                    return paymentApi.sendMoney(paymentData.amount);
+                }
+            };
+        }
+
+        const adapter = new PaymentAdapter(credentials);
+        let newFee = adapter.sendMoney(paymentData);
+        console.log("newFee:", newFee);
+
+
+
+    
+
+
+    </script>
+</body>
+</html>
