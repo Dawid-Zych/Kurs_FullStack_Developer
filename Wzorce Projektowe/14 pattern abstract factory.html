@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body>       
+    
+    <script>
+        
+        /*
+            Abstract Factory - Creational Pattern
+            Abstract factory ma na celu zgrupowanie wielu fabryk 
+            w celu osiągnięcia jednego celu np tworzenia obiektów 
+            o podobnych charakterystykach itd. 
+        */ 
+
+        function Bike(name) {
+            this.name = name;
+            this.numWheels = 2;
+            this.info = function() {
+                console.log("Bike:",this.name, this.numWheels);
+            }
+        }
+
+        function BikeFactory() {
+            return new Bike("Romet");
+        }
+
+
+        function Car(name) {
+            this.name = name;
+            this.numWheels = 4;
+            this.info = function() {
+                console.log("Car:",this.name, this.numWheels);
+            }
+        }
+
+        function CarFactory() {
+            return new Car("Ford");
+        }
+
+
+        function Truck(name) {
+            this.name = name;
+            this.numWheels = 6;
+            this.info = function() {
+                console.log("Truck:",this.name, this.numWheels);
+            }
+        }
+
+        function TruckFactory() {
+            return new Truck("Volvo");
+        }
+
+
+        let AbstractVehicleFactory = (function(){
+            let types = [];
+
+            return {
+                registerType: function(type, factory) {
+                    let vehicle = factory();
+
+                    if (vehicle.numWheels && vehicle.numWheels > 0
+                        && vehicle.name && vehicle.info) {
+                        types[type.toLowerCase()] = factory;
+                    }
+                    
+                },
+                getTypes: function () {
+                    return types;
+                },
+                getVehicle: function(type) {
+                    let vehicleType = types[type.toLowerCase()];
+                    if (vehicleType) return vehicleType();
+                }
+            };
+        })();
+        
+        AbstractVehicleFactory.registerType("bike", BikeFactory);
+        AbstractVehicleFactory.registerType("car", CarFactory);
+        AbstractVehicleFactory.registerType("truck", TruckFactory);
+
+        console.log(AbstractVehicleFactory.getTypes());
+
+        
+        console.log( AbstractVehicleFactory.getVehicle("bike") );
+        console.log( AbstractVehicleFactory.getVehicle("bike") );
+        console.log( AbstractVehicleFactory.getVehicle("car") );
+        console.log( AbstractVehicleFactory.getVehicle("truck") );
+        
+
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+    </script>
+</body>
+</html>
