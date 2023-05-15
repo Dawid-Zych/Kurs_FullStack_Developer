@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body>       
+    
+    <script>
+        
+        /*
+            Decorator - Wzorce strukturalne - Structural Pattern
+            Jest jednym z najpopularniejszych wzorców projektowych. 
+
+            1. Napisz funkcję konstruującą SmartphoneConfig() która 
+               w nowej instancji posiada metodę cost() zwracającą 
+               cenę bazową telefonu. Drugą metodą będzie screenSize()
+               zwracająca wartość 5.5 cala. Trzecia storageSize()
+               zwraca ilość pamięci 32gb jako tekst. To bazowa
+               konfiguracja telefonu.
+            2. Pierwszym dekoratorem będzie funkcja 
+               increaseStorage(smartphone) która pobierze aktualną
+               cenę telefonu metodą cost() i przypisze do przekazanej
+               instancji smartphone nową wersję metody cost() 
+               dodającą do ceny 1000.
+               Drugą metodą dekoratora będzie storageSize zwracjącą
+               nową wartość "128gb"
+            3. Drugi dekorator increaseScreenSize(smartphone) 
+               zwiększa cenę o 800zł dla większego ekranu, a
+               metoda screenSize() zwfraca wartość 6 cali.
+            4. Trzeci dekorator addInsurance(smartphone) dodaje
+               do ceny 10% jej wartości za ubezpieczenie.
+            5. Stwórz nową instancję Smartfona i pokaż jego bazowe 
+               parametry. Następnie zwiększ ilość pamięci, 
+               wielkość ekranu oraz ubezpieczenie. Pokaż nowe 
+               ceny smartfona, rozmiar ekranu i ilość pamięci.
+        */  
+
+        function SmartphoneConfig() {
+            this.cost = function() {
+                return 2000;
+            }
+            this.screenSize = function() {
+                return 5.5;
+            }
+            this.storageSize = function() {
+                return "32gb";
+            }
+        }
+
+        // Dekorator nr.1
+        function increaseStorage(smartphone) {
+            let price = smartphone.cost();
+
+            smartphone.cost = function() {
+                return price + 1000;
+            }
+
+            smartphone.storageSize = function() {
+                return "128gb";
+            }
+        }
+
+        // Dekorator nr.2
+        function increaseScreenSize(smartphone) {
+            let price = smartphone.cost();
+
+            smartphone.cost = function() {
+                return price + 800;
+            };
+
+            smartphone.screenSize = function() {
+                return 6;
+            }
+        }
+
+
+        // Dekorator nr.3
+        function addInsurance(smartphone) {
+            let price = smartphone.cost();
+
+            smartphone.cost = function() {
+                return price + (price * 0.1);
+            };
+        }
+
+        const smartphone = new SmartphoneConfig();
+        console.log(smartphone.cost()); // 2000
+        console.log(smartphone.screenSize()); // 5.5
+        console.log(smartphone.storageSize()); // 32gb
+
+        increaseStorage(smartphone);
+        console.log(smartphone.cost()); // 3000
+        console.log(smartphone.storageSize()); // 128gb
+
+        increaseScreenSize(smartphone);
+        console.log(smartphone.cost()); // 3800
+        console.log(smartphone.screenSize()); // 6
+
+        addInsurance(smartphone);
+        console.log(smartphone.cost()); // 4180
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+    
+
+
+    </script>
+</body>
+</html>
