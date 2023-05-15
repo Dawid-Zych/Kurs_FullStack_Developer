@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body>       
+    
+    <script>
+        
+        /*
+            Abstract Factory - Creational Pattern
+            Abstract factory ma na celu zgrupowanie wielu fabryk 
+            
+            1. Stwórz abstrakcyjną fabrykę, która pozwoli za pomocą
+               metody getDevice(type) uzyskać następujące instancje:
+               - Pc - komputer tworzony przez PcFactory z właściwościami
+                 brand i name opisującymi komputer
+               - Laptop - tworzony przez LaptopFactory z właściwościami
+                 jak Pc oraz dodatkową screenSize. Konstruktor Laptop
+                 wywoła na swojej instancji konstruktor Pc 
+               - GamingLaptop - twrzony przez GamingLaptopFactory
+                 z właściwościami jak Laptop oraz gpu. Konstruktor
+                 GamingLaptop wywołuje na swojej instancji konstruktor
+                 Laptop.  
+                 Uwaga każda instancja ma swoją implementację toString()
+                 zwracającą nazwę konstruktora wraz z właściwościami
+            2. Napisz obiekt AbstractDeviceFactory z metodami:
+               - registerType(type, factory) który zapisze do tablicy
+                 fabrykę obiektów. Sprawdź czy uzyskany obiekt posiada
+                 właściwości brand oraz name.
+               - getTypes() zwróci tablicę fabryk
+               - getDevice(type) zwróci konkretną instancję ze względu
+                 na przekazany typ jako łańcuch znaków np: "pc", 
+                 "laptop" oraz "gaming laptop".
+            3. Stwórz instancje obiektów z wykorzystaniem fabryk i pokaż
+               ich informacje w konsoli
+        */ 
+
+
+        function Pc(brand, name) {
+            this.brand = brand;
+            this.name = name;
+
+            this.toString = function() {
+                return this.constructor.name
+                    + " " + this.name
+                    + " " + this.brand;
+            }
+        }
+
+        function PcFactory() {
+            return new Pc("Alienware", "t1000");
+        }
+
+        function Laptop(brand, name, screenSize) {
+            Pc.call(this, brand, name);
+            this.screenSize = screenSize;
+
+            this.toString = function() {
+                return this.toString() + " " + this.screenSize;
+            }
+        }
+
+        function LaptopFactory() {
+            return new Laptop("Dell", "Inspiron", 14);
+        }
+
+
+        function GamingLaptop(brand, name, screenSize, gpu) {
+            Laptop.call(this, brand, name, screenSize);
+            this.gpu = gpu;
+
+            this.toString = function() {
+                return this.toString() + " " + this.gpu;
+            }
+        }
+
+        function GamingLaptopFactory() {
+            return new GamingLaptop("Alienware", "x15", 15, "Geforce");
+        }
+
+
+        const AbstractDeviceFactory = (function(){
+            const types = [];
+
+            return {
+                registerType: function(type, factory) {
+                    let device = factory();
+
+                    if (device.brand && device.name) {
+                        types[type.toLowerCase()] = factory;
+                    }
+                },
+                getTypes: function () {
+                    return types;
+                },
+                getDevice: function(type) {
+                    const deviceType = types[type.toLowerCase()];
+                    if (deviceType) {
+                        return deviceType();
+                    } else {
+                        return null;
+                    }
+                }
+            };
+        })();
+
+
+        AbstractDeviceFactory.registerType("pc", PcFactory);
+        AbstractDeviceFactory.registerType("laptop", LaptopFactory);
+        AbstractDeviceFactory.registerType("gaming laptop", GamingLaptopFactory);
+
+        console.log(AbstractDeviceFactory.getTypes());
+
+        console.log(AbstractDeviceFactory.getDevice("Laptop"));
+        console.log(AbstractDeviceFactory.getDevice("Gaming Laptop"));
+        console.log(AbstractDeviceFactory.getDevice("PC"));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+    </script>
+</body>
+</html>
