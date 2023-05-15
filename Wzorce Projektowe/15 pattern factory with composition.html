@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body>       
+    
+    <script>
+        
+        /*
+            Factory with Composition - Creational Pattern
+            Fabryka z kompozycją staje się coraz popularniejszym 
+            wzorcem, gdzie zamiast dziedziczenia przydziela się do 
+            obiektu zachowania (behaviors) co ma na celu uniknięcie 
+            wielu czasem niepotrzebnych dziedziczonych 
+            zachowań / metod etc. 
+            Nowe podejście często określane jest jako 
+            “composition over inheritance” czyli kompozycja ponad 
+            dziedziczenie. Daje nam to większą elastyczność niż 
+            rozszerzanie kolejnych obiektów w celu dziedziczenia.
+        */ 
+
+        let speaker = function (state) { 
+            return {
+                speak: function () {
+                    console.log(state.name, " mówi: ", state.words);
+                }
+            }
+        }
+
+        let walker = function (state) {
+            return {
+                walk: function () {
+                    console.log(state.name, "is walking");
+                },
+                run: function() {
+                    console.log(state.name, "is running");
+                }
+            };
+        }
+        
+        let person = function(name, age) {
+            let state = {
+                name: name,
+                age: age,
+                words: "Hello "
+            };
+
+            return Object.assign(
+                state,
+                speaker(state),
+                walker(state)
+            );
+        }
+
+        let person1 = person("Adam", 34);
+        person1.speak();
+        person1.walk();
+        person1.run();
+        console.log(person1);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+    </script>
+</body>
+</html>
