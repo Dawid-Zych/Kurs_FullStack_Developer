@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body>       
+    
+    <script>
+        
+        /*  
+            Factory with Composition - Creational Pattern 
+            1. Stwórz fabrykę z kompozycją dla pracownika, który
+               może przyjąć dwie role:
+               - programmer - z funkcją przyjmującą state i zwracającą
+                 obiekt z dwiema metodami. Pierwsza useLanguage(language)
+                 zapisuje w state język programisty w jakim ma pisać kod.
+                 Druga to metoda code(task) która w konsoli pokaże 
+                 informację że programista koduje w danym języku określone
+                 zadanie.
+                - tester - z funkcją przyjmującą state i zwracającą
+                  obiekt z metodą test(program) i pokazującą w konsoli
+                  informację że testowany jest podany program
+            2. Zapisz funkcję przyjmującą imię i nazwisko oraz zwracającą
+               pracownika. W środku zapisz obiekt state z danymi pracownika
+               wraz z adresem email. Pamiętaj o zwróceniu obiektu powstałego
+               z wywołania Object.assign() gdzie połączysz zachowania:
+               programmer i tester z state.
+            3. Stwórz przykładowego pracownika, ustaw język programowania
+               na JavaScript i zleć mu kodowanie aplikacji node.js oraz
+               jej przetestowanie
+        */ 
+
+
+        let programmer = function (state) {
+            return {
+                useLanguage: function(language) {
+                    state.language = language;
+                },
+                code: function (task) {
+                    console.log("Coding in language: ", state.language,
+                                " task:", task);  
+                }
+            }
+        }
+
+        let tester = function (state) {
+            return {
+                test: function(program) {
+                    console.log("Testing program: ", program);
+                }
+            }
+        }
+
+        let employee = function(name, surname) {
+            let state = {
+                name: name,
+                surname: surname,
+                email: name.toLowerCase() + "." + surname.toLowerCase()
+                        + "@example.com"
+            };
+
+            return Object.assign(
+                state,
+                programmer(state),
+                tester(state)
+            );
+        }
+
+
+        const employee1 = employee("Kasia", "Kowalska");
+        console.log(employee1);
+
+        employee1.useLanguage("JavaScript");
+        employee1.code("Task #1 - Node.js app");
+        employee1.code("Task #2 - Node.js app");
+        employee1.test("Node.js app");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+    </script>
+</body>
+</html>
