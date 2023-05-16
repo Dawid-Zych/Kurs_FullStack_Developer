@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body>       
+    
+    <script>
+        
+        /*
+            Flyweight - Pyłek - Structural Pattern
+            Pyłek ma na celu zaoszczędzenie pamięci w przypadku 
+            powtarzających się obiektów w dużych zbiorach np 
+            w sklepach internetowych. W przypadku np laptopów wiele
+            ich wariantów modeli procesora, taktowania, pamięci 
+            powtarza się przez co mogą dzielić referencję 
+            do tego samego obiektu zamiast tworzyć za każdym 
+            razem nowy.
+        */  
+
+        function Flyweight(brand, cpu, ram) {
+            this.brand = brand;
+            this.cpu = cpu;
+            this.ram = ram;
+        }
+
+        function Computer(brand, cpu, ram, color, modelId) {
+            this.flyweight = FlyweightFactory.get(brand, cpu, ram);
+            this.color = color;
+            this.modelId = modelId;
+        }
+
+        const FlyweightFactory = (function() {
+            let flyweights = {};
+
+            return {
+                get: function(brand, cpu, ram) {
+                    let propName = `${brand}_${cpu}_${ram}`;
+                    if(!flyweights[propName]) {
+                        flyweights[propName] = new Flyweight(brand, cpu, ram);
+                    }
+
+                    return flyweights[propName];
+                },
+
+                count: function() {
+                    return Object.keys(flyweights).length;
+                }
+            }
+        })();
+
+        let shop = [];
+
+        shop.push( new Computer("Dell", "Intel", "16gb", "black", "ASDF") );
+        shop.push( new Computer("Dell", "Intel", "16gb", "silver", "ASDF5") );
+        shop.push( new Computer("Dell", "Intel", "16gb", "red", "ASDF3") );
+        shop.push( new Computer("Dell", "Intel", "16gb", "white", "ASDF2") );
+        shop.push( new Computer("Asus", "Amd", "32gb", "black", "sdfsdf1") );
+        shop.push( new Computer("Asus", "Amd", "32gb", "red", "sdfsdf2") );
+        shop.push( new Computer("Asus", "Amd", "32gb", "silver", "sdfsdf3") );
+        shop.push( new Computer("Asus", "Amd", "32gb", "white", "sdfsdf4") );
+
+        console.log(shop);
+        console.log(FlyweightFactory.count()); // 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+    
+
+
+    </script>
+</body>
+</html>
