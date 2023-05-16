@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body>       
+    
+    <script>
+        
+        /*
+            Strategy - Behavioral pattern
+            Wzorzec pozwala na dynamiczną zmianę algorytmu dzięki 
+            wyborowi odpowiedniej strategii.
+        */  
+
+        let Shipping = function() {
+            this.company = "Example Ltd";
+        }
+
+        Shipping.prototype.setStrategy = function(company) {
+            this.company = company;
+        }
+
+        Shipping.prototype.calculate = function(parcel) {
+            return this.company.calculate(parcel);
+        }
+
+        function UPS() {
+            this.calculate = function(parcel) {
+                return 27;
+            }
+        }
+
+        function DHL() {
+            this.calculate = function(parcel) {
+                return 25;
+            }
+        }
+
+        let parcel = { from: "PL", to: "IT" };
+        let ups = new UPS();
+        let dhl = new DHL();
+
+        const shipping = new Shipping();
+        shipping.setStrategy(ups);
+        console.log( shipping.calculate() ); // 27
+
+        shipping.setStrategy(dhl);
+        console.log( shipping.calculate() ); // 25
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+    
+
+
+    </script>
+</body>
+</html>
