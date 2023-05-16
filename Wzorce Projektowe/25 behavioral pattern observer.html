@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body>       
+    
+    <script>
+        
+        /*
+            Observer - Behavioral pattern  
+            Wzorzec opisuje obiekt (nazywany Subject 
+            lub Observable), który informuje inne obiekty 
+            o zmianie swojego stanu, dzięki czemu subskrybenci 
+            mogą zareagować na wszelkie zmiany. 
+        */  
+
+        function JobPortal() {
+            this.observers = [];
+
+            this.subscribe = function(observer) {
+                this.observers.push(observer);
+            }
+
+            this.unsubscribe = function(observer) {
+                let index = this.observers.findIndex(
+                    o => o === observer
+                );
+
+                this.observers.splice(index, 1);
+            }
+
+            this.addNewListing = function(offer) {
+                this.observers.forEach(
+                    o => o.notify(offer)
+                );
+            }
+        }
+
+
+        function Candidate(name) {
+            this.name = name;
+            this.notify = function(offer) {
+                console.log(this.name, "otrzymał ofertę:", offer);
+            }
+        }
+
+        const jobPortal = new JobPortal();
+        jobPortal.subscribe( new Candidate("Ola") );
+        const candidate2 = new Candidate("Kasia"); 
+        jobPortal.subscribe( candidate2);
+        jobPortal.subscribe( new Candidate("Daniel") );
+        jobPortal.subscribe( new Candidate("Piotr") );
+
+        jobPortal.addNewListing("Fullstack Web Developer");
+
+        jobPortal.unsubscribe(candidate2);
+
+        jobPortal.addNewListing("Senior Fullstack Web Developer");
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+    
+
+
+    </script>
+</body>
+</html>
