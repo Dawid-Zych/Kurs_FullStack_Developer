@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body>       
+    
+    <script>
+        
+        /*
+            Mediator - Wzorce behawioralne - Behavioral Patterns
+            Mediator to centralny węzeł komunikacyjny w programie 
+            zarządzający przesyłaniem wiadomości w rozproszonym 
+            systemie. Zainteresowane obiekty wiedzą o mediatorze, 
+            ale o sobie nawzajem już nie. Mediator zdejmuje 
+            odpowiedzialność za komunikację między obiektami 
+            dostarczając interfejs do wysyłki oraz odbioru wiadomości. 
+            Kod staje się dzięki mediatorowi czytelniejszy, 
+            ale jeśli zawiedzie przestaną działać elementy aplikacji, 
+            które z niego korzystają.
+        */  
+
+        function User(name) {
+            this.name = name;
+            this.chatRoom = null;
+        }
+
+        User.prototype.send = function(msg, to) {
+            this.chatRoom.send(msg, this, to);
+        }
+
+        User.prototype.receive = function(msg, from) {
+            console.log("from:", from.name, "to user", 
+                this.name, " msg:", msg);
+        }
+
+
+        let chatRoom = function() {
+            let users = {};
+
+            return {
+                register: function(user) {
+                    if (!users[user.name]) {
+                        users[user.name] = user;
+                        user.chatRoom = this;
+                    } 
+                },
+                send: function(msg, from, to) { 
+                    if (to) {
+                        to.receive(msg, from);
+                    } else {
+                        for ( const key in users ) {
+                            if (users[key] !== from) {
+                                users[key].receive(msg, from);
+                            }
+                        }
+                    }
+                }
+            };
+        }
+
+        const chat = chatRoom();
+        let user1 = new User("Asia");
+        chat.register(user1);
+
+        let user2 = new User("Kasia");
+        chat.register(user2);
+
+        let user3 = new User("Olek");
+        chat.register(user3);
+
+        user1.send("Witam wszystkich!");
+        user2.send("Cześć!");
+
+        user1.send("Cześć Kasia!!!", user2);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+    
+
+
+    </script>
+</body>
+</html>
