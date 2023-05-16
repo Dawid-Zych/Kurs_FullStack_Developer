@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body>       
+    
+    <script>
+        
+        /* 
+            Iterator - wzorzec pozwala na iterację 
+            kolekcji elementów. 
+
+            Zadanie:
+            1. Stwórz iterator pozwalający na iterację
+               tablicy obiektów użytkowników, pokaż imię każdego
+               z nich.
+            2. Każdy użytkownik w tablicy to obiekt z właściwością
+               name i surname.
+        */   
+
+        const users = [
+            { name: "Ola", surname: "Kowalska" },
+            { name: "Ania", surname: "Kowalska" },
+            { name: "Kasia", surname: "Kowalska" }
+        ];
+
+        function iterate(arr, callback, scope) {
+            scope = scope || arr;
+
+            for (let index = 0; index < arr.length; index++) {
+                const el = arr[index];
+                callback.call(scope, index, arr[index]);
+            }
+        }
+
+        iterate(users, function (index, u) {
+            console.log("index:", index, "user:", u.name);
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+    
+
+
+    </script>
+</body>
+</html>
