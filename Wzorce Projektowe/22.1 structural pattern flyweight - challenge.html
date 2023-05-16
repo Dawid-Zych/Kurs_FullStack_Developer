@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background: black;
+            color: white;
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <script>
+
+        /*  
+            Flyweight - Pyłek - Structural Pattern  - zadanie
+
+            1. Napisz funkcję konstruującą Flyweight z parametrami:
+               brand, name i color, ustaw poszczególne wartości
+               właściwości w instancji.
+            2. Dodaj funkcję konstruującą Car z parametrami:
+               brand, name, color, engine. Wenwątrz wykorzystasz
+               FlyweightFactory aby pobrać metodą get() pyłek 
+               ze względu na: brand, name i color. Dodatkowo
+               w instancji zapisz właściwość engine.
+            3. FlyweightFactory przechowa zbiór powtarzających 
+               się danych samochodów  dla właściwości: brand,
+               name i color.
+            4. Stwórz wiele instancji Car dla Forda Mustanga
+               w kolerze zielonym, czerwonym i białym oraz
+               silnikami: v4, v6, v8. Pokaż w konsoli ilość
+               pyłków w FlyweightFactory
+        */
+
+
+        function Flyweight(brand, name, color) {
+            this.brand = brand;
+            this.name = name;
+            this.color = color;
+        }
+
+        function Car(brand, name, color, engine) {
+            this.flyweight = FlyweightFactory.get(brand, name, color);
+            this.engine = engine;
+        }
+
+        const FlyweightFactory = (function () {
+            const flyweights = {};
+
+            return {
+                get: function (brand, name, color) {
+                    const propName = `${brand}_${name}_${color}`;
+                    if (!flyweights[propName]) {
+                        flyweights[propName] = new Flyweight(brand, name, color);
+                    }
+
+                    return flyweights[propName];
+                },
+                count: function () {
+                    return Object.keys(flyweights).length;
+                }
+            };
+        })();
+
+        const shop = [];
+
+        shop.push(new Car("Ford", "Mustang", "red", "v4"));
+        shop.push(new Car("Ford", "Mustang", "red", "v6"));
+        shop.push(new Car("Ford", "Mustang", "red", "v8"));
+        shop.push(new Car("Ford", "Mustang", "green", "v4"));
+        shop.push(new Car("Ford", "Mustang", "green", "v6"));
+        shop.push(new Car("Ford", "Mustang", "green", "v8"));
+        shop.push(new Car("Ford", "Mustang", "white", "v4"));
+        shop.push(new Car("Ford", "Mustang", "white", "v6"));
+        shop.push(new Car("Ford", "Mustang", "white", "v8"));
+
+        console.log(FlyweightFactory.count()); // 3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>
