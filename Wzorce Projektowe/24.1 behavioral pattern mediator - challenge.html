@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background: black;
+            color: white;
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <script>
+
+        /*  
+            Mediator - Wzorce behawioralne - Behavioral Patterns
+            Zadanie:
+
+            1. Napisz funkcję konstruującą Client(name) zapisującą
+               w instancji name z parametru i cloudDrive o początkowej
+               wartości null.
+            2. Do prototypu Client dodaj metodę sendData(file, to)
+               gdzie wywołana będzie metoda sendData() na instancji
+               cloudDrive wraz z argumentami file, this oraz to
+            3. Drugą metodą prototypu w Client jest metoda
+               receiveData(file, from) pokazująca w konsoli
+               informacje  od jakiego klienta uzyskano plik
+               czyli from.name, kto otrzymał plik i nazwę samego 
+               pliku.
+            4. Napisz funkcję cloudDrive, która zwróci obiekt
+               z dwoma metodami:
+               - register(client) która sprawdza czy w obiekcie clients 
+                 istnieje przekazany client jako parametr. Jeśli nie to
+                 zostanie dodany do tablicy clients. Dodatkowo sam
+                 client ma uzupełnioną wartość cloudDrive o aktualną
+                 instancję dzięki czemu nie ma już wartości null
+                 i ma możliwość wysyłania i odbierania plików.
+               - sendData(file, from, to) pozwala na wysyłkę pliku
+                 do wszystkich osób jeśli parametr "to" jest pusty.
+                 Natomiast gdy "to" jest określony to plik będzie
+                 wysłany do konkretnego klienta.
+            5. Stwórz kilku klientów i wyślij pliki do konkretnych osób
+               oraz do wszystkich klientów.
+
+        */
+
+        function Client(name) {
+            this.name = name;
+            this.cloudDrive = null;
+        }
+
+        Client.prototype.sendData = function (file, to) {
+            this.cloudDrive.sendData(file, this, to);
+        }
+
+        Client.prototype.receiveData = function (file, from) {
+            console.log("from:", from.name, " to client: ",
+                this.name, "file:", file);
+        }
+
+
+        const cloudDrive = function () {
+            const clients = {};
+
+            return {
+                register: function (client) {
+                    if (!clients[client.name]) {
+                        clients[client.name] = client;
+                        client.cloudDrive = this;
+                    }
+                },
+                sendData: function (file, from, to) {
+                    if (to) {
+                        to.receiveData(file, from);
+                    } else {
+                        for (const key in clients) {
+                            if (clients[key] !== from) {
+                                clients[key].receiveData(file, from);
+                            }
+                        }
+                    }
+                }
+            };
+        }
+
+
+        const drive = cloudDrive();
+        const client1 = new Client("Asia");
+        drive.register(client1);
+
+        const client2 = new Client("Kasia");
+        drive.register(client2);
+
+        const client3 = new Client("Olek");
+        drive.register(client3);
+
+        client1.sendData("vacations.jpg");
+        client2.sendData("homework.png");
+
+        client3.sendData("concert.mp4", client1);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>
