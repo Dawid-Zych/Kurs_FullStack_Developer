@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body>       
+    
+    <script>
+        
+        /*  
+            Observer - Behavioral pattern  
+
+            Zadanie:
+            1. Napisz funkcję kontruującą Newsletter posiadającą
+               tablicę observers z czytelnikami i początkową
+               pustą tablicą. Posiada również metodę 
+               subscribe(observer) która sprawdza czy dany czytelnik
+               jest już zapisany z metodą inludes(). Jeśli jest to 
+               pokazana jest odpowiednia informacja w konsoli,
+               w przeciwnym wypadku zostaje zapisany do tablicy
+               observers. Metoda unsubscribe(observer) wypisuje
+               czytelnika z newslettera. Metoda sendLetter(letter)
+               wysyła wiadomość do wszystkich czytelników.
+            2. Czytelnik jako funkcja konstruująca Reader posiada
+               swoje imię i metodę notify(letter) gdzie w konsoli
+               pokazuje że czytelnik otrzymał wiadomość.
+            3. Stwórz instancję newslettera i kilku czytelników,
+               dodaj dwukrotnie jednego czytelnika i wyślij kilka
+               wiadomości do obserwatorów.
+        */  
+
+        function Newsletter() {
+            this.observers = [];
+
+            this.subscribe = function (observer) {
+                if (!this.observers.includes(observer)) {
+                    this.observers.push(observer);
+                } else {
+                    console.log("Reader already registered to newsletter");
+                }
+            }
+
+            this.unsubscribe = function(observer) {
+                const index = this.observers.findIndex( o => o === observer );
+
+                this.observers.splice(index, 1);
+            }
+
+            this.sendLetter = function(letter) {
+                this.observers.forEach(
+                    o => o.notify(letter)
+                );
+            }
+        }
+
+
+        function Reader(name) {
+            this.name = name;
+            this.notify = function(letter) {
+                console.log(this.name, "received letter:", letter);
+            }
+        }
+
+
+        const newsletter = new Newsletter();
+        newsletter.subscribe( new Reader("Ania") );
+        const reader2 = new Reader("Zosia");
+        newsletter.subscribe(reader2);
+        newsletter.subscribe(reader2);
+        newsletter.subscribe( new Reader("Paweł") );
+
+        newsletter.sendLetter("New article #1");
+        
+        newsletter.unsubscribe(reader2);
+        newsletter.sendLetter("Article #2");
+
+    
+
+
+    </script>
+</body>
+</html>
