@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        body {
+            background: black;
+            color: white;  
+        }
+
+        * {
+            margin: 20px 2px;
+        }
+        
+    </style>
+</head>
+<body>       
+    
+    <script>
+        
+        /*  
+            Strategy - Behavioral pattern
+            Wzorzec pozwala na dynamiczną zmianę algorytmu dzięki 
+            wyborowi odpowiedniej strategii.
+
+            1. Utwórz funkcję konstruującą Journey z właściwośćią
+               transport o wartości początkowej null
+            2. Journey w prototypie posiada metodę 
+               setStrategy(transport) i ustawia transport w instancji.
+               Dodatkowo w prototypie jest metoda calculatePrice(trip)
+               która na właściwości transport wywołuje metodę 
+               calculatePrice(trip), zwróci też uzyskaną z niej wartość.
+               Kolejną metodą jest calculateTime(trip) która
+               wywołuje na transport calculateTime(trip) oraz
+               zwraca jej wartość
+            3. Dodaj funkcję konstruującą Train ustawiającą w instancji
+               metodę calculatePrice(trip) zwracającą wartość 500.
+               Druga metoda calculateTime(trip) zwróci 30
+            4. Strategia Car zwraca cenę 700 i czas 20
+            5. Strategia Plane zwraca cenę 1000 a czas 3
+            6. Stwórz nową instancję Journey i ustaw strategię train,
+               pokaż cenę oraz czas podróży. To samo zrób z samochodem 
+               oraz samolotem.
+        */  
+ 
+        const Journey = function() {
+            this.transport = null;
+        }
+
+        Journey.prototype.setStrategy = function(transport) {
+            this.transport = transport;
+        }
+
+        Journey.prototype.calculatePrice = function(trip) {
+            return this.transport.calculatePrice(trip);
+        }
+
+        Journey.prototype.calculateTime = function(trip) {
+            return this.transport.calculateTime(trip);
+        }
+
+
+        function Train() {
+            this.calculatePrice = function() {
+                return 500;
+            }
+            this.calculateTime = function() {
+                return 30;
+            }
+        }
+
+        function Car() {
+            this.calculatePrice = function() {
+                return 700;
+            }
+            this.calculateTime = function() {
+                return 20;
+            }
+        }
+
+
+        function Plane() {
+            this.calculatePrice = function() {
+                return 1000;
+            }
+            this.calculateTime = function() {
+                return 3;
+            }
+        }
+
+        const trip = { from: "pl", to: "es" };
+        const train = new Train();
+        const car = new Car();
+        const plane = new Plane();
+
+        const journey = new Journey();
+        journey.setStrategy(train);
+        console.log("Train price:", journey.calculatePrice(trip));
+        console.log("Train time:", journey.calculateTime(trip));
+
+        journey.setStrategy(car);
+        console.log("Car price:", journey.calculatePrice(trip));
+        console.log("Car time:", journey.calculateTime(trip));
+
+        journey.setStrategy(plane);
+        console.log("Plane price:", journey.calculatePrice(trip));
+        console.log("Plane time:", journey.calculateTime(trip));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+    
+
+
+    </script>
+</body>
+</html>
