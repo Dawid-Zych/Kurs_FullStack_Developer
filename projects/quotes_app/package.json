@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "mongodb": "^5.5.0"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "name": "quotes_app",
+  "version": "1.0.0",
+  "main": "server.js",
+  "keywords": [],
+  "author": "Dawid Zych",
+  "license": "ISC",
+  "description": ""
+}
