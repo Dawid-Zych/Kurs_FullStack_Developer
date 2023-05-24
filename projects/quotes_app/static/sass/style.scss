@@ -1,0 +1,151 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100vw;
+	height: 100vh;
+	background: blue;
+	color: black;
+	font-family: sans-serif;
+	font-weight: bold;
+	text-align: center;
+}
+
+.quote-container {
+	width: 100%;
+	max-width: 800px;
+	padding: 30px 35px;
+	border-radius: 10px;
+	background-color: rgba(255, 255, 255, 0.5);
+
+	.quote-text {
+		font-size: 1.8rem;
+	}
+
+	.quote-author {
+		margin-top: 15px;
+		font-size: 1.5rem;
+		font-weight: normal;
+		font-size: italic;
+	}
+
+	.button-container {
+		margin-top: 15px;
+		display: flex;
+		justify-content: center;
+
+		button {
+			padding: 0.7rem 2rem;
+			border: none;
+			border-radius: 5px;
+			background: black;
+			cursor: pointer;
+			font-size: 1.2rem;
+			color: white;
+
+			&:hover {
+				filter: brightness(150%);
+			}
+		}
+	}
+}
+
+#lightbox {
+	position: fixed;
+	display: none;
+	z-index: 100;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.5);
+
+	&.active {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+}
+
+#editor {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	margin: 10px;
+	padding: 20px;
+	width: 100%;
+	max-width: 700px;
+	border-radius: 10px;
+	background: white;
+
+	.form-container {
+		form {
+			margin-top: 20px;
+			width: 100%;
+			display: flex;
+			flex-direction: row;
+		}
+
+		input {
+			margin-right: 5px;
+		}
+
+		#new-quote-text {
+			flex-grow: 1;
+		}
+
+		button {
+			padding: 3px;
+		}
+	}
+}
+
+.quotes-list {
+	margin-top: 10px;
+	width: 100%;
+	max-height: 400px;
+	overflow-y: auto;
+	list-style: none;
+
+	.list-item {
+		padding: 5px;
+		display: flex;
+		width: 100%;
+		text-align: left;
+		font-weight: normal;
+
+		&:nth-child(odd) {
+			background: #e5e4e2;
+		}
+
+		&:hover {
+			background: silver;
+		}
+
+		.quote-list-item {
+			width: 90%;
+			.author {
+				font-weight: bold;
+			}
+		}
+
+		.quote-list-item-delete {
+			width: 10%;
+			text-align: center;
+			a {
+				text-decoration: none;
+
+				&:hover {
+					font-weight: bold;
+					color: red;
+				}
+			}
+		}
+	}
+}
