@@ -74,9 +74,9 @@ async function deleteById(id) {
 	}
 }
 
-async function updateById(id, quote) {
+async function updateById(data) {
 	try {
-		const result = await Quote.updateById(id, quote);
+		const result = await Quote.updateById(data);
 		return result;
 	} catch (error) {
 		console.error(error);
