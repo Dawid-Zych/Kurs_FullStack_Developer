@@ -7,7 +7,6 @@ function saveAll(quotes) {
 		const result = await collection.insertMany(quotes);
 
 		if (result.insertedCount) {
-			console.log(`Zostało zapisanych ${result.insertedCount} elementów`);
 			resolve(result);
 		} else {
 			reject("Couldn't save quotes.");
@@ -57,11 +56,14 @@ function deleteById(id) {
 	});
 }
 
-function updateById(id, updateFields) {
+function updateById(data) {
 	return new Promise(async (resolve, reject) => {
 		const collection = await MongoSingleton.getCollection();
-		const result = await collection.updateOne({ _id: ObjectId(id) }, { $set: updateFields });
-
+		let updatefiles = {
+			quote: data.quote,
+			author: data.author,
+		};
+		const result = await collection.updateOne({ _id: new ObjectId(data._id) }, { $set: updatefiles });
 		if (result && result.matchedCount > 0) {
 			resolve(result);
 		} else {
