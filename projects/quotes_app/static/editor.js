@@ -174,7 +174,7 @@ class QuoteEditor {
 			if (data && data.updated === true) {
 				console.log('Cytat zaktualizowany w bazie danych: ', id);
 				this.editor.classList.remove('active');
-				this.reloadQuotesList();
+				await this.reloadQuotesList();
 			}
 		} catch (error) {
 			console.error('Błąd podczas aktualizacji cytatu: ', error);

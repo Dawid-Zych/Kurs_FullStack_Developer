@@ -93,6 +93,7 @@ body {
 #editor .form-container input,
 #editor .form-editor input {
   margin-right: 5px;
+  padding: 10px;
 }
 #editor .form-container #new-quote-text,
 #editor .form-container #edit-quote-text,
