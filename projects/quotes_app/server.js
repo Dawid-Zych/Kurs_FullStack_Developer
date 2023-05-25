@@ -50,10 +50,11 @@ const server = http.createServer(async function (req, res) {
 		res.end(JSON.stringify(quote));
 	} else if (req.url.match(/\/api\/quote\/([0-9a-z]+)/)) {
 		const id = req.url.split('/')[3];
-
 		let quote = await getQuote(id);
+
 		if (quote) {
 			res.writeHead(200, API_CONTENT_TYPE);
+			console.log(quote, 'zwracam');
 		} else {
 			res.writeHead(404, API_CONTENT_TYPE);
 			quote = { message: 'Quote by id not found' };
@@ -106,6 +107,29 @@ const server = http.createServer(async function (req, res) {
 			} else {
 				res.writeHead(404);
 				response = { deleted: false };
+			}
+
+			res.end(JSON.stringify(response));
+		});
+	} else if (req.url === '/api/quotes/update/one' && req.method === 'POST') {
+		let data = '';
+
+		req.on('data', function (chunk) {
+			data += chunk;
+		});
+
+		req.on('end', async function () {
+			const quote = JSON.parse(data);
+			let response = {};
+			const result = await updateById(quote);
+
+			console.log(result);
+			if (result) {
+				res.writeHead(200);
+				response = { updated: true };
+			} else {
+				res.writeHead(404);
+				response = { updated: false };
 			}
 
 			res.end(JSON.stringify(response));
