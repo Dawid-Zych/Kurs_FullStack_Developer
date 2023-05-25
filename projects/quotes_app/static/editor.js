@@ -5,9 +5,14 @@ class QuoteEditor {
 
 	init() {
 		this.lightbox = document.querySelector('#lightbox');
+		this.editor = document.querySelector('#edit-box');
 		this.quoteText = document.querySelector('#new-quote-text');
 		this.quoteAuthor = document.querySelector('#new-quote-author');
 		this.quotesList = document.querySelector('.quotes-list');
+		this.cancelQuote = document.querySelector('#cancel-quote');
+		this.editAuthor = document.querySelector('#edit-quote-author');
+		this.editTextQuote = document.querySelector('#edit-quote-text');
+		this.updateQuote = document.querySelector('#update-quote');
 
 		document.addEventListener('keyup', e => {
 			if (e.code === 'Backquote') this.showEditor();
@@ -36,17 +41,29 @@ class QuoteEditor {
 
 	getQuoteHtmlListItem = quoteData => {
 		const html = `
-        <div class="quote-list-item">
-             <span class="author">${quoteData.author}</span>: ${quoteData.quote}
-        </div>
-       <div class="quote-list-item-delete">
-        <a href="#" data-id="${quoteData._id}">X</a>
-       </div>
+	        <div class="quote-list-item">
+           		<span class="author">${quoteData.author}</span>: ${quoteData.quote}
+            </div>
+			<div class="keys">
+		  	 	<div>
+					<a class="editQuote" href="#" data-id="${quoteData._id}"><i class="fa-regular fa-pen-to-square"></i></a>
+				</div>
+			    <div>
+					<a class="deleteQuote" href="#" data-id="${quoteData._id}"><i class="fa-solid fa-trash"></i></a>
+	     	    </div>
+	    	</div>
         `;
+
 		const li = document.createElement('li');
 		li.classList.add('list-item');
 		li.innerHTML = html;
-		li.querySelector('a').addEventListener('click', e => {
+
+		li.querySelector('.editQuote').addEventListener('click', e => {
+			this.editor.classList.add('active');
+			this.editQuote(quoteData._id);
+		});
+
+		li.querySelector('.deleteQuote').addEventListener('click', e => {
 			this.deleteQuote(quoteData._id);
 		});
 
@@ -117,6 +134,51 @@ class QuoteEditor {
 		}
 
 		this.reloadQuotesList();
+	};
+
+	editQuote = async id => {
+		this.cancelQuote.addEventListener('click', e => {
+			this.editor.classList.remove('active');
+		});
+		try {
+			const response = await fetch(`/api/quote/${id}`);
+			const data = await response.json();
+			this.editAuthor.value = data.author;
+			this.editTextQuote.value = data.quote;
+
+			this.updateQuote.addEventListener('click', () => {
+				this.updateDB(id);
+			});
+		} catch (error) {
+			console.error('bład w edit quote', error);
+		}
+	};
+
+	updateDB = async id => {
+		const files = {
+			_id: id,
+			author: this.editAuthor.value,
+			quote: this.editTextQuote.value,
+		};
+
+		try {
+			const response = await fetch(`/api/quotes/update/one`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(files),
+			});
+
+			const data = await response.json();
+			if (data && data.updated === true) {
+				console.log('Cytat zaktualizowany w bazie danych: ', id);
+				this.editor.classList.remove('active');
+				this.reloadQuotesList();
+			}
+		} catch (error) {
+			console.error('Błąd podczas aktualizacji cytatu: ', error);
+		}
 	};
 }
 

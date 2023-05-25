@@ -56,7 +56,8 @@ body {
 	}
 }
 
-#lightbox {
+#lightbox,
+#edit-box {
 	position: fixed;
 	display: none;
 	z-index: 100;
@@ -72,7 +73,9 @@ body {
 		align-items: center;
 	}
 }
-
+#edit-box {
+	z-index: 200;
+}
 #editor {
 	display: flex;
 	flex-direction: column;
@@ -84,24 +87,32 @@ body {
 	border-radius: 10px;
 	background: white;
 
-	.form-container {
+	.form-container,
+	.form-editor {
 		form {
 			margin-top: 20px;
 			width: 100%;
 			display: flex;
-			flex-direction: row;
 		}
 
 		input {
 			margin-right: 5px;
 		}
 
-		#new-quote-text {
+		#new-quote-text,
+		#edit-quote-text {
 			flex-grow: 1;
 		}
 
 		button {
 			padding: 3px;
+			margin: 5px;
+		}
+	}
+
+	.form-editor {
+		form {
+			margin-top: 0;
 		}
 	}
 }
@@ -116,9 +127,11 @@ body {
 	.list-item {
 		padding: 5px;
 		display: flex;
+		justify-content: space-between;
 		width: 100%;
 		text-align: left;
 		font-weight: normal;
+		flex-wrap: wrap;
 
 		&:nth-child(odd) {
 			background: #e5e4e2;
@@ -129,18 +142,33 @@ body {
 		}
 
 		.quote-list-item {
-			width: 90%;
+			width: 85%;
 			.author {
 				font-weight: bold;
 			}
 		}
 
-		.quote-list-item-delete {
-			width: 10%;
+		.keys {
+			display: flex;
+			width: 15%;
 			text-align: center;
+			justify-content: end;
 			a {
 				text-decoration: none;
+				font-size: 22px;
+				padding: 5px;
+			}
 
+			.fa-pen-to-square {
+				color: royalblue;
+				&:hover {
+					font-weight: bold;
+					color: blue;
+				}
+			}
+
+			.fa-trash {
+				color: black;
 				&:hover {
 					font-weight: bold;
 					color: red;

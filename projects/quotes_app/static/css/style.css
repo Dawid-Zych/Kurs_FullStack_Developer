@@ -51,7 +51,8 @@ body {
   filter: brightness(150%);
 }
 
-#lightbox {
+#lightbox,
+#edit-box {
   position: fixed;
   display: none;
   z-index: 100;
@@ -61,10 +62,15 @@ body {
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.5);
 }
-#lightbox.active {
+#lightbox.active,
+#edit-box.active {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+#edit-box {
+  z-index: 200;
 }
 
 #editor {
@@ -78,20 +84,29 @@ body {
   border-radius: 10px;
   background: white;
 }
-#editor .form-container form {
+#editor .form-container form,
+#editor .form-editor form {
   margin-top: 20px;
   width: 100%;
   display: flex;
-  flex-direction: row;
 }
-#editor .form-container input {
+#editor .form-container input,
+#editor .form-editor input {
   margin-right: 5px;
 }
-#editor .form-container #new-quote-text {
+#editor .form-container #new-quote-text,
+#editor .form-container #edit-quote-text,
+#editor .form-editor #new-quote-text,
+#editor .form-editor #edit-quote-text {
   flex-grow: 1;
 }
-#editor .form-container button {
+#editor .form-container button,
+#editor .form-editor button {
   padding: 3px;
+  margin: 5px;
+}
+#editor .form-editor form {
+  margin-top: 0;
 }
 
 .quotes-list {
@@ -104,9 +119,11 @@ body {
 .quotes-list .list-item {
   padding: 5px;
   display: flex;
+  justify-content: space-between;
   width: 100%;
   text-align: left;
   font-weight: normal;
+  flex-wrap: wrap;
 }
 .quotes-list .list-item:nth-child(odd) {
   background: #e5e4e2;
@@ -115,19 +132,33 @@ body {
   background: silver;
 }
 .quotes-list .list-item .quote-list-item {
-  width: 90%;
+  width: 85%;
 }
 .quotes-list .list-item .quote-list-item .author {
   font-weight: bold;
 }
-.quotes-list .list-item .quote-list-item-delete {
-  width: 10%;
+.quotes-list .list-item .keys {
+  display: flex;
+  width: 15%;
   text-align: center;
+  justify-content: end;
 }
-.quotes-list .list-item .quote-list-item-delete a {
+.quotes-list .list-item .keys a {
   text-decoration: none;
+  font-size: 22px;
+  padding: 5px;
 }
-.quotes-list .list-item .quote-list-item-delete a:hover {
+.quotes-list .list-item .keys .fa-pen-to-square {
+  color: royalblue;
+}
+.quotes-list .list-item .keys .fa-pen-to-square:hover {
+  font-weight: bold;
+  color: blue;
+}
+.quotes-list .list-item .keys .fa-trash {
+  color: black;
+}
+.quotes-list .list-item .keys .fa-trash:hover {
   font-weight: bold;
   color: red;
 }/*# sourceMappingURL=style.css.map */

@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Losowy cytat</title>
+    <script src="https://kit.fontawesome.com/de05f8354b.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./css/style.css">
 </head>
 
@@ -15,39 +16,65 @@
         <div id="editor">
             <div class="form-container">
                 <form>
-                    <input type="text" id="new-quote-text" placeholder="Cytat">
                     <input type="text" id="new-quote-author" placeholder="Autor">
+                    <input type="text" id="new-quote-text" placeholder="Cytat">
                     <button id="add-new-quote">Dodaj cytat</button>
                 </form>
             </div>
             <ul class="quotes-list">
-                <!--  <li class="list-item">
+                <!-- <li class="list-item">
                     <div class="quote-list-item">
-                        Autor1: Cytat...
+                        <span class="author">adasdassssssssssssssssssss</span>:
+                        asdasdasdsada
                     </div>
-                    <div class="quote-list-item-delete">
-                        <a href="#" quote-id="sdfg6sgd7f6sg7d6f">X</a>
+                    <div class="keys">
+                        <div>
+                            <a class="editQuote" href="#"><i class="fa-regular fa-pen-to-square"></i></a>
+                        </div>
+                        <div>
+                            <a class="deleteQuote" href="#" data-id="${quoteData._id}"><i
+                                    class="fa-solid fa-trash"></i></a>
+                        </div>
                     </div>
                 </li>
+
                 <li class="list-item">
                     <div class="quote-list-item">
-                        Autor2: Cytat...
+                        <span class="author">adasdassssssssssss</span>:
+                        asdasdasdsadasssssssssssssss
+                        sssssssssssssssssssssssssssssssssss
+                        sssssssssssssssssssssssssssssssssssssssss
+                        ssssssssssssssssss
                     </div>
-                    <div class="quote-list-item-delete">
-                        <a href="#" quote-id="sdfg6sgd7f6sg7d6f">X</a>
-                    </div>
-                </li>
-                <li class="list-item">
-                    <div class="quote-list-item">
-                        Autor3: Cytat...
-                    </div>
-                    <div class="quote-list-item-delete">
-                        <a href="#" quote-id="sdfg6sgd7f6sg7d6f">X</a>
+
+                    <div class="keys">
+                        <div>
+                            <a class="editQuote" href="#"><i class="fa-regular fa-pen-to-square"></i></a>
+                        </div>
+                        <div>
+                            <a class="deleteQuote" href="#" data-id="${quoteData._id}"><i
+                                    class="fa-solid fa-trash"></i></a>
+                        </div>
                     </div>
                 </li> -->
             </ul>
         </div>
     </div>
+
+    <div id="edit-box">
+        <div id="editor">
+            <div class="form-editor">
+                <form>
+                    <input type="text" id="edit-quote-author" placeholder="Autor">
+                    <input type="text" id="edit-quote-text" placeholder="Cytat">
+                    <button id="update-quote">Zapisz cytat</button>
+                    <button id="cancel-quote">Anuluj</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
 
     <div id="quote-container" class="quote-container">
         <div class="quote-text">
