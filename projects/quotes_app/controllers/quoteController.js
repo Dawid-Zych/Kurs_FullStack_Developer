@@ -12,7 +12,7 @@ async function getQuotes() {
 
 async function getQuote(id) {
 	try {
-		const quote = Quote.getById(id);
+		const quote = await Quote.getById(id);
 		return quote;
 	} catch (error) {
 		console.log("Can't get single quote in controller!" + error);
@@ -98,7 +98,7 @@ async function insertOne(quote) {
 	}
 }
 
-async function addOne() {
+async function addNewQuote() {
 	try {
 		const quote = await Quote.addQuote();
 		return quote;
@@ -108,4 +108,4 @@ async function addOne() {
 	}
 }
 
-module.exports = { prepareDB, getQuote, getQuotes, getRandom, addOne, insertOne, deleteById, updateById };
+module.exports = { prepareDB, getQuote, getQuotes, getRandom, addNewQuote, insertOne, deleteById, updateById };
