@@ -22,6 +22,11 @@ class QuoteEditor {
 			e.preventDefault();
 			this.processNewQuote();
 		});
+
+		this.updateQuote.addEventListener('click', () => {
+			const id = this.updateQuote.dataset.id; // Pobierz ID cytatu z atrybutu data-id
+			this.updateDB(id);
+		});
 	}
 
 	showEditor = async () => {
@@ -31,11 +36,14 @@ class QuoteEditor {
 
 	reloadQuotesList = async () => {
 		this.removeAllChildNodes(this.quotesList);
-
-		const quotes = await this.getQuotes();
-		for (const q of quotes) {
-			const quoteHtml = this.getQuoteHtmlListItem(q);
-			this.quotesList.appendChild(quoteHtml);
+		try {
+			const quotes = await this.getQuotes();
+			for (const q of quotes) {
+				const quoteHtml = this.getQuoteHtmlListItem(q);
+				this.quotesList.appendChild(quoteHtml);
+			}
+		} catch (error) {
+			console.log('Brak obiektów w bazie danych! \n Przygotowanie nowej listy...');
 		}
 	};
 
@@ -89,7 +97,7 @@ class QuoteEditor {
 	}
 
 	processNewQuote = async () => {
-		if (this.quoteText.value.length == 0 || this.quoteAuthor.value.length == 0) {
+		if (this.quoteText.value.length === 0 || this.quoteAuthor.value.length === 0) {
 			console.log('Brak pełnych danych cytatu');
 			return;
 		}
@@ -132,7 +140,6 @@ class QuoteEditor {
 		if (data && data.deleted === true) {
 			console.log('Skasowany element: ', id);
 		}
-
 		this.reloadQuotesList();
 	};
 
@@ -146,9 +153,7 @@ class QuoteEditor {
 			this.editAuthor.value = data.author;
 			this.editTextQuote.value = data.quote;
 
-			this.updateQuote.addEventListener('click', () => {
-				this.updateDB(id);
-			});
+			this.updateQuote.dataset.id = id;
 		} catch (error) {
 			console.error('bład w edit quote', error);
 		}
@@ -160,7 +165,7 @@ class QuoteEditor {
 			author: this.editAuthor.value,
 			quote: this.editTextQuote.value,
 		};
-
+		console.log('files:', files);
 		try {
 			const response = await fetch(`/api/quotes/update/one`, {
 				method: 'POST',
@@ -173,9 +178,13 @@ class QuoteEditor {
 			const data = await response.json();
 			if (data && data.updated === true) {
 				console.log('Cytat zaktualizowany w bazie danych: ', id);
-				this.editor.classList.remove('active');
-				await this.reloadQuotesList();
+				this.reloadQuotesList(); // Odśwież listę cytatów
+			} else if (data && data.updated === false) {
+				console.log('Nie wprowadzono nowych danych');
 			}
+			this.editAuthor.value = '';
+			this.editTextQuote.value = '';
+			this.editor.classList.remove('active');
 		} catch (error) {
 			console.error('Błąd podczas aktualizacji cytatu: ', error);
 		}
