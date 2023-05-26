@@ -13,20 +13,23 @@ class QuoteEditor {
 		this.editAuthor = document.querySelector('#edit-quote-author');
 		this.editTextQuote = document.querySelector('#edit-quote-text');
 		this.updateQuote = document.querySelector('#update-quote');
+		this.chuckjoke = document.querySelector('.joke');
 
 		document.addEventListener('keyup', e => {
 			if (e.code === 'Backquote') this.showEditor();
 		});
 
-		document.querySelector('form').addEventListener('submit', e => {
+		document.querySelector('#form').addEventListener('submit', e => {
 			e.preventDefault();
 			this.processNewQuote();
 		});
 
 		this.updateQuote.addEventListener('click', () => {
-			const id = this.updateQuote.dataset.id; // Pobierz ID cytatu z atrybutu data-id
+			const id = this.updateQuote.dataset.id;
 			this.updateDB(id);
 		});
+
+		this.chuckjoke.addEventListener('click', this.addNewChuckJoke);
 	}
 
 	showEditor = async () => {
@@ -102,23 +105,23 @@ class QuoteEditor {
 			return;
 		}
 
+		const quote = { quote: this.quoteText.value, author: this.quoteAuthor.value };
+
 		const response = await fetch('/api/quotes/save', {
 			method: 'POST',
 			headers: {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
 			},
-			body: JSON.stringify({
-				quote: this.quoteText.value,
-				author: this.quoteAuthor.value,
-			}),
+			body: JSON.stringify(quote),
 		});
 
 		const data = await response.json();
+		console.log(data);
 		if (data && data.saved === true) {
 			console.log('Nowy element zapisany w bazie z  _id: ', data._id);
 
-			this.reloadQuotesList();
+			this.quotesList.append(this.getQuoteHtmlListItem(quote));
 			this.quoteText.value = '';
 			this.quoteAuthor.value = '';
 		}
@@ -136,11 +139,11 @@ class QuoteEditor {
 			}),
 		});
 		const data = await response.json();
-
 		if (data && data.deleted === true) {
 			console.log('Skasowany element: ', id);
+			const listItem = document.querySelector(`.deleteQuote[data-id="${id}"]`).closest('li');
+			listItem.remove();
 		}
-		this.reloadQuotesList();
 	};
 
 	editQuote = async id => {
@@ -155,7 +158,7 @@ class QuoteEditor {
 
 			this.updateQuote.dataset.id = id;
 		} catch (error) {
-			console.error('bład w edit quote', error);
+			console.error('Bład w edycji cytatu', error);
 		}
 	};
 
@@ -178,7 +181,7 @@ class QuoteEditor {
 			const data = await response.json();
 			if (data && data.updated === true) {
 				console.log('Cytat zaktualizowany w bazie danych: ', id);
-				this.reloadQuotesList(); // Odśwież listę cytatów
+				this.reloadQuotesList();
 			} else if (data && data.updated === false) {
 				console.log('Nie wprowadzono nowych danych');
 			}
@@ -188,6 +191,21 @@ class QuoteEditor {
 		} catch (error) {
 			console.error('Błąd podczas aktualizacji cytatu: ', error);
 		}
+	};
+
+	addNewChuckJoke = async () => {
+		try {
+			const response = await fetch('/api/quotes/add');
+			const data = await response.json();
+			console.log('Dodano nowy żart Chucka Norissa!');
+			if (data) {
+				this.quotesList.append(this.getQuoteHtmlListItem(data));
+			}
+		} catch (error) {
+			console.error('Nie udało się dodać żartu :(', error);
+		}
+
+		return null;
 	};
 }
 

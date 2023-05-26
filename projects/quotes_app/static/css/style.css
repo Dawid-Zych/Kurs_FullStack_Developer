@@ -73,8 +73,9 @@ body {
   z-index: 200;
 }
 
-#editor {
+.editor {
   display: flex;
+  position: relative;
   flex-direction: column;
   justify-content: center;
   margin: 10px;
@@ -84,29 +85,37 @@ body {
   border-radius: 10px;
   background: white;
 }
-#editor .form-container form,
-#editor .form-editor form {
+.editor .joke {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.editor .joke img {
+  height: 30px;
+}
+.editor .form-container form,
+.editor .form-editor form {
   margin-top: 20px;
   width: 100%;
   display: flex;
 }
-#editor .form-container input,
-#editor .form-editor input {
+.editor .form-container input,
+.editor .form-editor input {
   margin-right: 5px;
   padding: 10px;
 }
-#editor .form-container #new-quote-text,
-#editor .form-container #edit-quote-text,
-#editor .form-editor #new-quote-text,
-#editor .form-editor #edit-quote-text {
+.editor .form-container #new-quote-text,
+.editor .form-container #edit-quote-text,
+.editor .form-editor #new-quote-text,
+.editor .form-editor #edit-quote-text {
   flex-grow: 1;
 }
-#editor .form-container button,
-#editor .form-editor button {
+.editor .form-container button,
+.editor .form-editor button {
   padding: 3px;
   margin: 5px;
 }
-#editor .form-editor form {
+.editor .form-editor form {
   margin-top: 0;
 }
 

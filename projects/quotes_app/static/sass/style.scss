@@ -76,8 +76,9 @@ body {
 #edit-box {
 	z-index: 200;
 }
-#editor {
+.editor {
 	display: flex;
+	position: relative;
 	flex-direction: column;
 	justify-content: center;
 	margin: 10px;
@@ -86,6 +87,15 @@ body {
 	max-width: 700px;
 	border-radius: 10px;
 	background: white;
+
+	.joke {
+		position: absolute;
+		right: 0;
+		top: 0;
+		img {
+			height: 30px;
+		}
+	}
 
 	.form-container,
 	.form-editor {
