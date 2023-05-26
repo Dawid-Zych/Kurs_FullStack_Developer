@@ -6,24 +6,24 @@ module.exports = (function () {
 	let db;
 	let collection;
 
+	console.log('Inicjalizacja połączenia z bazą danych');
+
 	async function getInstance() {
-		return new Promise(async function (resolve, reject) {
-			if (client) return resolve(client);
+		if (client) return client;
 
-			try {
-				client = await new MongoClient(url);
-				await client.connect();
+		try {
+			client = new MongoClient(url);
+			await client.connect();
 
-				console.log('Connected to database');
-				db = client.db('quotesdb');
-				collection = db.collection('quotes');
+			console.log('Połączono z bazą danych');
+			db = client.db('quotesdb');
+			collection = db.collection('quotes');
 
-				return resolve(client);
-			} catch (error) {
-				console.log(error);
-				return reject(error);
-			}
-		});
+			return client;
+		} catch (error) {
+			console.error('Błąd podczas łączenia z bazą danych:', error);
+			throw error;
+		}
 	}
 
 	async function getDB() {
@@ -31,7 +31,7 @@ module.exports = (function () {
 			if (!db) await getInstance();
 			return db;
 		} catch (error) {
-			console.log(error, 'Getting DB failure');
+			console.error('Błąd podczas pobierania bazy danych:', error);
 		}
 	}
 
@@ -40,7 +40,8 @@ module.exports = (function () {
 			if (!collection) await getInstance();
 			return collection;
 		} catch (error) {
-			console.log(error, 'Getting DB failure');
+			console.error('Błąd podczas pobierania kolekcji:', error);
+			throw error;
 		}
 	}
 
