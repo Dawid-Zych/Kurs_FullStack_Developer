@@ -1,0 +1,17 @@
+{
+	"name": "moongose",
+	"version": "1.0.0",
+	"description": "",
+	"main": "mongoose_schema.js",
+	"type": "module",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"mongodb": "^5.5.0",
+		"mongoose": "^7.2.1"
+	}
+}
