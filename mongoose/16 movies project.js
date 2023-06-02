@@ -221,4 +221,56 @@ await connectMovieToActor(casino, pesci);
 await connectMovieToWriter(casino, pileggi);
 await connectMovieToWriter(casino, scorsese);
 
+const user1 = await User.create({
+	name: 'Ola',
+	surrname: 'Kowalska',
+	email: 'ola.kowalska@gmail.com',
+});
+const user2 = await User.create({
+	name: 'Adam',
+	surrname: 'Adamski',
+	email: 'adam.adamski@gmail.com',
+});
+
+const review1 = await Review.create({
+	user: user1,
+	movie: casino,
+	body: 'ujdzie w tłumie',
+	score: 5,
+});
+
+const review2 = await Review.create({
+	user: user2,
+	movie: casino,
+	body: 'Great movie',
+	score: 3.5,
+});
+
+async function connectMovieToReview(movie, review) {
+	await Movie.findByIdAndUpdate(movie._id, {
+		$addToSet: { reviews: review._id },
+	});
+	await Review.findOneAndUpdate(
+		{
+			_id: review._id,
+		},
+		{ movie: movie._id }
+	);
+}
+await connectMovieToReview(casino, review1);
+await connectMovieToReview(casino, review2);
+
+const movieDb = await Movie.find().populate([
+	{ path: 'director' },
+	{ path: 'actors' },
+	{ path: 'writers' },
+	{
+		path: 'reviews',
+		populate: {
+			path: 'user',
+		},
+	},
+]);
+
+console.log(JSON.stringify(movieDb, null, 4));
 await mongoose.disconnect();
