@@ -45,6 +45,8 @@ const movieSchema = new mongoose.Schema({
 	},
 });
 
+const Movie = mongoose.model('Movie', movieSchema);
+
 const personSchema = new mongoose.Schema({
 	_id: mongoose.Schema.Types.ObjectId,
 	name: {
@@ -87,5 +89,42 @@ const personSchema = new mongoose.Schema({
 
 const Person = mongoose.model('Person', personSchema);
 
-const Movie = mongoose.model('Movie', movieSchema);
+const userSchema = new mongoose.Schema({
+	name: {
+		type: String,
+		required: true,
+		trim: true,
+		minLength: 1,
+		maxLength: 16,
+	},
+	surrname: {
+		type: String,
+		required: true,
+		trim: true,
+		minLength: 1,
+		maxLength: 32,
+	},
+	email: {
+		type: String,
+		required: true,
+		trim: true,
+		minLength: 1,
+		maxLength: 132,
+		unique: true,
+		match: /.+\@.+\..+/,
+	},
+	review: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Review',
+		},
+	],
+	created: {
+		type: Date,
+		default: Date.now,
+	},
+});
+
+const User = mongoose.model('User', userSchema);
+
 await mongoose.disconnect();
