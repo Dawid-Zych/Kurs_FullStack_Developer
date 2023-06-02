@@ -160,6 +160,43 @@ await Movie.deleteMany();
 await Review.deleteMany();
 await User.deleteMany();
 
+const scorsese = await Person.create({
+	_id: new mongoose.Types.ObjectId(),
+	name: 'Martin',
+	surrname: 'Scorsese',
+});
+
+const stone = await Person.create({
+	_id: new mongoose.Types.ObjectId(),
+	name: 'Sharon',
+	surrname: 'Stone',
+});
+
+const deNiro = await Person.create({
+	_id: new mongoose.Types.ObjectId(),
+	name: 'Robert',
+	surrname: 'De Niro',
+});
+
+const pesci = await Person.create({
+	_id: new mongoose.Types.ObjectId(),
+	name: 'Joe',
+	surrname: 'Pesci',
+});
+
+const pileggi = await Person.create({
+	_id: new mongoose.Types.ObjectId(),
+	name: 'Nicholas',
+	surrname: 'Pileggi',
+});
+
+const casino = await Movie.create({
+	_id: new mongoose.Types.ObjectId(),
+	title: 'Casino',
+	premiere: new Date(1955, 11, 3),
+	director: scorsese,
+	// actors: [stone, deNiro, pesci],
+});
 const Review = mongoose.model('Review', reviewSchema);
 
 await mongoose.disconnect();
