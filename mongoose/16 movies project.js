@@ -127,4 +127,34 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema);
 
+const reviewSchema = new mongoose.Schema({
+	user: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User',
+	},
+	movie: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Movie',
+	},
+	body: {
+		type: String,
+		required: false,
+		trim: true,
+		minLength: 1,
+		maxLength: 2048,
+	},
+	score: {
+		type: Number,
+		required: true,
+		validate: {
+			validator: function (v) {
+				return v >= 1 && v <= 5;
+			},
+			message: 'Score must be between 1 and 5 stars',
+		},
+	},
+});
+
+const Review = mongoose.model('Review', reviewSchema);
+
 await mongoose.disconnect();
