@@ -3,4 +3,47 @@ const url = 'mongodb://127.0.0.1:27017/movie';
 
 mongoose.connect(url);
 console.log('polączono z mongodb');
+
+const movieSchema = new mongoose.Schema({
+	_id: mongoose.Schema.Types.ObjectId,
+	title: {
+		type: String,
+		required: true,
+		trim: true,
+		minLength: 1,
+		maxLength: 128,
+	},
+	premiere: {
+		type: Date,
+		default: Date.now,
+	},
+	director: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Person',
+	},
+	writers: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Person',
+		},
+	],
+	actors: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Person',
+		},
+	],
+	reviews: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Review',
+		},
+	],
+	created: {
+		type: Date,
+		default: Date.now,
+	},
+});
+
+const Movie = mongoose.model('Movie', movieSchema);
 await mongoose.disconnect();
