@@ -41,8 +41,8 @@ const Task = mongoose.model('Task', taskSchema);
 function makeTask(title, description) {
 	return new Task({
 		_id: new mongoose.Types.ObjectId(),
-		title: title,
-		description: description,
+		title,
+		description,
 	});
 }
 
@@ -53,7 +53,6 @@ const tasksArr = [
 	makeTask('Task #4', 'Something to do #4'),
 	makeTask('Task #5', 'Something to do #5'),
 ];
-await Task.deleteMany();
 try {
 	const tasksDb = await Task.find();
 	console.log('Num tasks in db:', tasksDb.length);
@@ -73,9 +72,9 @@ export async function getAll() {
 	return await Task.find();
 }
 
-export async function getByID(_id) {
+export async function getById(_id) {
 	return await Task.findById({ _id });
 }
-export async function deleteByID(_id) {
+export async function deleteById(_id) {
 	return await Task.findByIdAndDelete({ _id });
 }

@@ -9,6 +9,7 @@ const mimeTypes = {
 	'.css': 'text/css', // Typ MIME dla plików CSS
 	'.jpg': 'image/jpeg', // Typ MIME dla plików JPEG
 	'.png': 'image/png', // Typ MIME dla plików PNG
+	'.map': 'application/json',
 };
 
 export function serveStaticFile(req, res) {
@@ -36,9 +37,10 @@ export function serveStaticFile(req, res) {
     path to moduł wbudowany w Node.js, który udostępnia różne funkcje do pracy ze ścieżkami plików.
     path.dirname() jest funkcją, która przyjmuje ścieżkę do pliku i zwraca ścieżkę do katalogu nadrzędnego, czyli katalogu, w którym znajduje się dany plik. */
 
+	/* obsługa żądania HTTP, w której sprawdzane jest istnienie pliku o podanej ścieżce pathname. Jeśli plik istnieje, jest odczytywany i zwracany w odpowiedzi HTTP. Jeśli plik nie istnieje, zwracana jest odpowiedź HTTP o kodzie 404 - "Not Found". */
 	if (fs.existsSync(pathname)) {
 		// Sprawdza, czy plik o podanej ścieżce pathname istnieje w systemie plików. zwraca wartość logiczną (true lub false).
-		if (fs.statSync(pathname).isDirectory) {
+		if (fs.statSync(pathname).isDirectory()) {
 			//: Sprawdza, czy plik jest katalogiem. fs.statSync(pathname) zwraca obiekt fs.Stats, który zawiera informacje o pliku. Metoda isDirectory() na obiekcie fs.Stats zwraca wartość logiczną (true lub false) w zależności od tego, czy ścieżka reprezentuje katalog.
 			pathname += '/index.html';
 		}
@@ -52,7 +54,10 @@ export function serveStaticFile(req, res) {
 			} else {
 				const extension = path.parse(pathname).ext;
 				//Pobiera rozszerzenie pliku na podstawie ścieżki pathname. Wykorzystuje funkcję path.parse() do analizy ścieżki i pobrania obiektu z informacjami o ścieżce. Następnie używa właściwości ext do uzyskania samego rozszerzenia pliku.
+				console.log(extension);
+
 				res.setHeader('Content-type', mimeTypes[extension]);
+
 				//Ustawia nagłówek HTTP "Content-type" na podstawie rozszerzenia pliku.Korzysta z obiektu mimeTypes, który mapuje rozszerzenia plików na typy MIME.
 				res.end(data);
 				//Zwraca zawartość odczytanego pliku w odpowiedzi HTTP.
@@ -65,6 +70,12 @@ export function serveStaticFile(req, res) {
 	}
 }
 
+/* definiuje funkcję serveJsonObj, która służy do obsługi żądania HTTP i wysyłania odpowiedzi w formacie JSON.
+Funkcja serveJsonObj pozwala na wysłanie odpowiedzi w formacie JSON na podstawie dostępnych danych. 
+Jeśli dane są dostępne, odpowiedź ma kod stanu 200 i zawiera dane w formacie JSON. 
+Jeśli dane nie są dostępne, odpowiedź ma kod stanu 504 (np. w przypadku problemów z połączeniem
+     z zewnętrznym źródłem danych) i zawiera pusty obiekt JSON. */
+
 export function serveJsonObj(res, objData) {
 	//przyjmuje dwa parametry: res (obiekt odpowiedzi HTTP) i objData (dane w formacie obiektu, które zostaną przekonwertowane na JSON i wysłane w odpowiedzi).
 	if (objData) {
@@ -73,7 +84,7 @@ export function serveJsonObj(res, objData) {
 		//: Ustawia nagłówek HTTP dla odpowiedzi na kod stanu 200 (OK) i typ zawartości na JSON. Wydaje się, że korzysta z obiektu mimeTypes, który mapuje rozszerzenia plików na typy MIME.
 	} else {
 		//Jeśli objData nie istnieje lub ma wartość falsy (np. null, undefined, pusty obiekt), wykonuje się ten blok kodu.
-		res.writeHead(504, mimeTypes['.json']);
+		res.writeHead(404, mimeTypes['.json']);
 		// Ustawia nagłówek HTTP dla odpowiedzi na kod stanu 504 (Gateway Timeout) i typ zawartości na JSON.
 	}
 
@@ -81,6 +92,8 @@ export function serveJsonObj(res, objData) {
 	// Konwertuje objData na ciąg JSON za pomocą JSON.stringify() i wysyła go jako treść odpowiedzi HTTP.
 }
 
+/* definiuje funkcję getPostData, która służy do pobierania danych z żądania HTTP typu POST.
+ Funkcja zwraca obietnicę, która zostanie rozwiązana z danymi przesłanymi przez klienta. */
 export async function getPostData(req) {
 	//Służy do pobierania danych z żądania HTTP typu POST. Funkcja zwraca obietnicę, która zostanie rozwiązana z danymi przesłanymi przez klienta.
 	return new Promise((resolve, reject) => {
