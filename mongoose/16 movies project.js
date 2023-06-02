@@ -155,6 +155,8 @@ const reviewSchema = new mongoose.Schema({
 	},
 });
 
+const Review = mongoose.model('Review', reviewSchema);
+
 await Person.deleteMany();
 await Movie.deleteMany();
 await Review.deleteMany();
@@ -197,6 +199,26 @@ const casino = await Movie.create({
 	director: scorsese,
 	// actors: [stone, deNiro, pesci],
 });
-const Review = mongoose.model('Review', reviewSchema);
+
+async function connectMovieToActor(movie, person) {
+	await Movie.findByIdAndUpdate(movie._id, { $addToSet: { actors: person._id } });
+	await Person.findByIdAndUpdate(person._id, { $addToSet: { movieActor: movie._id } });
+}
+
+async function connectMovieToWriter(movie, person) {
+	await Movie.findByIdAndUpdate(movie._id, { $addToSet: { writers: person._id } });
+	await Person.findByIdAndUpdate(person._id, { $addToSet: { movieWriter: movie._id } });
+}
+
+async function connectMovieToDirector(movie, person) {
+	await Movie.findByIdAndUpdate(movie._id, { $addToSet: { director: person._id } });
+	await Person.findByIdAndUpdate(person._id, { $addToSet: { movieDirector: movie._id } });
+}
+
+await connectMovieToActor(casino, stone);
+await connectMovieToActor(casino, deNiro);
+await connectMovieToActor(casino, pesci);
+await connectMovieToWriter(casino, pileggi);
+await connectMovieToWriter(casino, scorsese);
 
 await mongoose.disconnect();
