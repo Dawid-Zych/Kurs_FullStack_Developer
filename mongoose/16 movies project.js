@@ -155,6 +155,11 @@ const reviewSchema = new mongoose.Schema({
 	},
 });
 
+await Person.deleteMany();
+await Movie.deleteMany();
+await Review.deleteMany();
+await User.deleteMany();
+
 const Review = mongoose.model('Review', reviewSchema);
 
 await mongoose.disconnect();
