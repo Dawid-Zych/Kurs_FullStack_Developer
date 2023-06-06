@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="pl">
+<%- include("../template/head") -%>
+
+    <body>
+        Hello from home.ejs
+        <!-- sprawdzimy czy istnieje przekazana wartosc w page heading -->
+        <% if (pageHeading) { %>
+            <h3>
+                <%= pageHeading %>
+            </h3>
+         <% }; %>
+
+
+    </body>
+
+</html>

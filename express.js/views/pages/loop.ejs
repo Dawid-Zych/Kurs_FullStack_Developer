@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pl">
+<%- include("../template/head") -%>
+
+    <body>
+
+        <header>
+            <nav>
+                <ul>
+                    <% links.forEach( function(entry) { %>
+                        <li>
+                            <a href="<% entry.url %>"></a>
+                            <%= entry.name %>
+                        </li>
+
+                     <% }); %>
+                </ul>
+            </nav>
+        </header>
+
+    </body>
+
+</html>
