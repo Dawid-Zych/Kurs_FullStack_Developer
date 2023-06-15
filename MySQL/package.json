@@ -1,0 +1,16 @@
+{
+	"name": "mysql",
+	"version": "1.0.0",
+	"description": "",
+	"main": "18+foreign_key.js",
+	"type": "module",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"mysql2": "^3.3.3"
+	}
+}
