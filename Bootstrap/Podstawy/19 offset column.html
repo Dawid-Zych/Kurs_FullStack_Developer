@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap grid</title>
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+        rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65">
+    <style>
+        body {
+            background: black;
+        }
+
+        [class *="col"] {
+            background: lightblue;
+            border: 1px solid black;
+            text-align: center;
+        }
+
+        [class *="row"] {
+            height: 100px;
+            border: 2px solid white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Przesunięcię kolumn z klasą offset -->
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">col-md-4</div>
+            <div class="col-md-4 offset-md-2">offset-md-2</div>
+        </div>
+    </div>
+
+    <!--  Możemy go również zresetować z klasa offset-0 -->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3 col-md-3">col-sm-3 col-md-3</div>
+            <div class="col-sm-3 offset-sm-2 col-md-3 offset-md-0">col-sm-3 offset-sm-2 col-md-3 offset-md-0</div>
+        </div>
+    </div>
+
+    <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"></script>
+</body>
+
+</html>
