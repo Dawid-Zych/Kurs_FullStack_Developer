@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap grid</title>
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+        rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65">
+</head>
+
+<body>
+
+    <!--  Toast - są to drobne notyfikacje dla użytkownika   -->
+    <div class="container" style="position: relative; min-height: 300px;">
+        <div class="toast" data-bs-delay="3000" role="alert" style="position:absolute; top:0;right: 0;">
+            <div class="toast-header">
+                <strong class="me-auto">Toast</strong>
+                <small>10 minutes ago</small>
+                <button class="btn btn-close" type="button" aria-label="close" data-bs-dismiss="toast"></button>
+            </div>
+            <div class="toast-body">
+                Hello World!
+            </div>
+        </div>
+    </div>
+
+    <!-- Żeby mieć stos naszych notyfikacji wrzucamy position do osobnego diva -->
+    <div class="container" style="position: relative; min-height: 300px;">
+        <div style="position:absolute; top:0;right: 0;">
+            <div class="toast" data-bs-delay="3000" role="alert">
+                <div class="toast-header">
+                    <strong class="me-auto">Toast</strong>
+                    <small>10 minutes ago</small>
+                    <button class="btn btn-close" type="button" aria-label="close" data-bs-dismiss="toast"></button>
+                </div>
+                <div class="toast-body">
+                    Hello World!
+                </div>
+            </div>
+            <!-- zmiana wyglądu naszego toasta -->
+            <div class="toast text-bg-primary m-3" data-bs-delay="5000" role="alert">
+                <div class="toast-header">
+                    <strong class="me-auto">Toast</strong>
+                    <small>10 minutes ago</small>
+                    <button class="btn btn-close" type="button" aria-label="close" data-bs-dismiss="toast"></button>
+                </div>
+                <div class="toast-body">
+                    Hello World!
+                </div>
+            </div>
+            <!-- data-bs-autohide wymusza że użytkownik musi zamknąc naszego toasta -->
+            <div class="toast" data-bs-autohide="false" role="alert">
+                <div class="toast-header">
+                    <strong class="me-auto">Toast</strong>
+                    <small>10 minutes ago</small>
+                    <button class="btn btn-close" type="button" aria-label="close" data-bs-dismiss="toast"></button>
+                </div>
+                <div class="toast-body">
+                    Hello World!
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.onload = function () {
+            const toastNode = [].slice.call(document.querySelectorAll(".toast"))
+
+            const toastList = toastNode.map(function (toast) {
+                const t = new bootstrap.Toast(toast)
+                t.show();
+                return
+            })
+        }
+    </script>
+
+    <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"></script>
+
+</body>
+
+</html>
