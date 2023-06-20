@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap grid</title>
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+        rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65">
+</head>
+
+<body>
+
+    <div class="container m-4">
+        <button class="btn btn-danger m-2" type="button" data-bs-toggle="popover" title="Tytuł komunikatu"
+            data-bs-content="Treść komunikatu">
+            Kliknij przycisk</button>
+    </div>
+
+    <!-- możemy określić z której strony pojawi się popover -->
+    <button type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover"
+        data-bs-placement="top" data-bs-content="Top popover">
+        Popover on top
+    </button>
+    <button type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover"
+        data-bs-placement="right" data-bs-content="Right popover">
+        Popover on right
+    </button>
+    <button type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover"
+        data-bs-placement="bottom" data-bs-content="Bottom popover">
+        Popover on bottom
+    </button>
+    <button type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover"
+        data-bs-placement="left" data-bs-content="Left popover">
+        Popover on left
+    </button>
+
+    <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"></script>
+    <script>
+        window.onload = function () {
+            const popovers = document.querySelectorAll("[data-bs-toggle ='popover']")
+            const popoversList = [];
+
+            [].forEach.call(popovers, function (el) {
+                popoversList.push(new bootstrap.Popover(el))
+            })
+        }
+    </script>
+</body>
+
+</html>
