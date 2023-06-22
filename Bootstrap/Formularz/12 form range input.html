@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap grid</title>
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+        rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65">
+</head>
+
+<body>
+    <!--  range wybór wartości miedzy min a max -->
+
+
+    <div class="container m-4">
+        <form action="" class="p-4">
+            <label for="range1" class="form-label">Wybierz wartość</label>
+            <input type="range" id="range1" class="form-range" min="0" max="100" value="35" step="0.5">
+            <input type="text" disabled id="range-value" value="35">
+    </div>
+    </form>
+    </div>
+
+
+    <script>
+        const formRange = document.querySelector('#range1')
+        const rangeValue = document.querySelector('#range-value')
+
+
+        formRange.addEventListener('input', e => {
+            rangeValue.value = e.target.value
+        })
+
+
+
+    </script>
+
+    <script crossorigin="anonymous" src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"></script>
+
+</body>
+
+</html>
