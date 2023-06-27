@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Footer from './components/Footer/Footer';
 import Heading from './components/Heading/Heading';
+import Header from './components/Header/Header';
 
 const address = {
 	street: 'Wilcza 7',
@@ -14,6 +15,7 @@ const address = {
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 	<React.StrictMode>
+		<Header homePageName='startujemy' />
 		<Heading headerTitle='Hello from Header!' />
 		<App />
 		<Footer contact='admin@example.com' address={address} />
