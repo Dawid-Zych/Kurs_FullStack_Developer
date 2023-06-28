@@ -5,6 +5,10 @@ export default class Header extends Component {
 		super(props);
 	}
 	render() {
-		return <div>To jest Header</div>;
+		return( 
+			<div>
+					To jest Header
+			</div>
+		);
 	}
 }
