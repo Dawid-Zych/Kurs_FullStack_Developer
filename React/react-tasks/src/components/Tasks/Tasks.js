@@ -2,10 +2,6 @@ import { Component } from 'react';
 import TaskItem from '../TaskItem/TaskItem';
 
 export default class Tasks extends Component {
-	constructor(props) {
-		super(props);
-	}
-
 	// generujemy nasze komponenty tastitem z tablicy która jest przekazana do props
 	getTaskItem = () => {
 		return this.props.taskItem.map(item => <TaskItem key={item.id} {...item} />);
