@@ -29,7 +29,7 @@ export default class App extends Component {
 					name: task.newTaskName,
 					user: task.user,
 					status: 'InProgress',
-					color: TextTrackList.color,
+					color: task.color,
 				},
 			],
 		});
