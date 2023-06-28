@@ -96,7 +96,7 @@ export default class Header extends Component {
 				<nav>
 					<ul>
 						<li className={this.state.linkClicked ? 'clicked' : ''}>
-							<a href='#' id='link' onClick={this.toggle}>
+							<a href='/' id='link' onClick={this.toggle}>
 								{this.state.link}
 							</a>
 							&nbsp; {this.state.linkClicked ? 'clicked' : 'not clicked'}
