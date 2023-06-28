@@ -4,7 +4,7 @@ export default function TaskItem(props) {
 			<p className='flex-grow-1 mb-0 pb-3 mx-2 small lh-sm text-start'>
 				<strong className='d-block my-1'>
 					<span className={'badge bg-' + props.color}>{props.status}</span>
-					{/* <span className='mx-1'>@{props.user.toLowerCase()}</span> */}
+					<span className='mx-1'>@{props.user.toLowerCase()}</span>
 				</strong>
 				{props.name}
 			</p>

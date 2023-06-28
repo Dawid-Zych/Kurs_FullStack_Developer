@@ -5,12 +5,16 @@ export default class Tasks extends Component {
 	constructor(props) {
 		super(props);
 	}
+
+	// generujemy nasze komponenty tastitem z tablicy która jest przekazana do props
+	getTaskItem = () => {
+		return this.props.taskItem.map(item => <TaskItem key={item.id} {...item} />);
+	};
+
 	render() {
 		return (
-			<div>
-				<div>
-					<TaskItem />
-				</div>
+			<div className='container'>
+				<div className='my-3 p-3 bg-body rounded shadow-sm'>{this.getTaskItem()}</div>
 			</div>
 		);
 	}
