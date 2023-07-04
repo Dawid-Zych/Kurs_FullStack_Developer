@@ -1,0 +1,66 @@
+@import './animation.css';
+
+.toasts-container {
+	position: fixed;
+	top: 0;
+	right: 0;
+	z-index: 100;
+}
+
+.toasts-container .toast {
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	opacity: 0;
+	transform: translateX(100%);
+	overflow-x: hidden;
+	animation: toast-created 0.25s ease-in-out forwards;
+	padding: 1rem;
+	margin: 10px;
+	max-width: 20rem;
+	min-width: 15rem;
+	border-radius: 0.5rem;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	background: #4caf53;
+	color: white;
+}
+.toasts-container .toast.toast-destroy {
+	animation: toast-destroy 2s ease-in-out forwards;
+}
+
+.toasts-container .toast.success {
+	background: #28a745;
+}
+
+.toasts-container .toast.danger {
+	background: #dc3545;
+}
+
+.toasts-container .toast.warning {
+	background: #ffc107;
+	color: #000;
+}
+
+.toasts-container .toast.light {
+	background: #f8f9fa;
+	color: #000;
+}
+
+.toasts-container .toast.dark {
+	background: #343a40;
+}
+
+.toasts-container .toast::before {
+	display: block;
+	position: absolute;
+	width: 22px;
+	height: 22px;
+	top: 16px;
+	right: 10px;
+	content: '\f00d';
+	font-family: FontAwesome;
+	font-size: 1.3rem;
+	cursor: pointer;
+	color: #fff;
+}
