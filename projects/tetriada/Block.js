@@ -1,15 +1,13 @@
-/* manipulowanie blokami */
-
 export default class Block {
 	constructor(board) {
-		this.board;
+		this.board = board;
 	}
 
 	blockTypes = null;
 
 	activeBlock = null;
 	activePatternIndex = 0;
-	x = 5;
+	x = 4;
 	y = 2;
 
 	init = async () => {
@@ -107,7 +105,7 @@ export default class Block {
 				let newX = this.x + moveX + c;
 				let newY = this.y + moveY + r;
 
-				if (this.board.checkSquareCollision(newX.newY)) {
+				if (this.board.checkSquareCollision(newX, newY)) {
 					console.log('Collision!');
 					return true;
 				}

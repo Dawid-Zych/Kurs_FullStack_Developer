@@ -1,0 +1,55 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	position: relative;
+}
+
+canvas {
+	border: 1px solid black;
+}
+
+.modal {
+	position: absolute;
+	visibility: hidden;
+	border: 1px solid black;
+	width: 50vh;
+	height: 20vh;
+	background: aquamarine;
+	color: red;
+	border-radius: 15px;
+	text-align: center;
+}
+
+.modal p {
+	font-size: 30px;
+	margin: 20px;
+}
+
+.modal.active {
+	visibility: visible;
+}
+
+.modal button {
+	font-size: 20px;
+	padding: 10px;
+	background: royalblue;
+	border-radius: 5px;
+	color: white;
+	cursor: pointer;
+	transition: background 0.5s;
+}
+
+.modal button:hover {
+	background: blue;
+}
+
+.modal button:active {
+	transform: translateY(2px);
+}

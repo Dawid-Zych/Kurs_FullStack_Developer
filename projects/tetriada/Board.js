@@ -1,4 +1,4 @@
-import Renderer from './renderer';
+import Renderer from './Renderer.js';
 
 export default class Board {
 	board = null;
@@ -34,7 +34,7 @@ export default class Board {
 			});
 		});
 
-		this.renderer.drawText('Points: ' + this.score, 5, 20, 'black', '16px Verdana');
+		this.renderer.drawText('Punkty: ' + this.score, 5, 20, 'black', '16px Verdana');
 	};
 
 	drawBoardSquare = (rowIndex, colIndex, color) => {
@@ -57,12 +57,12 @@ export default class Board {
 	checkSquareCollision = (x, y) => {
 		if (
 			x < 0 || // czy wychodzi za lewa scianę
-			x > this.NUM_COLS || // czy wychodzi za prawą ścianę
+			x >= this.NUM_COLS || // czy wychodzi za prawą ścianę
 			y >= this.NUM_ROWS //czy wychodzi poza dolną ścianę
 		) {
 			return true; //jest kolizja
 		}
-
+		
 		// y to wiersz , x to kolumna
 		if (y < 0) return false;
 		if (this.board[y][x] == this.DEFAULT) {
