@@ -63,6 +63,45 @@ export default class Board {
 			return true; //jest kolizja
 		}
 
+		// y to wiersz , x to kolumna
 		if (y < 0) return false;
+		if (this.board[y][x] == this.DEFAULT) {
+			return false; // brak kolizji
+		} else {
+			return true; // kolizja
+		}
+	};
+
+	removeFullRows = () => {
+		let newScore = 0;
+		let numFullRows = 0;
+
+		for (let r = 0; r < this.NUM_ROWS; r++) {
+			let isFullRow = true;
+			const columns = this.board[r];
+			for (let c = 0; c < this.NUM_COLS; c++) {
+				if (this.board[r][c] == this.DEFAULT) {
+					isFullRow = false; // jest przerwa, nie ma pełnego row;
+				}
+			}
+			if (isFullRow == true) {
+				numFullRows++;
+
+				//przesuwamy wszystko o jeden wiersz w dół
+				for (let y = r; y > 1; y--) {
+					for (let x = 0; x < this.NUM_COLS; x++) {
+						this.board[y][x] = this.board[y - 1][x];
+					}
+				}
+
+				for (let x = 0; x < this.NUM_COLS; x++) {
+					this.board[0][x] = this.DEFAULT;
+				}
+
+				newScore += 1;
+			}
+		}
+
+		this.score += newScore * numFullRows;
 	};
 }
