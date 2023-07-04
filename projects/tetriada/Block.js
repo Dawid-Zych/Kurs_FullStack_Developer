@@ -67,12 +67,62 @@ export default class Block {
 		blockPattern.forEach((row, rowIndex) => {
 			row.forEach((col, colIndex) => {
 				if (col) {
-					board.drawBoardSquare(
-                        rowIndex + this.y,
-                        colIndex + this.x,
-                        this.activeBlock.color
-                          
-                  );
+					board.drawBoardSquare(rowIndex + this.y, colIndex + this.x, this.activeBlock.color);
+				}
+			});
+		});
+	};
+
+	moveLeft = () => {
+		this.x -= 1;
+	};
+
+	moveRight = () => {
+		this.x += 1;
+	};
+
+	moveDown = () => {
+		this.y += 1;
+	};
+
+	rotateRight = () => {
+		this.nextPattern();
+	};
+
+	rotateLeft = () => {
+		this.previousPattern();
+	};
+
+	checkCollision = (moveX, moveY) => {
+		const blockPattern = this.getActivePattern();
+
+		for (let r = 0; r < blockPattern.length; r++) {
+			const column = blockPattern[r];
+
+			for (let c = 0; c < column.length; c++) {
+				// r - wiersz, c - kolumna
+				if (!blockPattern[r][c]) {
+					continue; // 0 więc omijamy
+				}
+				let newX = this.x + moveX + c;
+				let newY = this.y + moveY + r;
+
+				if (this.board.checkSquareCollision(newX.newY)) {
+					console.log('Collision!');
+					return true;
+				}
+			}
+		}
+		return false;
+	};
+
+	lockOnBoard = () => {
+		const blockPattern = this.getActivePattern();
+
+		blockPattern.forEach((row, rowIndex) => {
+			row.forEach((col, colIndex) => {
+				if (col) {
+					this.board.lockBoardSquare(rowIndex + this.y, colIndex + this.x, this.activeBlock.color);
 				}
 			});
 		});
