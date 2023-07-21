@@ -168,7 +168,7 @@ try {
 	const cars2 = await Automobile.findAll({
 		where: {
 			[Op.and]: [
-				{ id: { [Op.gt]: 10 } }, // id > 10
+				{ id: { [Op.lte]: 10 } }, // id =< 10
 				{ brand: ['Ford', 'Citroen', 'Dodge'] },
 				{ color: ['red', 'white', 'blue'] },
 			],
