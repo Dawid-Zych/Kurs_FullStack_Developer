@@ -141,3 +141,38 @@ DronesFactory.hasMany(Drone, {
 Drone.belongsTo(DronesFactory, {
 	foreignKey: 'fk_factory_id',
 });
+
+/* kolejny model opisze nam dana firme lub osobe która będzie użyta na fakturze */
+
+const BusinessEntity = sequelize.define('BusinessEntity', {
+	id: {
+		type: DataTypes.INTEGER,
+		primaryKey: true,
+		autoIncrement: true,
+		validate: { isInt: true },
+	},
+	name: {
+		type: DataTypes.STRING(128),
+		allowNull: true,
+		validate: {
+			len: [1, 128],
+		},
+	},
+	email: {
+		type: DataTypes.STRING(128),
+		allowNull: true,
+		unique: true,
+		validate: {
+			len: [1, 128],
+			isEmail: true,
+		},
+	},
+});
+
+Address.hasOne(BusinessEntity, {
+	foreignKey: 'fk_address_id',
+});
+
+BusinessEntity.belongsTo(Address, {
+	foreignKey: 'fk_address_id', // jest w BusinessEntity
+});
