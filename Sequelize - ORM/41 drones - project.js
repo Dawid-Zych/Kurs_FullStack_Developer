@@ -176,3 +176,79 @@ Address.hasOne(BusinessEntity, {
 BusinessEntity.belongsTo(Address, {
 	foreignKey: 'fk_address_id', // jest w BusinessEntity
 });
+
+/* model faktury */
+const Invoice = sequelize.define('Invoice', {
+	id: {
+		type: DataTypes.INTEGER,
+		allowNull: false,
+		primaryKey: true,
+		autoIncrement: true,
+		validate: {
+			isInt: true,
+		},
+	},
+	invoiceNumber: {
+		type: DataTypes.STRING(128),
+		allowNull: false,
+		validate: {
+			len: [1, 128],
+		},
+	},
+	invoiceDate: {
+		type: DataTypes.DATE,
+		defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
+		allowNull: true,
+		validate: {
+			isDate: true,
+		},
+	},
+	netSum: {
+		//netto
+		comment: 'invoice amount before tax',
+		type: DataTypes.DECIMAL(10, 2),
+		defaultValue: 0,
+		allowNull: false,
+		validate: {
+			isDecimal: true,
+		},
+	},
+	tax: {
+		//tax
+		comment: 'tax on invoice',
+		type: DataTypes.DECIMAL(10, 2),
+		defaultValue: 0,
+		allowNull: false,
+		validate: {
+			isDecimal: true,
+		},
+	},
+	grossSum: {
+		//brutto
+		comment: 'invoice amount after tax',
+		type: DataTypes.DECIMAL(10, 2),
+		defaultValue: 0,
+		allowNull: false,
+		validate: {
+			isDecimal: true,
+		},
+	},
+});
+
+Invoice.belongsTo(BusinessEntity, {
+	as: 'seller',
+}); // sellerId w Invoice
+
+Invoice.belongsTo(BusinessEntity, {
+	as: 'buyer',
+}); // buyerId w Invoice
+
+Invoice.hasMany(Drone, {
+	foreignKey: 'fk_invoice_id',
+});
+
+Drone.belongsTo(Invoice, {
+	foreignKey: 'fk_invoice_id', // klucz w Drone
+});
+
+await sequelize.sync({ force: true }); // zapisujemy wszystkie modele
