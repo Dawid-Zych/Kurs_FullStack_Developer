@@ -252,3 +252,99 @@ Drone.belongsTo(Invoice, {
 });
 
 await sequelize.sync({ force: true }); // zapisujemy wszystkie modele
+
+const factoryAddress = await Address.create({
+	street: 'Fabryczna 7',
+	postalCode: '00-001',
+	city: 'Wawa',
+	country: 'Polska',
+});
+
+const factory = await DronesFactory.create({
+	name: 'Drones Factory #1',
+});
+
+await factory.setAddress(factoryAddress);
+
+/* -------- kupujący ------- */
+
+const buyer1 = await BusinessEntity.create({
+	name: 'Example Ltd.',
+	email: Math.random() + '@example.com',
+});
+
+const buyer1Address = await Address.create({
+	street: 'Wilcza 5',
+	postalCode: '00-023',
+	city: 'KrK',
+	country: 'Polska',
+});
+
+await buyer1.setAddress(buyer1Address);
+
+/* -------- sprzedający------- */
+
+const seller1 = await BusinessEntity.create({
+	name: 'Drones Factory WebShop Ltd.',
+	email: Math.random() + '@dronesfactory.com',
+});
+
+const seller1Address = await Address.create({
+	street: 'Ujazdowskie 5',
+	postalCode: '32-011',
+	city: 'Opole',
+	country: 'Polska',
+});
+
+await seller1.setAddress(seller1Address);
+
+/* ------------ drony ------------- */
+
+const drone1 = await Drone.create({
+	brand: 'Drone',
+	model: 'X1',
+	price: 600,
+	topSpeed: 20,
+});
+
+await drone1.setDronesFactory(factory);
+
+const drone2 = await Drone.create({
+	brand: 'Drone',
+	model: 'X2',
+	price: 400,
+	topSpeed: 15,
+});
+
+await drone2.setDronesFactory(factory);
+
+const invoice = await Invoice.create({
+	invoiceNumber: 'Fa 123/FXA',
+	netSum: 1000,
+	tax: 230,
+	grossSum: 1230,
+});
+
+await invoice.setSeller(seller1);
+await invoice.setBuyer(buyer1);
+
+await drone1.setInvoice(invoice);
+await drone2.setInvoice(invoice);
+
+const factoryDb = await DronesFactory.findOne({
+	include: [{ model: Address }, { model: Drone }],
+});
+
+console.log('\n', JSON.stringify(factoryDb, null, 4));
+
+const invoiceDb = await Invoice.findOne({
+	include: [
+		{ model: BusinessEntity, as: 'seller', include: Address },
+		{ model: BusinessEntity, as: 'buyer', include: Address },
+		{ model: Drone, include: DronesFactory },
+	],
+});
+
+console.log('\n', JSON.stringify(invoiceDb, null, 4));
+
+await sequelize.close();
