@@ -63,11 +63,13 @@ const authUser = (user, password, done) => {
 
 // przekazujemy funkcję autoryzującą do lokalnej strategii
 passport.use(
-	new LocalStrategy({
-		usernameField: 'username',
-		passportField: 'password',
-	}),
-	authUser
+	new LocalStrategy(
+		{
+			usernameField: 'username',
+			passportField: 'password',
+		},
+		authUser
+	)
 );
 
 passport.serializeUser((user, done) => {
@@ -101,7 +103,7 @@ passport.deserializeUser((id, done) => {
 // sprawdza czy zalogowany user, wtedy pozwala odwiedzić dany url
 // jeśli nie zalogowany to redirect na stronę główną
 // używana funkcja np do obsługi adresu /dashboard który jest tylko dla zalogowanych
-const checkAuthenticated = (req, req, next) => {
+const checkAuthenticated = (req, res, next) => {
 	if (req.isAuthenticated()) {
 		// zwróci true jeśli zautoryzowany user czyli dane w req.session.passport.user
 		return next(); // jeśli zautoryzowany i może odwiedzić url
@@ -133,4 +135,65 @@ const printRequestData = (req, res, next) => {
 	next();
 };
 
-app.use(printRequestData)
+app.use(printRequestData);
+
+// routing i połączenie z passportem
+
+const viewsPath = path.join(__dirname, 'views');
+console.log('viewsPath', viewsPath);
+
+app.set('views', viewsPath);
+app.set('view engine', 'ejs');
+app.use(express.static('./public'));
+
+app.get('/login', checkLoggedIn, (req, res) => {
+	console.log('get /login');
+	res.render('pages/login.ejs');
+});
+
+app.post(
+	'/login',
+	passport.authenticate('local', {
+		successRedirect: '/dashboard',
+		failureRedirect: '/login',
+	})
+);
+
+app.get('/dashboard', checkAuthenticated, (req, res) => {
+	console.log(' get /dashboard');
+	res.render('pages/dashboard.ejs', {
+		name: req.user.username,
+	});
+});
+
+app.get('/logout', (req, res, next) => {
+	req.logout(function (err) {
+		console.log(' User logged out!');
+
+		if (err) {
+			return next(err);
+		}
+		res.redirect('/');
+	});
+});
+
+app.post('/logout', (req, res, next) => {
+	req.logout(function (err) {
+		console.log(' User logged out!');
+
+		if (err) {
+			return next(err);
+		}
+		res.redirect('/');
+	});
+});
+
+app.get('/', (req, res) => {
+	res.render('pages/index.ejs', {
+		name: 'unknown',
+	});
+});
+
+app.listen(3010, () => {
+	console.log('Server started at port 3010');
+});
