@@ -13,6 +13,16 @@
                     <% } %>
         </ul>
     </nav>
+    <% if (user && user.email && user.role==='admin' ) { %>
+        <nav>
+            Admin menu:
+            <ul>
+                <li><a href="/admin/users">users</a></li>
+            </ul>
+
+
+        </nav>
+        <% } %>
 </div>
 
 <p>
