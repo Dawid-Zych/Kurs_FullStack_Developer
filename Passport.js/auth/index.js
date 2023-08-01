@@ -40,24 +40,60 @@ app.use(
 app.use(passport.initialize()); // passport będzie działał na każdym requeście
 app.use(passport.session()); // umożliwia passportowi używanie mechanizmu sesji
 
-
-// authuser to funkcja pozwalająca na autoryzację użytkownika, zwraca zautoryzowanego 
+// authuser to funkcja pozwalająca na autoryzację użytkownika, zwraca zautoryzowanego
 // użytkownika np z bazy, authUser używana jest przez strategię do autoryzacji usera
 const authUser = (user, password, done) => {
-    //passport dodane do user dane z req.body.username i req.body.password 
-    console.log(` - authUser() username: ${user}, password: ${password} `);
+	//passport dodane do user dane z req.body.username i req.body.password
+	console.log(` - authUser() username: ${user}, password: ${password} `);
 
-    // user oraz password muszą być użyte do odnalezienia użytkownika w bazie danych
-    // 1. Jeżeli użytkownik nie jest znaleziony lub jest złe hasło zwracamy  done(null, false) 
-    // 2. Gdy użytkownik i hasło się zgadzają z rekordem w bazie zwracamy  done(null, user)
+	// user oraz password muszą być użyte do odnalezienia użytkownika w bazie danych
+	// 1. Jeżeli użytkownik nie jest znaleziony lub jest złe hasło zwracamy  done(null, false)
+	// 2. Gdy użytkownik i hasło się zgadzają z rekordem w bazie zwracamy  done(null, user)
 
-    let authenticatedUser = {
-        id: 5,
-        username: "user#001",
-        surname: "Kowalski"
-    };
+	let authenticatedUser = {
+		id: 5,
+		username: 'user#001',
+		surname: 'Kowalski',
+	};
 
-    // na potrzeby przykładu zawsze zwracamy zautoryzowanego usera, że udało się 
-    // go znaleźć w bazie
-    return done(null, authenticatedUser);
-}
+	// na potrzeby przykładu zawsze zwracamy zautoryzowanego usera, że udało się
+	// go znaleźć w bazie
+	return done(null, authenticatedUser);
+};
+
+// przekazujemy funkcję autoryzującą do lokalnej strategii
+passport.use(
+	new LocalStrategy({
+		usernameField: 'username',
+		passportField: 'password',
+	}),
+	authUser
+);
+
+passport.serializeUser((user, done) => {
+	// funkcja otrzymuje zautoryzowanego usera z authUser()
+	console.log(' - serializeUser(), user:', user);
+
+	// wywołujemy done i passport zapisze id usera do
+	// req.session.passport.user
+	// w ten sposób dane użytkownika zapisane są w sesji czyli np
+	// {id: 5, name: 'user#001', surname: 'Kowalski'}
+	// To id będzie użyte przez deserializeUser() do pobrania pełnych danych użytkownika
+
+	done(null, user.id);
+});
+
+passport.deserializeUser((id, done) => {
+	// funkcja na podstawie przekazanego id pobiera pełne dane
+	// użytkownik np z bazy i zwraca je do done(), dzięki temu
+	// trafia on do req.user i może być użyty gdziekolwiek w apce
+	console.log(' - deserializeUser with id:', id);
+
+	const userDB = {
+		id: 5,
+		username: 'user#001',
+		surname: 'Kowalski',
+	};
+
+	done(null, userDB);
+});
