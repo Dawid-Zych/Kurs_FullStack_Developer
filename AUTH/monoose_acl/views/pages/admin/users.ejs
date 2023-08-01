@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin users list</title>
+</head>
+
+<body>
+    <h3>Admin users list</h3>
+    <%- include('../partials/navbar.ejs', {user}) %>
+
+        <p>
+            <% if (users) { %>
+                <table>
+                    <tr>
+                        <th>_id</th>
+                        <th>name</th>
+                        <th>surname</th>
+                        <th>email</th>
+                        <th>role</th>
+                        <th>actions</th>
+                    </tr>
+                    <% for (let i=0; i < users.length; i++) { %>
+                        <tr>
+                            <td>
+                                <%= users[i]._id %>
+                            </td>
+                            <td>
+                                <%= users[i].name %>
+                            </td>
+                            <td>
+                                <%= users[i].surname %>
+                            </td>
+                            <td>
+                                <%= users[i].email %>
+                            </td>
+                            <td>
+                                <%= users[i].role %>
+                            </td>
+                            <td><a href="/admin/users/edit/<%= users[i]._id  %>">edit</a></td>
+                        </tr>
+                        <% } %>
+                </table>
+                <%} %>
+        </p>
+
+        <a href="/admin/users/add">Add user</a>
+
+
+</body>
+
+</html>
