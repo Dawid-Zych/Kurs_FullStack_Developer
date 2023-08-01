@@ -8,6 +8,7 @@ import expressSession from 'express-session';
 import * as path from 'path';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { authRole } from './utility/aclauth.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
