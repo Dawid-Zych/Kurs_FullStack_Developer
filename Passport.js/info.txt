@@ -7,6 +7,7 @@ passport - umożliwia nam zastosowanie różnych mechanizmów logowania, w zale�
 
 passport-local - to my przyjmujemy cały proces zarządzania logowania użytkownika
 
-passport-google-outh - możemy logować użytkowników za pomocą logowania google
+passport-google-oauth - możemy logować użytkowników za pomocą logowania google 
+passport-facebook - za pomocą facebooka
 
 ejs- mechanizm template
