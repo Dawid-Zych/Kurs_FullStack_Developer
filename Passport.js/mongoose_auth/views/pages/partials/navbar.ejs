@@ -1,0 +1,26 @@
+<div class="header">
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <% if (user && user.email) { %>
+                <li><a href="/dashboard">dashboard</a></li>
+                <li><a href="/logout">logout</a></li>
+
+                <% } else { %>
+                    <li><a href="/login">login</a></li>
+                    <li><a href="/register">register</a></li>
+
+                    <% } %>
+        </ul>
+    </nav>
+</div>
+
+<p>
+    <% if (user && user.email) { %>
+        <h3>
+            <%= user.email %> is logged in!
+        </h3>
+        <% } %>
+
+
+</p>
