@@ -1,0 +1,12 @@
+express
+
+express-session - rozszerzenie umożliwiające zarządzanie sesją na stronie serwera użytkownika
+
+passport - umożliwia nam zastosowanie różnych mechanizmów logowania, w zależnośći co wybierzemy
+        musimy zainstalowac odpowiednia paczke
+
+passport-local - to my przyjmujemy cały proces zarządzania logowania użytkownika
+
+passport-google-outh - możemy logować użytkowników za pomocą logowania google
+
+ejs- mechanizm template
