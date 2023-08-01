@@ -10,7 +10,7 @@ import expressSession from 'express-session';
 import * as path from 'path';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { dir } from 'console';
+import { dir, log } from 'console';
 
 const __dirname = dirname(fileURLToPath(import.meta.url)); // ścieżka naszego projektu
 
@@ -97,3 +97,40 @@ passport.deserializeUser((id, done) => {
 
 	done(null, userDB);
 });
+
+// sprawdza czy zalogowany user, wtedy pozwala odwiedzić dany url
+// jeśli nie zalogowany to redirect na stronę główną
+// używana funkcja np do obsługi adresu /dashboard który jest tylko dla zalogowanych
+const checkAuthenticated = (req, req, next) => {
+	if (req.isAuthenticated()) {
+		// zwróci true jeśli zautoryzowany user czyli dane w req.session.passport.user
+		return next(); // jeśli zautoryzowany i może odwiedzić url
+	}
+
+	res.redirect('/'); // nie zautoryzowany user więc redirect na stronę główną
+};
+
+// funkcja sprawdzająca czy zalogowany użytkownik, jeśli tak i chce
+// wejść na login czy register to trafi na dashboard
+const checkLoggedIn = (req, res, next) => {
+	if (req.isAuthenticated()) {
+		//zwróci true jeśli zautoryzowany user czyli dane w req.session.passport.user
+		return res.redirect('/dashboard');
+	}
+
+	next();
+};
+
+let count = 0;
+const printRequestData = (req, res, next) => {
+	console.log('\nREQUEST num:', +count++ + ' date:' + new Date());
+	console.log('req.body.username:', req.body.username);
+	console.log('req.body.password:', req.body.password);
+	console.log('req.session.passport:', req.session.passport);
+	console.log('req.user:', req.user);
+	console.log('req.session.id:', req.session.id);
+	console.log('req.session.cookie:', req.session.cookie);
+	next();
+};
+
+app.use(printRequestData)
