@@ -39,7 +39,7 @@ passport.use(
 		},
 		async (email, password, done) => {
 			try {
-				const userExists = await User.findOne({ email: email });
+				const userExists = await User.findOne({ email });
 				if (userExists) {
 					// jest już w bazie
 					return done(null, false); // kończymy bo user o tym email istnieje w bazie

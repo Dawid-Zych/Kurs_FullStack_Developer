@@ -10,7 +10,6 @@ import expressSession from 'express-session';
 import * as path from 'path';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { dir, log } from 'console';
 
 const __dirname = dirname(fileURLToPath(import.meta.url)); // ścieżka naszego projektu
 
@@ -66,7 +65,7 @@ passport.use(
 	new LocalStrategy(
 		{
 			usernameField: 'username',
-			passportField: 'password',
+			passwordField: 'password',
 		},
 		authUser
 	)
