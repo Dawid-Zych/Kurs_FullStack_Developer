@@ -9,8 +9,11 @@ import * as path from 'path';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { authRole } from './utility/aclauth.js';
+import { UserController } from './controllers/UsersController.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+
+const userController = new UserController();
 
 const app = express();
 
@@ -88,6 +91,56 @@ app.get('/dashboard', checkAuthenticated, (req, res) => {
 	res.render('pages/dashboard.ejs', {
 		user: req.user,
 	});
+});
+
+/* Połączenia z naszymi rolami */
+
+app.get('/admin/users', authRole, async (req, res) => {
+	console.log('/admin/users');
+
+	const users = await userController.getAll();
+	res.render('/pages/admin/users.ejs', {
+		user: req.user,
+		users: users,
+	});
+});
+
+app.get('/admin/users/add', authRole, async (req, res) => {
+	console.log('/admin/users/add');
+
+	res.render('/pages/admin/users_add.ejs', {
+		user: req.user,
+		users: users,
+	});
+});
+
+app.post('/admin/users/add', authRole, async (req, res) => {
+	console.log('POST   /admin/users/add');
+	console.log('req.body:', req.body);
+
+	const userDb = await userController.createUser(req.body);
+	res.redirect('/admin/users');
+});
+
+app.get('/admin/users/edit/:id', authRole, async (req, res) => {
+	console.log('GET /admin/users/edit/:id');
+	const { id } = req.params;
+	if (!id) return res.redirect('/admin/users');
+
+	const userToEdit = await userController.getUserById(id);
+	res.render('pages/admin/users_edit.ejs', {
+		user: req.user, // admin
+		userToEdit: userToEdit,
+	});
+});
+
+app.post('/admin/users/edit/:id', authRole, async (req, res) => {
+	console.log('POST /admin/users/edit/:id');
+	const { id } = req.params;
+	if (!id) return res.redirect('/admin/users');
+
+	const updatedUser = await userController.updateById(id, req.body);
+	res.redirect('/admin/users');
 });
 
 //wylogowanie
