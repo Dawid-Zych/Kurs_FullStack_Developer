@@ -1,3 +1,5 @@
+// musimy dodać role naszego użytkownika
+
 import { mongoose } from '../utility/db.js';
 // nmp i bcryptjs pozwoli nam zahashowac nasze hasla
 import bcrypt from 'bcryptjs';
@@ -33,6 +35,14 @@ const userSchema = mongoose.Schema({
 		unique: true,
 		match: /.+\@.+\..+/,
 	},
+	role: {
+		type: String,
+		required: false,
+		trim: true,
+		minLength: 1,
+		maxLength: 12,
+		default: 'user',
+	},
 	created: {
 		type: Date,
 		default: Date.now,
@@ -66,10 +76,15 @@ userSchema.methods.validPassword = async function (password) {
 const User = mongoose.model('User', userSchema);
 
 function makeUser(email, password) {
+	/* dla testów robimy user admina */
+	let role = 'user';
+	if (email.indexOf('admin') >= 0) role = 'admin'; // tylko do tstów!!
+
 	return new User({
 		_id: new mongoose.Types.ObjectId(),
 		email: email,
 		password: password,
+		role: role,
 	});
 }
 
