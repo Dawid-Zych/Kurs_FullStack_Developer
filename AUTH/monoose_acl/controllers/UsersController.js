@@ -27,7 +27,7 @@ export class UserController {
 
 	async updateById(id, userData) {
 		const dataToUpdate = { ...userData, role: 'user' };
-		const updatedData = await User.findOneAndUpdatE({ _id: id }, { dataToUpdate }, { new: true });
+		const updatedData = await User.findOneAndUpdate({ _id: id }, dataToUpdate, { new: true });
 
 		return updatedData;
 	}

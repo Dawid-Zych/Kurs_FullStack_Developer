@@ -99,7 +99,7 @@ app.get('/admin/users', authRole, async (req, res) => {
 	console.log('/admin/users');
 
 	const users = await userController.getAll();
-	res.render('/pages/admin/users.ejs', {
+	res.render('pages/admin/users.ejs', {
 		user: req.user,
 		users: users,
 	});
@@ -108,9 +108,8 @@ app.get('/admin/users', authRole, async (req, res) => {
 app.get('/admin/users/add', authRole, async (req, res) => {
 	console.log('/admin/users/add');
 
-	res.render('/pages/admin/users_add.ejs', {
+	res.render('pages/admin/users_add.ejs', {
 		user: req.user,
-		users: users,
 	});
 });
 
@@ -137,7 +136,11 @@ app.get('/admin/users/edit/:id', authRole, async (req, res) => {
 app.post('/admin/users/edit/:id', authRole, async (req, res) => {
 	console.log('POST /admin/users/edit/:id');
 	const { id } = req.params;
-	if (!id) return res.redirect('/admin/users');
+	console.log('\n REQ PARAAAMSSSSS', req.path);
+	if (!id) {
+		console.log('brak id ?');
+		return res.redirect('/admin/users');
+	}
 
 	const updatedUser = await userController.updateById(id, req.body);
 	res.redirect('/admin/users');
