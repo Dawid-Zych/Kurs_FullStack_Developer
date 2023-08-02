@@ -1,91 +1,80 @@
-// musimy dodać role naszego użytkownika
+import { DataTypes } from 'sequelize';
+import { sequelize } from '../utility/db.js';
 
-import { mongoose } from '../utility/db.js';
-// nmp i bcryptjs pozwoli nam zahashowac nasze hasla
-import bcrypt from 'bcryptjs';
-
-const userSchema = mongoose.Schema({
-	_id: mongoose.Schema.Types.ObjectId,
+const User = sequelize.define('User', {
+	id: {
+		type: DataTypes.INTEGER,
+		primaryKey: true,
+		autoIncrement: true,
+		validate: {
+			isInt: true,
+		},
+	},
 	name: {
-		type: String,
-		required: false,
-		trim: true,
-		minLength: 1,
-		maxLength: 32,
+		type: DataTypes.STRING(32),
+		allowNull: true,
+		validate: {
+			len: [1, 32],
+		},
 	},
 	surname: {
-		type: String,
-		required: false,
-		trim: true,
-		minLength: 1,
-		maxLength: 32,
-	},
-	password: {
-		type: String,
-		required: true,
-		minLength: 1,
-		maxLength: 128,
+		type: DataTypes.STRING(64),
+		allowNull: true,
+		validate: {
+			len: [1, 64],
+		},
 	},
 	email: {
-		type: String,
-		required: true,
-		trim: true,
-		minLength: 1,
-		maxLength: 128,
+		type: DataTypes.STRING(32),
+		allowNull: false,
 		unique: true,
-		match: /.+\@.+\..+/,
+		validate: {
+			len: [1, 32],
+			isEmail: true,
+		},
+	},
+	password: {
+		type: DataTypes.STRING,
+		allowNull: false,
+		validate: {
+			notNull: {
+				msg: 'Password is needed',
+			},
+			notEmpty: {
+				msg: 'Please provide a password',
+			},
+			isNotEasy: function (value) {
+				value = value.toLowerCase();
+
+				if (value.includes('12345') || value.includes('54321') || value.includes('admin')) {
+					throw new Error('Password is too simple');
+				}
+			},
+		},
+	},
+	age: {
+		type: DataTypes.INTEGER,
+		allowNull: true,
+		defaultValue: 18,
+		validate: {
+			isInt: true,
+		},
+	},
+	address: {
+		type: DataTypes.STRING(256),
+		allowNull: true,
+		validate: {
+			len: [1, 256],
+		},
 	},
 	role: {
-		type: String,
-		required: false,
-		trim: true,
-		minLength: 1,
-		maxLength: 12,
-		default: 'user',
-	},
-	created: {
-		type: Date,
-		default: Date.now,
+		type: DataTypes.ENUM('admin', 'director', 'teacher', 'student'),
+		defaultValue: 'student',
+		allowNull: false,
+		validate: {
+			len: [1, 12],
+		},
 	},
 });
 
-userSchema.pre('save', async function (next) {
-	try {
-		const user = this;
-		if (!user.isModified('password')) return next(); // hasło już zmodyfikowane więc kończymy
-
-		const salt = await bcrypt.genSalt(10);
-		const hashedPassword = await bcrypt.hash(this.password, salt);
-
-		this.password = hashedPassword;
-
-		next();
-	} catch (error) {
-		return next(error);
-	}
-});
-
-userSchema.methods.validPassword = async function (password) {
-	try {
-		return await bcrypt.compare(password, this.password);
-	} catch (error) {
-		throw new Error(error);
-	}
-};
-
-const User = mongoose.model('User', userSchema);
-
-function makeUser(email, password) {
-	/* dla testów robimy user admina */
-	let role = 'user';
-	if (email.indexOf('admin') >= 0) role = 'admin'; // tylko do tstów!!
-
-	return new User({
-		_id: new mongoose.Types.ObjectId(),
-		email: email,
-		password: password,
-		role: role,
-	});
-}
-
-export { User, makeUser };
+export { User };
