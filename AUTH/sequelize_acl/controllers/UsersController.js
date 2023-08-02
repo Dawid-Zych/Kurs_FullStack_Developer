@@ -1,34 +1,55 @@
-import mongoose from 'mongoose';
-import { User } from '../models/user.model.js';
+import brcrypt from 'bcryptjs';
+import { User, School, Subject, Grade } from '../models/relationsSchema.js';
 
-export class UserController {
-	constructor() {
-		this.init();
-	}
-	async init() {}
-
+export class UsersController {
 	async getAll() {
-		return await User.find({});
+		return await User.findAll({});
 	}
 
-	async createUser(userData) {
-		const insertedData = new User({
-			...userData,
-			_id: new mongoose.Types.ObjectId(),
-			role: 'user',
-		});
-
-		return await insertedData.save();
+	async getAllUsersByRole(role) {
+		return await User.findAll({ where: { role } });
 	}
 
-	async getUserById(id) {
-		return await User.findOne({ _id: id });
+	async createUser(userData, schoolDb) {
+		const salt = await brcrypt.genSalt(10);
+		userData.password = await brcrypt.hash(userData.password, salt);
+
+		const userDb = await User.create(userData);
+
+		if (schoolDb) {
+			await userDb.setSchool(schoolDb);
+		}
+
+		return userDb;
+	}
+
+	async validPassword(password, userDb) {
+		try {
+			return await brcrypt.compare(password.userDb.password);
+		} catch (error) {
+			throw new Error(error);
+		}
+	}
+
+	async setSchool(userDb, schoolDb) {
+		if (userDb && schoolDb) {
+			await userDb.setSchool(schoolDb);
+			return true;
+		}
+		return false;
+	}
+
+	async getById(id) {
+		return await User.findByPk(id);
 	}
 
 	async updateById(id, userData) {
-		const dataToUpdate = { ...userData, role: 'user' };
-		const updatedData = await User.findOneAndUpdate({ _id: id }, dataToUpdate, { new: true });
+		const updatedUser = await User.update({ ...userData }, { where: { id } });
 
-		return updatedData;
+		return updatedUser;
+	}
+
+	async getUserByEmail(email) {
+		return await User.findOne({ where: { email } });
 	}
 }
