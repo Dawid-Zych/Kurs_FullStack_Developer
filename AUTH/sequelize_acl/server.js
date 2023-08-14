@@ -9,11 +9,8 @@ import * as path from 'path';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { authRole } from './utility/aclauth.js';
-import { UserController } from './controllers/UsersController.js';
-
+import { usersController, subjectController, schoolsController, gradesController } from './controllers/controllers.js';
 const __dirname = dirname(fileURLToPath(import.meta.url));
-
-const userController = new UserController();
 
 const app = express();
 

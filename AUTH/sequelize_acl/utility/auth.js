@@ -66,13 +66,13 @@ const authUser = async (req, email, password, done) => {
 	// authUser to funkcja pozwalająca na autoryzację użytkownika, zwraca zautoryzowanego
 	// użytkownika np z bazy, authUser używana jest przez strategię do autoryzacji usera
 	try {
-		const authenticatedUser = await User.findOne({ email });
+		const authenticatedUser = await usersController.getUserByEmail(email);
 		if (!authenticatedUser) {
 			// nie ma usera w bazie
 			return done(null, false);
 		}
 
-		if (!authenticatedUser.validPassword(password)) {
+		if (!usersController.validPassword(password, authenticatedUser)) {
 			return done(null, false);
 		}
 

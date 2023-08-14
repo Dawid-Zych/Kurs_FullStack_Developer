@@ -2,9 +2,9 @@ import { DataTypes } from 'sequelize';
 
 import { School } from './school.model.js';
 import { Grade } from './grade.model.js';
-import { Subject } from './subject.model';
+import { Subject } from './subject.model.js';
 import { User } from './user.model.js';
-import { sequelize } from '../utility/db';
+import { sequelize } from '../utility/db.js';
 
 /*    relacje School      */
 // szkoła ma wielu użytkowników
@@ -44,7 +44,7 @@ Subject.belongsToMany(User, {
 	foreignKey: 'subjectId',
 });
 
-Student.belongsToMany(Subject, {
+User.belongsToMany(Subject, {
 	through: SubjectUser,
 	foreignKey: 'userId',
 });
