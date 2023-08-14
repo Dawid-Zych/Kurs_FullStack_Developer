@@ -77,6 +77,6 @@ Grade.belongsTo(User, {
 
 Grade.belongsTo(School); // schoolId w Grade
 
-await sequelize.sync();
+await sequelize.sync({ force: true });
 
 export { User, School, Subject, Grade };
