@@ -7,6 +7,8 @@ function getGuestDefaultUser() {
 }
 
 function authRole(req, res, next) {
+	return next(); // tylko dla developmentu, pozwala na wszystkie dostępy do zasobów!!!!!!!!!
+
 	/* 
     req.passport.session: { user: 'asdadggadagw436qq'} albo undefined
     req.user: {

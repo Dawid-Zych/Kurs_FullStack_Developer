@@ -1,6 +1,8 @@
 import passport from 'passport';
 import LocalStrategy from 'passport-local';
-import { User, makeUser } from '../models/user.model.js';
+import { User } from '../models/user.model.js';
+
+import { usersController } from '../controllers/controllers.js';
 
 passport.serializeUser((user, done) => {
 	// funkcja otrzymuje zautoryzowanego usera z authUser()
@@ -18,7 +20,7 @@ passport.deserializeUser(async (id, done) => {
 	// trafia on do req.user i może być użyty gdziekolwiek w apce
 
 	try {
-		const userDb = await User.findById(id);
+		const userDb = await usersController.getById(id);
 		console.log('deserializeUser(), userDb:', userDb);
 
 		done(null, userDb);
@@ -39,15 +41,18 @@ passport.use(
 		},
 		async (email, password, done) => {
 			try {
-				const userExists = await User.findOne({ email });
+				const userExists = await usersController.getUserByEmail(email);
 				if (userExists) {
 					// jest już w bazie
 					return done(null, false); // kończymy bo user o tym email istnieje w bazie
 				}
 
-				const user = makeUser(email, password);
+				const userDb = await usersController.createUser({
+					email,
+					password,
+				});
 
-				const userDb = await user.save();
+				console.log(userDb);
 
 				return done(null, userDb); // user jest zarejestrowany i przekazany dalej do passport js
 			} catch (error) {

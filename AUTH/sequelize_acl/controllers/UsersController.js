@@ -1,5 +1,5 @@
 import brcrypt from 'bcryptjs';
-import { User, School, Subject, Grade } from '../models/relationsSchema.js';
+import { User } from '../models/relationsSchema.js';
 
 export class UsersController {
 	async getAll() {
