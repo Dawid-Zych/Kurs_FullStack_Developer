@@ -11,12 +11,17 @@ import { fileURLToPath } from 'url';
 import { authRole } from './utility/aclauth.js';
 import { usersController, subjectsController, schoolsController, gradesController } from './controllers/controllers.js';
 import { rolesArr } from './models/user.model.js';
+import { htmlHelper } from './helpers/htmlHelper.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 
 app.use(express.urlencoded({ extended: false })); // sparsuje dane przesłane z POST
+
+// przypisujemy do locals dowolna zmienna
+// bedzie dostepny w kazdym widoku
+app.locals.htmlHelper = htmlHelper;
 
 app.use(
 	expressSession({
