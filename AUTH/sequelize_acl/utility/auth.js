@@ -38,8 +38,9 @@ passport.use(
 		{
 			usernameField: 'email',
 			passwordField: 'password',
+			passReqToCallback: true,
 		},
-		async (email, password, done) => {
+		async (req, email, password, done) => {
 			try {
 				const userExists = await usersController.getUserByEmail(email);
 				if (userExists) {
@@ -48,8 +49,13 @@ passport.use(
 				}
 
 				const userDb = await usersController.createUser({
-					email,
-					password,
+					name: req.body.name,
+					surname: req.body.surname,
+					email: email,
+					password: password,
+					address: req.body.address,
+					age: req.body.age,
+					schoolId: req.body.schoolId,
 				});
 
 				console.log(userDb);
