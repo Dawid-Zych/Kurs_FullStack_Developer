@@ -1,24 +1,18 @@
-<!DOCTYPE html>
-<html lang="pl">
+<%- include('partials/head', {title: 'Login' }) %>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-</head>
+    <body>
+        <h3>Login</h3>
 
-<body>
-    <h3>Login</h3>
+        <%- include('partials/navbar', { user }) %>
 
-    <%- include('partials/navbar', { user }) %>
+            <form action="/login" method="post">
+                Email: <input type="text" name="email">
+                <br>
+                Password: <input type="password" name="password">
+                <br>
+                <button type="submit">Login</button>
+            </form>
+            <%- include('partials/footer', {title: 'Login' }) %>
+    </body>
 
-        <form action="/login" method="post">
-            Email: <input type="text" name="email">
-            <br>
-            Password: <input type="password" name="password">
-            <br>
-            <button type="submit">Login</button>
-        </form>
-</body>
-
-</html>
+    </html>

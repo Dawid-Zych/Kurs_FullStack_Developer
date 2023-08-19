@@ -1,17 +1,13 @@
-<!DOCTYPE html>
-<html lang="pl">
+<%- include('partials/head', {title: 'Dashboard' }) %>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-</head>
 
-<body>
-    <h3>Dashboard</h3>
+    <body>
+        <h3>Dashboard</h3>
 
-    <%- include('partials/navbar', { user }) %>
+        <%- include('partials/navbar', { user }) %>
+            <%- include('partials/footer', {title: 'Dashboard' }) %>
 
-</body>
 
-</html>
+    </body>
+
+    </html>

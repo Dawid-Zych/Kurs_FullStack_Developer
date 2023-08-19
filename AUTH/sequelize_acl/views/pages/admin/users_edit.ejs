@@ -1,30 +1,26 @@
-<!DOCTYPE html>
-<html lang="pl">
+<%- include('../partials/head', {title: 'Admin edit user' }) %>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin: edit user</title>
-</head>
+    <body>
+        <h3>Admin: edit user</h3>
+        <%- include('../partials/navbar.ejs', {user}) %>
 
-<body>
-    <h3>Admin: edit user</h3>
-    <%- include('../partials/navbar.ejs', {user}) %>
+            <form action="/admin/users/edit/<%= userToEdit._id %>" method="post">
+                <input type="hidden" name="id" value="<%= userToEdit._id %>">
+                Name: <input type="text" name="name" value="<%= userToEdit.name %>">
+                <br><br>
+                Surname: <input type="text" name="surname" value="<%= userToEdit.surname %>">
+                <br><br>
+                Email: <input type="email" name="email" value="<%= userToEdit.email %>">
+                <br><br>
+                <!--   Password: <input type="password" name="password"> -->
+                <br><br>
+                <button type="submit">Save user</button>
 
-        <form action="/admin/users/edit/<%= userToEdit._id %>" method="post">
-            <input type="hidden" name="id" value="<%= userToEdit._id %>">
-            Name: <input type="text" name="name" value="<%= userToEdit.name %>">
-            <br><br>
-            Surname: <input type="text" name="surname" value="<%= userToEdit.surname %>">
-            <br><br>
-            Email: <input type="email" name="email" value="<%= userToEdit.email %>">
-            <br><br>
-            <!--   Password: <input type="password" name="password"> -->
-            <br><br>
-            <button type="submit">Save user</button>
+            </form>
 
-        </form>
+            <%- include('../partials/footer', {title: 'Admin edit user' }) %>
 
-</body>
 
-</html>
+    </body>
+
+    </html>
