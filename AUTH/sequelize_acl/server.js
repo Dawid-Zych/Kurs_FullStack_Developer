@@ -10,6 +10,8 @@ import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { authRole } from './utility/aclauth.js';
 import { usersController, subjectsController, schoolsController, gradesController } from './controllers/controllers.js';
+import { rolesArr } from './models/user.model.js';
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const app = express();
@@ -52,10 +54,12 @@ app.set('view engine', 'ejs');
 app.use(express.static('./public'));
 
 // rejestracja usera, checkLoggedIn() sprawdza czy zalogowany to wtedy redirect na dashboard
-app.get('/register', checkLoggedIn, (req, res) => {
+app.get('/register', checkLoggedIn, async (req, res) => {
 	console.log('/register');
+	const schools = await schoolsController.getAll();
 	res.render('pages/register.ejs', {
 		user: req.user,
+		schools: schools,
 	});
 });
 
@@ -114,7 +118,7 @@ app.post('/admin/users/add', authRole, async (req, res) => {
 	console.log('POST   /admin/users/add');
 	console.log('req.body:', req.body);
 
-	const userDb = await userController.createUser(req.body);
+	const userDb = await usersController.createUser(req.body);
 	res.redirect('/admin/users');
 });
 
@@ -139,7 +143,7 @@ app.post('/admin/users/edit/:id', authRole, async (req, res) => {
 		return res.redirect('/admin/users');
 	}
 
-	const updatedUser = await userController.updateById(id, req.body);
+	const updatedUser = await usersController.updateById(id, req.body);
 	res.redirect('/admin/users');
 });
 
