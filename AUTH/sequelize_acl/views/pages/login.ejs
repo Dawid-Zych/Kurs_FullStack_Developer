@@ -6,11 +6,17 @@
         <%- include('partials/navbar', { user }) %>
 
             <form action="/login" method="post">
-                Email: <input type="text" name="email">
-                <br>
-                Password: <input type="password" name="password">
-                <br>
-                <button type="submit">Login</button>
+                <div>
+                    <label for="emailControl" class="form-label">Email: </label>
+                    <input type="email" id="emailControl" name="email" class="form-control">
+                </div>
+
+                <div>
+                    <label for="passwordControl" class="form-label">Password: </label>
+                    <input type="password" id="passwordControl" name="password" class="form-control">
+                </div>
+
+                <button type="submit" class="btn">Login</button>
             </form>
             <%- include('partials/footer', {title: 'Login' }) %>
     </body>
