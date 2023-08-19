@@ -16,6 +16,16 @@ const schoolDb = await schoolsController.createSchool({
 });
 console.log('schooldB:', schoolDb);
 
+const schoolDb2 = await schoolsController.createSchool({
+	name: 'University #002',
+	address: 'Ujazdowskie 23, 00-501 Warszawa',
+});
+
+const schoolDb3 = await schoolsController.createSchool({
+	name: 'University #003',
+	address: 'Krakowska 23, 30-201 Warszawa',
+});
+
 const directorDb = await usersController.createUser({
 	name: 'Adam',
 	surname: 'Adamski',
