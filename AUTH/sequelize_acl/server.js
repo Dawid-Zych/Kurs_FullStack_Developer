@@ -236,7 +236,6 @@ app.post('/admin/schools/edit/:id', authRole, async (req, res) => {
 	res.redirect('/admin/schools');
 });
 
-
 // VIEW
 
 app.get('/admin/schools/view/:id', authRole, async (req, res) => {
@@ -253,12 +252,134 @@ app.get('/admin/schools/view/:id', authRole, async (req, res) => {
 		schoolToView: schoolToView,
 	});
 });
+
+// SUBJECTS
+app.get('/subjects', authRole, async (req, res) => {
+	console.log('/subjects');
+	const schools = await schoolsController.getAll();
+	const subjects = await subjectsController.getAll();
+	const teachers = await usersController.getAllUsersByRole('teacher');
+
+	res.render('pages/subjects/index.ejs', {
+		user: req.user,
+		schools: schools,
+		teachers: teachers,
+		subjects: subjects,
+	});
+});
+
+app.get('/subjects/add', authRole, async (req, res) => {
+	console.log('/admin/subjects/add');
+	const schools = await schoolsController.getAll();
+	const teachers = await usersController.getAllUsersByRole('teacher');
+
+	res.render('pages/admin/schools/subject_add.ejs', {
+		user: req.user,
+		schools: schools,
+		teachers: teachers,
+	});
+});
+
+app.post('/subjects/add', authRole, async (req, res) => {
+	console.log('POST /subjects/add');
+
+	const subjectDB = await subjectsController.createSubject(req.body);
+	res.redirect('/subjects');
+});
+
+app.get('/subjects/edit/:id', authRole, async (req, res) => {
+	console.log('/subjects/edit/:id');
+
+	const { id } = req.params;
+	if (!id) return res.redirect('/subjects');
+
+	const schools = await schoolsController.getAll();
+	const subjectToEdit = await subjectsController.getById(id);
+	const teachers = await usersController.getAllUsersByRole('teacher');
+
+	res.render('pages/subjects/subject_edit.ejs', {
+		user: req.user,
+		schools: schools,
+		teachers: teachers,
+		subjectToEdit: subjectToEdit,
+	});
+});
+
+app.post('/subjects/edit/:id', authRole, async (req, res) => {
+	console.log('POST /subjects/edit/:id');
+	const { id } = req.params;
+
+	if (!id) return res.redirect('/subjects');
+
+	const updatedSubject = await subjectsController.updateById(id, req.body);
+
+	res.redirect('/subjects');
+});
+
+// VIEW
+
+app.get('/subjects/view/:id', authRole, async (req, res) => {
+	console.log('/subjects/view/:id');
+
+	const { id } = req.params;
+	if (!id) return res.redirect('subjects');
+
+	const directors = await usersController.getAllUsersByRole('director');
+	const schoolToView = await schoolsController.getByID(id);
+	res.render('pages/admin/schools/school_view.ejs', {
+		user: req.user,
+		directors: directors,
+		schoolToView: schoolToView,
+	});
+});
+app.get('/admin/schools/edit/:id', authRole, async (req, res) => {
+	console.log('/admin/schools/edit/:id');
+
+	const { id } = req.params;
+	if (!id) return res.redirect('/admin/schools');
+	const directors = await usersController.getAllUsersByRole('director');
+	const schoolToEdit = await schoolsController.getByID(id);
+	res.render('pages/admin/schools/school_edit.ejs', {
+		user: req.user,
+		directors: directors,
+		schoolToEdit: schoolToEdit,
+	});
+});
+
+app.post('/admin/schools/edit/:id', authRole, async (req, res) => {
+	console.log('POST /admin/schools/edit/:id');
+	const { id } = req.params;
+
+	if (!id) return res.redirect('/admin/schools');
+
+	const updatedSchool = await schoolsController.updateById(id, req.body);
+
+	res.redirect('/admin/schools');
+});
+
+app.get('subjects/view/:id', authRole, async (req, res) => {
+	console.log('subjects/view/:id');
+
+	const { id } = req.params;
+	if (!id) return res.redirect('/subjects');
+
+	const schools = await schoolsController.getAll();
+	const subjectToView = await subjectsController.getById(id);
+	const teachers = await usersController.getAllUsersByRole('teacher');
+
+	res.render('pages/subjects/subject_view.ejs', {
+		user: req.user,
+		schools: schools,
+		teachers: teachers,
+		subjectToView: subjectToView,
+	});
+});
+
 app.get('/', (req, res) => {
 	res.render('pages/index.ejs', {
 		user: req.user,
 	});
 });
-
 app.listen(3010, () => {
 	console.log('Server started at port 3010');
 });
