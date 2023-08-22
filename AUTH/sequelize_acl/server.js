@@ -103,11 +103,13 @@ app.get('/dashboard', checkAuthenticated, (req, res) => {
 
 app.get('/admin/users', authRole, async (req, res) => {
 	console.log('/admin/users');
+	const schools = await schoolsController.getAll();
 
-	const users = await userController.getAll();
+	const users = await usersController.getAll();
 	res.render('pages/admin/users.ejs', {
 		user: req.user,
 		users: users,
+		schools: schools,
 	});
 });
 
