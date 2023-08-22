@@ -109,7 +109,7 @@ const student3 = await usersController.createUser(
 		password: 'test',
 		role: 'student',
 	},
-	schoolDb2
+	schoolDb
 );
 
 const subject1 = await subjectsController.createSubject(
@@ -151,7 +151,7 @@ const grade2 = await gradesController.createGrade(
 	},
 	student2,
 	teacherDb,
-	schoolDb2
+	schoolDb
 );
 
 const schoolAllData = await School.findOne({

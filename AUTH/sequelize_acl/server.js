@@ -92,6 +92,23 @@ app.post(
 	})
 );
 
+//wylogowanie
+app.get('/logout', (req, res, next) => {
+	req.logout(function (err) {
+		console.log('User logged out!');
+		if (err) return next(err);
+		res.redirect('/');
+	});
+});
+
+app.post('/logout', (req, res, next) => {
+	req.logout(function (err) {
+		console.log('User logged out!');
+		if (err) return next(err);
+		res.redirect('/');
+	});
+});
+
 app.get('/dashboard', checkAuthenticated, (req, res) => {
 	console.log('/dashboard');
 	res.render('pages/dashboard.ejs', {
@@ -115,9 +132,12 @@ app.get('/admin/users', authRole, async (req, res) => {
 
 app.get('/admin/users/add', authRole, async (req, res) => {
 	console.log('/admin/users/add');
+	const schools = await schoolsController.getAll();
 
-	res.render('pages/admin/users_add.ejs', {
+	res.render('pages/admin/user_add.ejs', {
 		user: req.user,
+		schools: schools,
+		rolesArr: rolesArr,
 	});
 });
 
@@ -134,10 +154,14 @@ app.get('/admin/users/edit/:id', authRole, async (req, res) => {
 	const { id } = req.params;
 	if (!id) return res.redirect('/admin/users');
 
+	const schools = await schoolsController.getAll();
+
 	const userToEdit = await userController.getUserById(id);
-	res.render('pages/admin/users_edit.ejs', {
+	res.render('pages/admin/user_edit.ejs', {
 		user: req.user, // admin
 		userToEdit: userToEdit,
+		schools: schools,
+		rolesArr: rolesArr,
 	});
 });
 
@@ -154,23 +178,81 @@ app.post('/admin/users/edit/:id', authRole, async (req, res) => {
 	res.redirect('/admin/users');
 });
 
-//wylogowanie
-app.get('/logout', (req, res, next) => {
-	req.logout(function (err) {
-		console.log('User logged out!');
-		if (err) return next(err);
-		res.redirect('/');
+//schools
+app.get('/admin/schools', authRole, async (req, res) => {
+	console.log('/admin/schools');
+	const schools = await schoolsController.getAll();
+	const directors = await usersController.getAllUsersByRole('director');
+
+	res.render('pages/admin/schools/index.ejs', {
+		user: req.user,
+		schools: schools,
+		directors: directors,
 	});
 });
 
-app.post('/logout', (req, res, next) => {
-	req.logout(function (err) {
-		console.log('User logged out!');
-		if (err) return next(err);
-		res.redirect('/');
+app.get('/admin/schools/add', authRole, async (req, res) => {
+	console.log('/admin/schools/add');
+	const schools = await schoolsController.getAll();
+	const directors = await usersController.getAllUsersByRole('director');
+
+	res.render('pages/admin/schools/school_add.ejs', {
+		user: req.user,
+		schools: schools,
+		directors: directors,
 	});
 });
 
+app.post('/admin/schools/add', authRole, async (req, res) => {
+	console.log('POST /admin/schools/add');
+	const { id } = req.params;
+	const schoolDb = await schoolsController.createSchool(req.body);
+	res.redirect('/admin/schools');
+});
+
+// EDIT
+app.get('/admin/schools/edit/:id', authRole, async (req, res) => {
+	console.log('/admin/schools/edit/:id');
+
+	const { id } = req.params;
+	if (!id) return res.redirect('/admin/schools');
+	const directors = await usersController.getAllUsersByRole('director');
+	const schoolToEdit = await schoolsController.getByID(id);
+	res.render('pages/admin/schools/school_edit.ejs', {
+		user: req.user,
+		directors: directors,
+		schoolToEdit: schoolToEdit,
+	});
+});
+
+app.post('/admin/schools/edit/:id', authRole, async (req, res) => {
+	console.log('POST /admin/schools/edit/:id');
+	const { id } = req.params;
+
+	if (!id) return res.redirect('/admin/schools');
+
+	const updatedSchool = await schoolsController.updateById(id, req.body);
+
+	res.redirect('/admin/schools');
+});
+
+
+// VIEW
+
+app.get('/admin/schools/view/:id', authRole, async (req, res) => {
+	console.log('/admin/schools/view/:id');
+
+	const { id } = req.params;
+	if (!id) return res.redirect('/admin/schools');
+
+	const directors = await usersController.getAllUsersByRole('director');
+	const schoolToView = await schoolsController.getByID(id);
+	res.render('pages/admin/schools/school_view.ejs', {
+		user: req.user,
+		directors: directors,
+		schoolToView: schoolToView,
+	});
+});
 app.get('/', (req, res) => {
 	res.render('pages/index.ejs', {
 		user: req.user,
