@@ -269,11 +269,11 @@ app.get('/subjects', authRole, async (req, res) => {
 });
 
 app.get('/subjects/add', authRole, async (req, res) => {
-	console.log('/admin/subjects/add');
+	console.log('/subjects/add');
 	const schools = await schoolsController.getAll();
 	const teachers = await usersController.getAllUsersByRole('teacher');
 
-	res.render('pages/admin/schools/subject_add.ejs', {
+	res.render('pages/subjects/subject_add.ejs', {
 		user: req.user,
 		schools: schools,
 		teachers: teachers,

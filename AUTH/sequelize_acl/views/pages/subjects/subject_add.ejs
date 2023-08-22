@@ -1,0 +1,36 @@
+<%- include('../partials/head', {title: 'Add subject' }) %>
+
+    <body>
+        <h3>Add subject</h3>
+
+        <%- include('../partials/navbar', { user }) %>
+            <% let selectTeacherHtml=htmlHelper.getSelectIdCodeFromArr(teachers, 'teacherId' , 'name' , 'teacherControl'
+                , 'form-control' ) %>
+                <% let selectSchoolHtml=htmlHelper.getSelectIdCodeFromArr(schools, 'schoolId' , 'name' , 'schoolControl'
+                    , 'form-control' ) %>
+                    <form action="/subjects/add" method="post">
+                        <div>
+                            <label for="nameControl" class="form-label">Name: </label>
+                            <input type="text" id="nameControl" name="name" class="form-control">
+                        </div>
+                        <div>
+                            <label for="descriptionControl" class="form-label">Description: </label>
+                            <input type="text" id="descriptionControl" name="descrption" class="form-control">
+                        </div>
+
+                        <div>
+                            <label for="teacherControl" class="form-label">Teacher: </label>
+                            <%- selectTeacherHtml %>
+                        </div>
+
+                        <div>
+                            <label for="schoolControl" class="form-label">School: </label>
+                            <%- selectSchoolHtml %>
+                        </div>
+
+                        <button type="submit" class="btn">Save subject</button>
+                    </form>
+                    <%- include('../partials/footer', {title: 'Admin add school' }) %>
+    </body>
+
+    </html>
