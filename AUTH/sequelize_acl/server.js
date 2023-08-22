@@ -120,9 +120,10 @@ app.get('/dashboard', checkAuthenticated, (req, res) => {
 
 app.get('/admin/users', authRole, async (req, res) => {
 	console.log('/admin/users');
-	const schools = await schoolsController.getAll();
 
 	const users = await usersController.getAll();
+	const schools = await schoolsController.getAll();
+
 	res.render('pages/admin/users.ejs', {
 		user: req.user,
 		users: users,
@@ -156,7 +157,7 @@ app.get('/admin/users/edit/:id', authRole, async (req, res) => {
 
 	const schools = await schoolsController.getAll();
 
-	const userToEdit = await userController.getUserById(id);
+	const userToEdit = await usersController.getUserById(id);
 	res.render('pages/admin/user_edit.ejs', {
 		user: req.user, // admin
 		userToEdit: userToEdit,
@@ -168,11 +169,7 @@ app.get('/admin/users/edit/:id', authRole, async (req, res) => {
 app.post('/admin/users/edit/:id', authRole, async (req, res) => {
 	console.log('POST /admin/users/edit/:id');
 	const { id } = req.params;
-	console.log('\n REQ PARAAAMSSSSS', req.path);
-	if (!id) {
-		console.log('brak id ?');
-		return res.redirect('/admin/users');
-	}
+	if (!id) return res.redirect('/admin/users');
 
 	const updatedUser = await usersController.updateById(id, req.body);
 	res.redirect('/admin/users');
@@ -216,6 +213,7 @@ app.get('/admin/schools/edit/:id', authRole, async (req, res) => {
 
 	const { id } = req.params;
 	if (!id) return res.redirect('/admin/schools');
+
 	const directors = await usersController.getAllUsersByRole('director');
 	const schoolToEdit = await schoolsController.getByID(id);
 	res.render('pages/admin/schools/school_edit.ejs', {
@@ -246,6 +244,7 @@ app.get('/admin/schools/view/:id', authRole, async (req, res) => {
 
 	const directors = await usersController.getAllUsersByRole('director');
 	const schoolToView = await schoolsController.getByID(id);
+
 	res.render('pages/admin/schools/school_view.ejs', {
 		user: req.user,
 		directors: directors,
@@ -262,9 +261,9 @@ app.get('/subjects', authRole, async (req, res) => {
 
 	res.render('pages/subjects/index.ejs', {
 		user: req.user,
+		subjects: subjects,
 		schools: schools,
 		teachers: teachers,
-		subjects: subjects,
 	});
 });
 
@@ -293,15 +292,15 @@ app.get('/subjects/edit/:id', authRole, async (req, res) => {
 	const { id } = req.params;
 	if (!id) return res.redirect('/subjects');
 
-	const schools = await schoolsController.getAll();
 	const subjectToEdit = await subjectsController.getById(id);
+	const schools = await schoolsController.getAll();
 	const teachers = await usersController.getAllUsersByRole('teacher');
 
 	res.render('pages/subjects/subject_edit.ejs', {
 		user: req.user,
+		subjectToEdit: subjectToEdit,
 		schools: schools,
 		teachers: teachers,
-		subjectToEdit: subjectToEdit,
 	});
 });
 
@@ -319,59 +318,20 @@ app.post('/subjects/edit/:id', authRole, async (req, res) => {
 // VIEW
 
 app.get('/subjects/view/:id', authRole, async (req, res) => {
-	console.log('/subjects/view/:id');
-
-	const { id } = req.params;
-	if (!id) return res.redirect('subjects');
-
-	const directors = await usersController.getAllUsersByRole('director');
-	const schoolToView = await schoolsController.getByID(id);
-	res.render('pages/admin/schools/school_view.ejs', {
-		user: req.user,
-		directors: directors,
-		schoolToView: schoolToView,
-	});
-});
-app.get('/admin/schools/edit/:id', authRole, async (req, res) => {
-	console.log('/admin/schools/edit/:id');
-
-	const { id } = req.params;
-	if (!id) return res.redirect('/admin/schools');
-	const directors = await usersController.getAllUsersByRole('director');
-	const schoolToEdit = await schoolsController.getByID(id);
-	res.render('pages/admin/schools/school_edit.ejs', {
-		user: req.user,
-		directors: directors,
-		schoolToEdit: schoolToEdit,
-	});
-});
-
-app.post('/admin/schools/edit/:id', authRole, async (req, res) => {
-	console.log('POST /admin/schools/edit/:id');
-	const { id } = req.params;
-
-	if (!id) return res.redirect('/admin/schools');
-
-	const updatedSchool = await schoolsController.updateById(id, req.body);
-
-	res.redirect('/admin/schools');
-});
-
-app.get('subjects/view/:id', authRole, async (req, res) => {
 	console.log('subjects/view/:id');
 
 	const { id } = req.params;
 	if (!id) return res.redirect('/subjects');
 
-	const schools = await schoolsController.getAll();
 	const subjectToView = await subjectsController.getById(id);
+	const schools = await schoolsController.getAll();
 	const teachers = await usersController.getAllUsersByRole('teacher');
 
 	res.render('pages/subjects/subject_view.ejs', {
 		user: req.user,
+		subjectToView: subjectToView,
 		schools: schools,
 		teachers: teachers,
-		subjectToView: subjectToView,
 	});
 });
 

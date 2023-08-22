@@ -1,0 +1,34 @@
+<%- include("../partials/head", { title: "View subject" }) %>
+
+    <body>
+        <h3>View subject by id: <%= subjectToView.id %>
+        </h3>
+        <%- include("../partials/navbar", { user }) %>
+
+            <form action="/subjects/view/<%= subjectToView.id %>" method="post">
+                <div>
+                    <label for="nameControl" class="form-label">Name:</label>
+                    <input type="text" id="nameControl" class="form-control" name="name"
+                        value="<%= subjectToView.name %>" disabled>
+                </div>
+                <div>
+                    <label for="descriptionControl" class="form-label">Description:</label>
+                    <input type="text" id="descriptionControl" class="form-control" name="description"
+                        value="<%= subjectToView.description %>" disabled>
+                </div>
+                <div>
+                    <label for="teacherControl" class="form-label">Teacher:</label>
+                    <%= htmlHelper.getElValueFromArrById(teachers, subjectToView.teacherId, "name" ) %>
+                </div>
+                <div>
+                    <label for="schoolControl" class="form-label">School:</label>
+                    <%= htmlHelper.getElValueFromArrById(schools, subjectToView.schoolId, "name" ) %>
+                </div>
+            </form>
+
+            <a href="/subjects/edit/<%= subjectToView.id %>" class="btn">Edit subject</a>
+
+            <%- include("../partials/footer", { title: "View subject" }) %>
+    </body>
+
+    </html>
