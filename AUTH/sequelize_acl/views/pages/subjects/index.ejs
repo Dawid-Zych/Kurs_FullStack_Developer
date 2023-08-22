@@ -1,0 +1,46 @@
+<%- include('..//partials/head', {title: 'Subjects' }) %>
+
+    <body>
+        <h3>Subjects list</h3>
+        <%- include('../partials/navbar.ejs', {user}) %>
+
+            <p>
+                <% if (subjects) { %>
+                    <table class="table">
+                        <tr>
+                            <th>id</th>
+                            <th>name</th>
+                            <th>school</th>
+                            <th>teacher</th>
+                            <th>actions</th>
+                        </tr>
+                        <% for (let i=0; i < subjects.length; i++) { %>
+                            <tr>
+                                <td>
+                                    <%= subjects[i].id %>
+                                </td>
+                                <td>
+                                    <%= subjects[i].name %>
+                                </td>
+                                <td>
+                                    <%= htmlHelper.getElValueFromArrById(schools,subjects[i].schoolId, "name" ) %>
+                                </td>
+                                <td>
+                                    <%= htmlHelper.getElValueFromArrById(teachers,subjects[i].teacherId, "name" ) %>
+                                </td>
+                                <td>
+                                    <a href="/admin/subjects/edit/<%= subjects[i].id  %>">edit</a>
+                                    <a href="/admin/subjects/view/<%= subjects[i].id  %>">view</a>
+                                </td>
+                            </tr>
+                            <% } %>
+                    </table>
+                    <%} %>
+            </p>
+
+            <a href="/admin/subjects/add" class="btn">Add subjects</a>
+
+            <%- include('../partials/footer', {title: 'Subjects' }) %>
+    </body>
+
+    </html>
