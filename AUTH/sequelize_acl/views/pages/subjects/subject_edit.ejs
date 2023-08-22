@@ -1,0 +1,38 @@
+<%- include('../partials/head', {title: 'Edit subject' }) %>
+
+    <body>
+        <h3>Edit subject by id: <%= subjectToEdit.id %>
+        </h3>
+
+        <%- include('../partials/navbar', { user }) %>
+            <% let selectTeacherHtml=htmlHelper.getSelectIdCodeFromArr(teachers, 'teacherId' , 'name' , 'teacherControl'
+                , 'form-control' ,subjectToEdit.teacherId ) %>
+                <% let selectSchoolHtml=htmlHelper.getSelectIdCodeFromArr(schools, 'schoolId' , 'name' , 'schoolControl'
+                    , 'form-control' , subjectToEdit.schoolId) %>
+                    <form action="/subjects/edit/<%= subjectToEdit.id %>" method="post">
+                        <input type="hidden" value="<%= subjectToEdit.id %>" name="id" value="<%= subjectToEdit.name %>">
+                        <div>
+                            <label for="nameControl" class="form-label">Name: </label>
+                            <input type="text" id="nameControl" name="name" class="form-control" value="<%= subjectToEdit.name %>">
+                        </div>
+                        <div>
+                            <label for="descriptionControl" class="form-label">Description: </label>
+                            <input type="text" id="descriptionControl" name="description" class="form-control" value="<%= subjectToEdit.description %>">
+                        </div>
+
+                        <div>
+                            <label for="teacherControl" class="form-label">Teacher: </label>
+                            <%- selectTeacherHtml %>
+                        </div>
+
+                        <div>
+                            <label for="schoolControl" class="form-label">School: </label>
+                            <%- selectSchoolHtml %>
+                        </div>
+
+                        <button type="submit" class="btn">Save subject</button>
+                    </form>
+                    <%- include('../partials/footer', {title: 'Admin add school' }) %>
+    </body>
+
+    </html>
