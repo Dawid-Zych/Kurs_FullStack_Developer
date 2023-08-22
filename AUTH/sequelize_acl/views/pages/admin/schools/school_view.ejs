@@ -1,0 +1,35 @@
+<%- include('../../partials/head', {title: 'Admin view school' }) %>
+
+    <body>
+        <h3>Admin view with id: <%= schoolToView.id %>"</h3>
+
+        <%- include('../../partials/navbar', { user }) %>
+
+            <form action="/admin/schools/view/ <%= schoolToView.id %>" method="post">
+                <div>
+                    <label for="nameControl" class="form-label">Name: </label>
+                    <input type="text" id="nameControl" name="name" class="form-control"
+                        value="<%= schoolToView.name %>" disabled>
+                </div>
+
+                <div>
+                    <label for="addressControl" class="form-label">Address: </label>
+                    <input type="text" id="addressControl" name="address" class="form-control"
+                        value="<%= schoolToView.address %>" disabled>
+                </div>
+
+
+                <div>
+                    <label for="directorControl" class="form-label">Director: </label>
+                    <%= htmlHelper.getElValueFromArrById(directors,schoolToView.directorId,'name') %>
+                </div>
+
+
+            </form>
+
+            <a href="/admin/schools/edit/<%= schoolToView.id  %>" class="btn">edit school</a>
+
+            <%- include('../../partials/footer', {title: 'Admin edit school' }) %>
+    </body>
+
+    </html>
