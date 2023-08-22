@@ -46,6 +46,16 @@ const directorWithSchoolFromDb = await User.findOne({
 });
 console.log('Director With School:', JSON.stringify(directorWithSchoolFromDb, null, 4));
 
+const directorDb2 = await usersController.createUser({
+	name: 'Katarzyna',
+	surname: 'Barska',
+	email: 'director2@example.com',
+	password: 'test',
+	role: 'director',
+});
+
+await schoolsController.setDirector(schoolDb2, directorDb2);
+
 const teacherDb = await usersController.createUser({
 	name: 'Alina',
 	surname: 'Kowalska',
@@ -55,6 +65,14 @@ const teacherDb = await usersController.createUser({
 });
 
 console.log('Teacher:', teacherDb.dataValues);
+
+const teacherDb2 = await usersController.createUser({
+	name: 'Halinka',
+	surname: 'Halińska',
+	email: 'halina@example.com',
+	password: 'test',
+	role: 'teacher',
+});
 
 const student1 = await usersController.createUser(
 	{
@@ -76,11 +94,23 @@ const student2 = await usersController.createUser(
 		email: 'student2@example.com',
 		password: 'test',
 		role: 'student',
+		age: 22,
 	},
 	schoolDb
 );
 
 console.log('student2:', student2.dataValues);
+
+const student3 = await usersController.createUser(
+	{
+		name: 'Daniel',
+		surname: 'Danielski',
+		email: 'student3@example.com',
+		password: 'test',
+		role: 'student',
+	},
+	schoolDb2
+);
 
 const subject1 = await subjectsController.createSubject(
 	{
@@ -93,6 +123,17 @@ const subject1 = await subjectsController.createSubject(
 await subjectsController.addUserToSubject(student1, subject1);
 await subjectsController.addUserToSubject(student2, subject1);
 
+const subject2 = await subjectsController.createSubject(
+	{
+		name: 'Eng',
+	},
+	teacherDb2,
+	schoolDb3
+);
+
+await subjectsController.addUserToSubject(student2, subject2);
+await subjectsController.addUserToSubject(student3, subject2);
+
 const grade1 = await gradesController.createGrade(
 	{
 		grade: 5.0,
@@ -101,6 +142,16 @@ const grade1 = await gradesController.createGrade(
 	student1,
 	teacherDb,
 	schoolDb
+);
+
+const grade2 = await gradesController.createGrade(
+	{
+		grade: 4.5,
+		description: 'good work!',
+	},
+	student2,
+	teacherDb,
+	schoolDb2
 );
 
 const schoolAllData = await School.findOne({
