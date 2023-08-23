@@ -365,6 +365,74 @@ app.get('/grades', authRole, async (req, res) => {
 	});
 });
 
+app.get('/grades/add', authRole, async (req, res) => {
+	console.log('/grades/add');
+	const schools = await schoolsController.getAll();
+	const subjects = await subjectsController.getAll();
+	const teachers = await usersController.getAllUsersByRole('teacher');
+	const students = await usersController.getAllUsersByRole('students');
+
+	res.render('pages/grades/grade_add.ejs', {
+		user: req.user,
+		schools: schools,
+		subjects: subjects,
+		teachers: teachers,
+		students: students,
+	});
+});
+
+app.post('/grades/add', authRole, async (req, res) => {
+	console.log('POST /grades/add');
+
+	const gradeDb = await gradesController.createGrade(req.body);
+	res.redirect('/grades');
+});
+
+app.get('/grades/edit/:id', authRole, async (req, res) => {
+	console.log('/grades/edit/:id');
+	const { id } = req.params;
+
+	if (!id) return res.redirect('/grades');
+	const gradeToEdit = await gradesController.getById(id);
+	const schools = await schoolsController.getAll();
+	const subjects = await subjectsController.getAll();
+	const teachers = await usersController.getAllUsersByRole('teacher');
+	const students = await usersController.getAllUsersByRole('students');
+
+	res.render('pages/grades/grade_edit.ejs', {
+		user: req.user,
+		schools: schools,
+		subjects: subjects,
+		teachers: teachers,
+		students: students,
+		gradeToEdit: gradeToEdit,
+	});
+});
+
+app.post('/grades/edit/:id', authRole, async (req, res) => {
+	console.log('POST /grades/edit/:id');
+	const { id } = req.params;
+
+	if (!id) return res.redirect('/grades');
+	const updatedGradeDb = await gradesController.updateById(id, req.body);
+	res.redirect('/grades');
+});
+
+app.get('/grades/view/:id', authRole, async (req, res) => {
+	console.log('/grades/view/:id');
+
+	const { id } = req.params;
+	if (!id) return res.redirect('/grades');
+	
+	const gradeToView = await gradesController.getAllFullDataById(id);
+	console.log('gradeToView', JSON.stringify(gradeToView, null, 4));
+
+	res.render('pages/grades/grade_view.ejs', {
+		user: req.user,
+		gradeToView: gradeToView,
+	});
+});
+
 app.get('/', (req, res) => {
 	res.render('pages/index.ejs', {
 		user: req.user,
