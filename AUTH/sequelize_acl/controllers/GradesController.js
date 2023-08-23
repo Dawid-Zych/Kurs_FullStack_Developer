@@ -5,6 +5,12 @@ export class GradesController {
 		return await Grade.findAll({});
 	}
 
+	async getAllFullData() {
+		return await Grade.findAll({
+			include: [{ model: User }, { model: Subject }, { model: School }, { model: User, as: 'teacher' }],
+		});
+	}
+
 	async createGrade(gradeData, studentDb, teacherDb, schoolDb) {
 		const gradeDb = await Grade.create({
 			...gradeData,
@@ -29,6 +35,14 @@ export class GradesController {
 		return await Grade.findByPk(id);
 	}
 
+	async getAllFullDataById(id) {
+		return await Grade.findOne({
+			where: {
+				id: id,
+			},
+			include: [{ model: User }, { model: Subject }, { model: School }, { model: User, as: 'teacher' }],
+		});
+	}
 	async updateById(id, gradeData) {
 		const updatedGrade = await Grade.update(
 			{
@@ -40,5 +54,14 @@ export class GradesController {
 		);
 
 		return updatedGrade;
+	}
+
+	async getGradesByStudentId(studentId) {
+		return await Grade.findAll({
+			where: {
+				studentId: studentId,
+			},
+			include: [{ model: User }, { model: Subject }, { model: School }, { model: User, as: 'teacher' }],
+		});
 	}
 }

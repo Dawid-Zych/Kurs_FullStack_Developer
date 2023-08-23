@@ -75,7 +75,9 @@ Grade.belongsTo(User, {
 	foreignKey: 'studentId', // w Grade
 });
 
-Grade.belongsTo(School); // schoolId w Grade
+Grade.belongsTo(School, {
+	foreignKey: 'schoolId', // w Grade
+}); // schoolId w Grade
 
 await sequelize.sync({ force: true });
 
