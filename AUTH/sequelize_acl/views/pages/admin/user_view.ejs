@@ -1,0 +1,50 @@
+<%- include('../partials/head', {title: 'Admin view user' }) %>
+
+    <body>
+        <h3>Admin: view user with id: <%= userToView.id %>
+        </h3>
+        <%- include('../partials/navbar.ejs', {user}) %>
+
+            <form action="/admin/users/edit/<%= userToView.id %>" method="post">
+                <div>
+                    <label for="nameControl" class="form-label">Name:</label>
+                    <input type="text" id="nameControl" class="form-control" name="name" value="<%= userToView.name %>">
+                </div>
+                <div>
+                    <label for="surnameControl" class="form-label">Surname:</label>
+                    <input type="text" id="surnameControl" class="form-control" name="surname"
+                        value="<%= userToView.surname %>" disabled>
+                </div>
+                <div>
+                    <label for="emailControl" class="form-label">Email:</label>
+                    <input type="email" id="emailControl" class="form-control" name="email"
+                        value="<%= userToView.email %>" disabled>
+                </div>
+                <div>
+                    <label for="roleControl" class="form-label">Role:</label>
+                    <%= userToView.role %>
+
+                </div>
+                <div>
+                    <label for="schoolControl" class="form-label">School:</label>
+                    <%- htmlHelper.getElValueFromArrById(schools, userToView.schoolId, 'name' ) %>
+                </div>
+                <div>
+                    <label for="addressControl" class="form-label">Adress:</label>
+                    <input type="text" id="addressControl" class="form-control" name="address"
+                        value="<%= userToView.address %>" disabled>
+                </div>
+                <div>
+                    <label for="ageControl" class="form-label">Age:</label>
+                    <input type="text" id="ageControl" class="form-control" name="age" value="<%= userToView.age %>"
+                        disabled>
+                </div>
+            </form>
+
+            <td><a href="/admin/users/edit/<%= userToView.id  %>" class="btn">Edit user</a></td>
+            
+            <%= include('../partials/footer', {title: 'Admin edit user' }) %>
+
+    </body>
+
+    </html>

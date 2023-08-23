@@ -175,6 +175,22 @@ app.post('/admin/users/edit/:id', authRole, async (req, res) => {
 	res.redirect('/admin/users');
 });
 
+app.get('/admin/users/view/:id', authRole, async (req, res) => {
+	console.log('GET /admin/users/view/:id');
+	const { id } = req.params;
+	if (!id) return res.redirect('/admin/users');
+
+	const schools = await schoolsController.getAll();
+
+	const userToView = await usersController.getById(id);
+	res.render('pages/admin/user_view.ejs', {
+		user: req.user, // admin
+		userToView: userToView,
+		schools: schools,
+		rolesArr: rolesArr,
+	});
+});
+
 //schools
 app.get('/admin/schools', authRole, async (req, res) => {
 	console.log('/admin/schools');
