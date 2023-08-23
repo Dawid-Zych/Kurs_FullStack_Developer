@@ -1,34 +1,43 @@
-<%- include("../partials/head", { title: "View grade" }) %>
+<%- include('..//partials/head', {title: 'View grade' }) %>
 
     <body>
-        <h3>View grade by id: <%= gradeToView.id %>
+        <h3>View grade with id:<% gradeToView.id %>
         </h3>
-        <%- include("../partials/navbar", { user }) %>
-
-            <form action="/grades/view/<%= gradeToView.id %>" method="post">
+        <%- include('../partials/navbar.ejs', {user}) %>
+            <form action="/grades/view/<%=gradeToView.id%>" method="post">
                 <div>
-                    <label for="nameControl" class="form-label">Name:</label>
-                    <input type="text" id="nameControl" class="form-control" name="name"
-                        value="<%= gradeToView.name %>" disabled>
+                    <label for="gradeControl" class="form-label">Grade:</label>
+                    <input type="number" min="1" max="6" step="0.5" class="form-control" id="gradeControl" name="grade"
+                        required value="<%=gradeToView.grade %>" disabled>
                 </div>
                 <div>
                     <label for="descriptionControl" class="form-label">Description:</label>
-                    <input type="text" id="descriptionControl" class="form-control" name="description"
-                        value="<%= gradeToView.description %>" disabled>
-                </div>
-                <div>
-                    <label for="teacherControl" class="form-label">Teacher:</label>
-                    <%= htmlHelper.getElValueFromArrById(teachers, gradeToView.teacherId, "name" ) %>
+                    <input type="text" class="form-control" id="descriptionControl" name="description"
+                        value="<%=gradeToView.description %>" disabled>
                 </div>
                 <div>
                     <label for="schoolControl" class="form-label">School:</label>
-                    <%= htmlHelper.getElValueFromArrById(schools, gradeToView.schoolId, "name" ) %>
+                    <%= gradeToView['School']?.name %>
+                </div>
+                <div>
+                    <label for="subjectControl" class="form-label">Subject:</label>
+                    <%- gradeToView['Subject']?.name %>
+                </div>
+                <div>
+                    <label for="teacherControl" class="form-label">Teacher:</label>
+                    <%- gradeToView['teacher']?.name %>
+                </div>
+                <div>
+                    <label for="studentControl" class="form-label">Student:</label>
+                    <%- gradeToView['User']?.name %>
                 </div>
             </form>
 
-            <a href="/grades/edit/<%= gradeToView.id %>" class="btn">Edit grade</a>
+            <a href="/grades/edit/<%- gradeToView.id %>" class="btn">Edit grade</a>
 
-            <%- include("../partials/footer", { title: "View grade" }) %>
+
+
+            <%- include('../partials/footer', {title: 'View grade' }) %>
     </body>
 
     </html>
