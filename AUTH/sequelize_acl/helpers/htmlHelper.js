@@ -1,12 +1,4 @@
 class HtmlHelper {
-	/* 
-        <select name = 'cars' id='cars-select' class=''>
-            <option value='1'>School 001</option>
-            <option value='2' selected>School 002</option>
-            <option value='3'>School 003</option>
-        </select>
-    */
-
 	getSelectIdCodeFromArr(arr, selectName, propertyToShow, id, className, selectedId = -1) {
 		let idCode = '';
 		if (id) idCode = `id="${id}"`;

@@ -1,0 +1,34 @@
+<%- include("../partials/head", { title: "View grade" }) %>
+
+    <body>
+        <h3>View grade by id: <%= gradeToView.id %>
+        </h3>
+        <%- include("../partials/navbar", { user }) %>
+
+            <form action="/grades/view/<%= gradeToView.id %>" method="post">
+                <div>
+                    <label for="nameControl" class="form-label">Name:</label>
+                    <input type="text" id="nameControl" class="form-control" name="name"
+                        value="<%= gradeToView.name %>" disabled>
+                </div>
+                <div>
+                    <label for="descriptionControl" class="form-label">Description:</label>
+                    <input type="text" id="descriptionControl" class="form-control" name="description"
+                        value="<%= gradeToView.description %>" disabled>
+                </div>
+                <div>
+                    <label for="teacherControl" class="form-label">Teacher:</label>
+                    <%= htmlHelper.getElValueFromArrById(teachers, gradeToView.teacherId, "name" ) %>
+                </div>
+                <div>
+                    <label for="schoolControl" class="form-label">School:</label>
+                    <%= htmlHelper.getElValueFromArrById(schools, gradeToView.schoolId, "name" ) %>
+                </div>
+            </form>
+
+            <a href="/grades/edit/<%= gradeToView.id %>" class="btn">Edit grade</a>
+
+            <%- include("../partials/footer", { title: "View grade" }) %>
+    </body>
+
+    </html>

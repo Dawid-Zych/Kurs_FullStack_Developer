@@ -1,0 +1,65 @@
+<%- include('..//partials/head', {title: 'Grades' }) %>
+
+    <body>
+        <h3>Grades list</h3>
+        <%- include('../partials/navbar.ejs', {user}) %>
+
+            <p>
+                <% if (grades) { %>
+                    <table class="table">
+                        <tr>
+                            <th>id</th>
+                            <th>name</th>
+                            <th>surname</th>
+                            <th>grade</th>
+                            <th>description</th>
+                            <th>school</th>
+                            <th>subject</th>
+                            <th>teacher</th>
+                            <th>actions</th>
+                        </tr>
+                        <% for (let i=0; i < grades.length; i++) { %>
+                            <% const grade=grades[i] %>
+
+
+                                <tr>
+                                    <td>
+                                        <%= grade.id %>
+                                    </td>
+                                    <td>
+                                        <%= grade['User']?.name %>
+                                    </td>
+                                    <td>
+                                        <%= grade['User']?.surname %>
+                                    </td>
+                                    <td>
+                                        <%= grade.grade %>
+                                    </td>
+                                    <td>
+                                        <%= grade.description %>
+                                    </td>
+                                    <td>
+                                        <%= grade['School']?.name %>
+                                    </td>
+                                    <td>
+                                        <%= grade['Subject']?.name %>
+                                    </td>
+                                    <td>
+                                        <%= grade['teacher']?.name %>
+                                    </td>
+                                    <td>
+                                        <a href="/grades/edit/<%= grade.id  %>">edit</a>
+                                        <a href="/grades/view/<%= grade.id  %>">view</a>
+                                    </td>
+                                </tr>
+                                <% } %>
+                    </table>
+                    <%} %>
+            </p>
+
+            <a href="/grades/add" class="btn">Add grade</a>
+
+            <%- include('../partials/footer', {title: 'Grades' }) %>
+    </body>
+
+    </html>

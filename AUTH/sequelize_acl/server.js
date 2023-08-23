@@ -370,7 +370,7 @@ app.get('/grades/add', authRole, async (req, res) => {
 	const schools = await schoolsController.getAll();
 	const subjects = await subjectsController.getAll();
 	const teachers = await usersController.getAllUsersByRole('teacher');
-	const students = await usersController.getAllUsersByRole('students');
+	const students = await usersController.getAllUsersByRole('student');
 
 	res.render('pages/grades/grade_add.ejs', {
 		user: req.user,
@@ -397,7 +397,7 @@ app.get('/grades/edit/:id', authRole, async (req, res) => {
 	const schools = await schoolsController.getAll();
 	const subjects = await subjectsController.getAll();
 	const teachers = await usersController.getAllUsersByRole('teacher');
-	const students = await usersController.getAllUsersByRole('students');
+	const students = await usersController.getAllUsersByRole('student');
 
 	res.render('pages/grades/grade_edit.ejs', {
 		user: req.user,
@@ -423,7 +423,7 @@ app.get('/grades/view/:id', authRole, async (req, res) => {
 
 	const { id } = req.params;
 	if (!id) return res.redirect('/grades');
-	
+
 	const gradeToView = await gradesController.getAllFullDataById(id);
 	console.log('gradeToView', JSON.stringify(gradeToView, null, 4));
 
