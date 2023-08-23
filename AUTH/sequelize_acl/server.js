@@ -157,7 +157,7 @@ app.get('/admin/users/edit/:id', authRole, async (req, res) => {
 
 	const schools = await schoolsController.getAll();
 
-	const userToEdit = await usersController.getUserById(id);
+	const userToEdit = await usersController.getById(id);
 	res.render('pages/admin/user_edit.ejs', {
 		user: req.user, // admin
 		userToEdit: userToEdit,

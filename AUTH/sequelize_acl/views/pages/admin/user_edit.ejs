@@ -1,25 +1,57 @@
 <%- include('../partials/head', {title: 'Admin edit user' }) %>
 
     <body>
-        <h3>Admin: edit user</h3>
+        <h3>Admin: edit user with id: <%= userToEdit.id %>
+        </h3>
         <%- include('../partials/navbar.ejs', {user}) %>
+            <% let selectSchoolHtml=htmlHelper.getSelectIdCodeFromArr(schools, 'schoolId' , 'name' , 'schoolControl'
+                , 'form-control' , userToEdit.schoolId )%>
+                <% let selectRoleHtml=htmlHelper.getSelectCodeFromArr(rolesArr, 'role' , 'roleControl' , 'form-control'
+                    , userToEdit.role )%>
+                    <form action="/admin/users/edit/<%= userToEdit.id %>" method="post">
+                        <input type="hidden" value="<%= userToEdit.id %>" name="id">
+                        <div>
+                            <label for="nameControl" class="form-label">Name:</label>
+                            <input type="text" id="nameControl" class="form-control" name="name"
+                                value="<%= userToEdit.name %>">
+                        </div>
+                        <div>
+                            <label for="surnameControl" class="form-label">Surname:</label>
+                            <input type="text" id="surnameControl" class="form-control" name="surname"
+                                value="<%= userToEdit.surname %>">
+                        </div>
+                        <!--   <div>
+                            <label for="passwordControl" class="form-label">Password:</label>
+                            <input type="password" id="passwordControl" class="form-control" name="password" value='<%= userToEdit.password %>'>
+                        </div> -->
+                        <div>
+                            <label for="emailControl" class="form-label">Email:</label>
+                            <input type="email" id="emailControl" class="form-control" name="email"
+                                value="<%= userToEdit.email %>">
+                        </div>
+                        <div>
+                            <label for="roleControl" class="form-label">Role:</label>
+                            <%- selectRoleHtml %>
+                        </div>
+                        <div>
+                            <label for="schoolControl" class="form-label">School:</label>
+                            <%- selectSchoolHtml %>
+                        </div>
+                        <div>
+                            <label for="addressControl" class="form-label">Adress:</label>
+                            <input type="text" id="addressControl" class="form-control" name="address"
+                                value="<%= userToEdit.address %>">
+                        </div>
+                        <div>
+                            <label for="ageControl" class="form-label">Age:</label>
+                            <input type="text" id="ageControl" class="form-control" name="age"
+                                value="<%= userToEdit.age %>">
+                        </div>
+                        <br><br>
+                        <button type="submit" class="btn">Save user</button>
 
-            <form action="/admin/users/edit/<%= userToEdit._id %>" method="post">
-                <input type="hidden" name="id" value="<%= userToEdit._id %>">
-                Name: <input type="text" name="name" value="<%= userToEdit.name %>">
-                <br><br>
-                Surname: <input type="text" name="surname" value="<%= userToEdit.surname %>">
-                <br><br>
-                Email: <input type="email" name="email" value="<%= userToEdit.email %>">
-                <br><br>
-                <!--   Password: <input type="password" name="password"> -->
-                <br><br>
-                <button type="submit">Save user</button>
-
-            </form>
-
-            <%- include('../partials/footer', {title: 'Admin edit user' }) %>
-
+                    </form>
+                    <%- include('../partials/footer', {title: 'Admin edit user' }) %>
 
     </body>
 
