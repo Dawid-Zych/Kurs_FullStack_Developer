@@ -1,23 +1,47 @@
 <%- include('../partials/head', {title: 'Admin add user' }) %>
 
-<body>
-    <h3>Admin: add user</h3>
-    <%- include('../partials/navbar.ejs', {user}) %>
+    <body>
+        <h3>Admin: add user</h3>
+        <%- include('../partials/navbar.ejs', {user}) %>
+            <% let selectSchoolHtml=htmlHelper.getSelectIdCodeFromArr(schools, 'schoolId' , 'name' , 'schoolControl'
+                , 'form-control' )%>
+                <% let selectRoleHtml=htmlHelper.getSelectCodeFromArr(rolesArr, 'role' , 'roleControl' , 'form-control'
+                    , 'student' )%>
+                    <form action="/admin/users/add" method="post">
+                        <div>
+                            <label for="nameControl" class="form-label">Name:</label>
+                            <input type="text" id="nameControl" class="form-control" name="name">
+                        </div>
+                        <div>
+                            <label for="surnameControl" class="form-label">Surname:</label>
+                            <input type="text" id="surnameControl" class="form-control" name="surname">
+                        </div>
+                        <div>
+                            <label for="passwordControl" class="form-label">Password:</label>
+                            <input type="password" id="passwordControl" class="form-control" name="password">
+                        </div>
+                        <div>
+                            <label for="emailControl" class="form-label">Email:</label>
+                            <input type="email" id="emailControl" class="form-control" name="email">
+                        </div>
+                        <div>
+                            <label for="roleControl" class="form-label">Role:</label>
+                            <%- selectRoleHtml %>
+                        </div>
+                        <div>
+                            <label for="schoolControl" class="form-label">School:</label>
+                            <%- selectSchoolHtml %>
+                        </div>
+                        <div>
+                            <label for="addressControl" class="form-label">Adress:</label>
+                            <input type="text" id="addressControl" class="form-control" name="address">
+                        </div>
+                        <br><br>
+                        <button type="submit" class="btn">Save user</button>
 
-        <form action="/admin/users/add" method="post">
-            Name: <input type="text" name="name">
-            <br><br>
-            Surname: <input type="text" name="surname">
-            <br><br>
-            Email: <input type="email" name="email">
-            <br><br>
-            Password: <input type="password" name="password">
-            <br><br>
-            <button type="submit">Save user</button>
+                    </form>
+                    <%- include('../partials/footer', {title: 'Admin add user' }) %>
 
-        </form>
-        <%- include('../partials/footer', {title: 'Admin add user' }) %>
+    </body>
 
-</body>
-
-</html>
+    </html>

@@ -20,7 +20,7 @@
                         <% for (let i=0; i < users.length; i++) { %>
                             <tr>
                                 <td>
-                                    <%= users[i]._id %>
+                                    <%= users[i].id %>
                                 </td>
                                 <td>
                                     <%= users[i].name %>
@@ -41,13 +41,14 @@
                                     <%= htmlHelper.getElValueFromArrById(schools,users[i].schoolId, "name" ) %>
                                 </td>
                                 <td><a href="/admin/users/edit/<%= users[i].id  %>">edit</a></td>
+                                <td><a href="/admin/users/view/<%= users[i].id  %>">view</a></td>
                             </tr>
                             <% } %>
                     </table>
                     <%} %>
             </p>
 
-            <a href="/admin/users/add">Add user</a>
+            <a href="/admin/users/add" class="btn">Add user</a>
 
             <%- include('../partials/footer', {title: 'Admin users list' }) %>
     </body>
