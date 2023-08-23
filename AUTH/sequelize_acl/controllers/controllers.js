@@ -141,6 +141,7 @@ const grade1 = await gradesController.createGrade(
 	},
 	student1,
 	teacherDb,
+	subject1,
 	schoolDb
 );
 
@@ -151,6 +152,7 @@ const grade2 = await gradesController.createGrade(
 	},
 	student2,
 	teacherDb,
+	subject2,
 	schoolDb
 );
 

@@ -351,6 +351,20 @@ app.get('/subjects/view/:id', authRole, async (req, res) => {
 	});
 });
 
+/* Grades */
+
+app.get('/grades', authRole, async (req, res) => {
+	console.log('/grades');
+
+	const grades = await gradesController.getAllFullData();
+	console.log('gradesFull:', JSON.stringify(grades, null, 4));
+
+	res.render('pages/grades/index.ejs', {
+		user: req.user,
+		grades: grades,
+	});
+});
+
 app.get('/', (req, res) => {
 	res.render('pages/index.ejs', {
 		user: req.user,
