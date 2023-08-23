@@ -1,0 +1,48 @@
+<%- include('..//partials/head', {title: 'Edit grade' }) %>
+
+    <body>
+        <h3>Edit grade with id:<% gradeToEdit.id %>
+        </h3>
+        <%- include('../partials/navbar.ejs', {user}) %>
+            <% const selectTeacherHtml=htmlHelper.getSelectIdCodeFromArr(teachers,'teacherId', 'name' , 'teacherControl'
+                , 'form-control' , gradeToEdit.teacherId ) %>
+                <% let selectSchoolHtml=htmlHelper.getSelectIdCodeFromArr(schools, 'schoolId' , 'name' , 'schoolControl'
+                    ,'form-control' ,gradeToEdit.schoolId) %>
+                    <% let selectSubjectHtml=htmlHelper.getSelectIdCodeFromArr(subjects, 'subjectId' , 'name'
+                        , 'subjectControl' ,'form-control', gradeToEdit.subjectId ) %>
+                        <% let selectStudentHtml=htmlHelper.getSelectIdCodeFromArr(students, 'studentId' , 'name'
+                            , 'studentControl' ,'form-control', gradeToEdit.studentId ) %>
+
+                            <form action="/grades/edit/<%=gradeToEdit.id%>" method="post">
+                                <input type="hidden" value="<%=gradeToEdit.id%>" name="id">
+                                <div>
+                                    <label for="gradeControl" class="form-label">Grade:</label>
+                                    <input type="number" min="1" max="6" step="0.5" class="form-control"
+                                        id="gradeControl" name="grade" required value="<%=gradeToEdit.grade %>">
+                                </div>
+                                <div>
+                                    <label for="descriptionControl" class="form-label">Description:</label>
+                                    <input type="text" class="form-control" id="descriptionControl" name="description"
+                                        value="<%=gradeToEdit.description %>">
+                                </div>
+                                <div>
+                                    <label for=" subjectControl" class="form-label">Subject:</label>
+                                    <%- selectSubjectHtml %>
+                                </div>
+                                <div>
+                                    <label for="teacherControl" class="form-label">Teacher:</label>
+                                    <%- selectTeacherHtml %>
+                                </div>
+                                <div>
+                                    <label for="studentControl" class="form-label">Student:</label>
+                                    <%- selectStudentHtml %>
+                                </div>
+                                <button class="btn" type="submit">Save grade</button>
+                            </form>
+
+
+
+                            <%- include('../partials/footer', {title: 'Edit grade' }) %>
+    </body>
+
+    </html>
