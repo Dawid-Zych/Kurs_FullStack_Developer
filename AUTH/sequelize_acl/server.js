@@ -299,6 +299,33 @@ app.post('/admin/schools/view/:id/addsubject', authRole, async (req, res) => {
 	res.redirect('/admin/schools/view/' + id);
 });
 
+// dodanie nauczyciela do konkretnej szkoły
+
+app.get('/admin/schools/view/:id/addteacher', authRole, async (req, res) => {
+	console.log('/admin/schools/view/:id/addteacher');
+
+	const { id } = req.params;
+	if (!id) return res.redirect('/admin/schools');
+
+	const school = await schoolsController.getFullDataById(id);
+
+	res.render('pages/admin/schools/school_addTeacher.ejs', {
+		user: req.user,
+		schoolId: id,
+		school: school,
+	});
+});
+
+app.post('/admin/schools/view/:id/addteacher', authRole, async (req, res) => {
+	console.log('POST /admin/schools/view/:id/addteacher');
+
+	const { id } = req.params;
+	if (!id) return res.redirect('/admin/schools/');
+
+	const userDb = await usersController.createUser(req.body);
+	res.redirect('/admin/schools/view/' + id);
+});
+
 // SUBJECTS
 app.get('/subjects', authRole, async (req, res) => {
 	console.log('/subjects');
