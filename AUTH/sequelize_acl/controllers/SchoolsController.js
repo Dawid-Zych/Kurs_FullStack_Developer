@@ -29,6 +29,12 @@ export class SchoolsController {
 		return await School.findByPk(id);
 	}
 
+	async getFullDataById(id) {
+		return await School.findByPk(id, {
+			include: [{ model: Subject, include: [{ model: User, as: 'teacher' }] }],
+		});
+	}
+
 	async updateById(id, schoolData) {
 		const updatedSchool = await School.update(
 			{
