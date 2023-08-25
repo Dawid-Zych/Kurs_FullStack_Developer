@@ -53,6 +53,8 @@ export class UsersController {
 						{ model: User, as: 'teacher' },
 						{
 							model: Grade,
+							required: false, // Grade nie obowiązkowy!
+									// pobierze też przedmioty bez ocen
 							include: [{ model: School }, { model: User, as: 'teacher' }],
 							where: {
 								studentId: id, // ocena tylko dla usera o id

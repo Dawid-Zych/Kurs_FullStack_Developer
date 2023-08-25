@@ -182,12 +182,14 @@ app.get('/admin/users/view/:id', authRole, async (req, res) => {
 
 	const schools = await schoolsController.getAll();
 
-	const userToView = await usersController.getById(id);
+	const userToView = await usersController.getFullDataById(id);
+	const grades = await gradesController.getGradesByStudentId(id);
 	res.render('pages/admin/user_view.ejs', {
 		user: req.user, // admin
 		userToView: userToView,
 		schools: schools,
 		rolesArr: rolesArr,
+		grades: grades,
 	});
 });
 

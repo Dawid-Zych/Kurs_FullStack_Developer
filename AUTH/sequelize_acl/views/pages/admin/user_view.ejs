@@ -25,10 +25,7 @@
                     <%= userToView.role %>
 
                 </div>
-                <div>
-                    <label for="schoolControl" class="form-label">School:</label>
-                    <%- htmlHelper.getElValueFromArrById(schools, userToView.schoolId, 'name' ) %>
-                </div>
+
                 <div>
                     <label for="addressControl" class="form-label">Adress:</label>
                     <input type="text" id="addressControl" class="form-control" name="address"
@@ -39,11 +36,120 @@
                     <input type="text" id="ageControl" class="form-control" name="age" value="<%= userToView.age %>"
                         disabled>
                 </div>
+                <div>
+                    <label for="schoolControl" class="form-label">School:</label>
+                    <%- htmlHelper.getElValueFromArrById(schools, userToView.schoolId, 'name' ) %>
+                </div>
             </form>
 
             <td><a href="/admin/users/edit/<%= userToView.id  %>" class="btn">Edit user</a></td>
-            
-            <%= include('../partials/footer', {title: 'Admin edit user' }) %>
+
+            <p>
+            <h3>User <%= userToView.name + ' ' + userToView.surname %> subjects:</h3>
+            </p>
+
+
+            <% const subjects=userToView['Subjects'] %>
+                <% if (subjects) { %>
+                    <% for (let i=0; i < subjects.length; i++) { %>
+                        <% const subject=subjects[i] %>
+
+                            <h3>
+                                Subject: <%= subject.name %>
+                            </h3>
+                            <table class="table">
+                                <tr>
+                                    <th>subject id</th>
+                                    <th>name</th>
+                                    <th>school</th>
+                                    <th>teacher</th>
+                                    <th>actions</th>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <%= subject.id %>
+                                    </td>
+                                    <td>
+                                        <%= subject.name %>
+                                    </td>
+                                    <td>
+                                        <%= subject['School']?.name %>
+                                    </td>
+                                    <td>
+                                        <%= subject['teacher']?.name %>
+                                    </td>
+                                    <td>
+
+                                    </td>
+                                </tr>
+                            </table>
+
+
+                            <!-- subject grades -->
+
+
+                            <% const grades=subject['Grades'] %>
+                                <% if (grades) { %>
+                                    <h4>Subjects <%= subject.name %> grades:</h4>
+                                    <table class="table">
+                                        <tr>
+                                            <th>grade id</th>
+                                            <th>student id</th>
+                                            <th>grade</th>
+                                            <th>school</th>
+                                            <th>subjectId</th>
+                                            <th>teacher</th>
+                                            <th>actions</th>
+                                        </tr>
+
+                                        <% for (let i=0; i < grades.length; i++) { %>
+                                            <% const grade=grades[i] %>
+
+                                                <tr>
+                                                    <td>
+                                                        <%= grade.id %>
+                                                    </td>
+                                                    <td>
+                                                        <%= grade.studentId %>
+                                                    </td>
+                                                    <td>
+                                                        <%= grade.grade %>
+                                                    </td>
+                                                    <td>
+                                                        <%= grade['School']?.name %>
+                                                    </td>
+                                                    <td>
+                                                        <%= grade.subjectId %>
+                                                    </td>
+                                                    <td>
+                                                        <%= grade['teacher']?.name %>
+                                                    </td>
+                                                    <td>
+                                                        <a href="/grades/edit/<%= grade.id %>">edit</a>
+                                                        <a href="/grades/view/<%= grade.id %>">view</a>
+                                                    </td>
+                                                </tr>
+
+
+
+                                                <% } %>
+
+                                    </table>
+
+
+
+                                    <% }%>
+
+
+
+
+                                        <% } %>
+                                            <%} %>
+
+
+
+                                                <%= include('../partials/footer', {title: 'Admin view user' }) %>
 
     </body>
 
