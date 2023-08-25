@@ -56,23 +56,29 @@ const directorDb2 = await usersController.createUser({
 
 await schoolsController.setDirector(schoolDb2, directorDb2);
 
-const teacherDb = await usersController.createUser({
-	name: 'Alina',
-	surname: 'Kowalska',
-	email: 'alina@example.com',
-	password: 'test',
-	role: 'teacher',
-});
+const teacherDb = await usersController.createUser(
+	{
+		name: 'Alina',
+		surname: 'Kowalska',
+		email: 'alina@example.com',
+		password: 'test',
+		role: 'teacher',
+	},
+	schoolDb
+);
 
 console.log('Teacher:', teacherDb.dataValues);
 
-const teacherDb2 = await usersController.createUser({
-	name: 'Halinka',
-	surname: 'Halińska',
-	email: 'halina@example.com',
-	password: 'test',
-	role: 'teacher',
-});
+const teacherDb2 = await usersController.createUser(
+	{
+		name: 'Halinka',
+		surname: 'Halińska',
+		email: 'halina@example.com',
+		password: 'test',
+		role: 'teacher',
+	},
+	schoolDb
+);
 
 const student1 = await usersController.createUser(
 	{
@@ -122,15 +128,17 @@ const subject1 = await subjectsController.createSubject(
 
 await subjectsController.addUserToSubject(student1, subject1);
 await subjectsController.addUserToSubject(student2, subject1);
+await subjectsController.addUserToSubject(student3, subject1);
 
 const subject2 = await subjectsController.createSubject(
 	{
 		name: 'Eng',
 	},
 	teacherDb2,
-	schoolDb3
+	schoolDb
 );
 
+await subjectsController.addUserToSubject(student1, subject2);
 await subjectsController.addUserToSubject(student2, subject2);
 await subjectsController.addUserToSubject(student3, subject2);
 

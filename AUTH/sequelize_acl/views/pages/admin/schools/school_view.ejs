@@ -29,7 +29,104 @@
 
             <a href="/admin/schools/edit/<%= schoolToView.id  %>" class="btn">edit school</a>
 
-            <%- include('../../partials/footer', {title: 'Admin edit school' }) %>
+            <br>
+            <br>
+            <br>
+            <br>
+
+            <p>
+            <h3>Subjects:</h3>
+            <% const subjects=schoolToView['Subjects'] %>
+                <% if (subjects) { %>
+                    <table class="table">
+                        <tr>
+                            <th>subjectId</th>
+                            <th>name</th>
+                            <th>teacher</th>
+                            <th>actions</th>
+                        </tr>
+                        <% for (let i=0; i < subjects.length; i++ ) { %>
+                            <% const subject=subjects[i] %>
+
+                                <tr>
+                                    <td>
+                                        <%= subject.id %>
+                                    </td>
+                                    <td>
+                                        <%= subject.name %>
+                                    </td>
+                                    <td>
+                                        <%= subject['teacher']?.name %>
+                                    </td>
+                                    <td>
+                                        <a href="/subjects/view/<%= subject.id %>">view subject</a>
+                                    </td>
+
+                                </tr>
+
+
+                                <% } %>
+
+                    </table>
+                    <% } %>
+
+                        </p>
+
+
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+
+                        <p>
+                        <h3>Teachers:</h3>
+
+                        <% if (teachers) { %>
+                            <table class="table">
+                                <tr>
+                                    <th>teacherId</th>
+                                    <th>name</th>
+                                    <th>surname</th>
+                                    <th>role</th>
+                                    <th>actions</th>
+                                </tr>
+                                <% for (let i=0; i < teachers.length; i++ ) { %>
+                                    <% const teacher=teachers[i] %>
+
+                                        <tr>
+                                            <td>
+                                                <%= teacher.id %>
+                                            </td>
+                                            <td>
+                                                <%= teacher.name %>
+                                            </td>
+                                            <td>
+                                                <%= teacher.surname %>
+                                            </td>
+                                            <td>
+                                                <%= teacher.role %>
+                                            </td>
+                                            <td>
+                                                <a href="/admin/users/view/<%= teacher.id %>">view teacher</a>
+                                            </td>
+
+                                        </tr>
+
+
+                                        <% } %>
+
+                            </table>
+                            <% } %>
+                                </p>
+
+                                <a href="/admin/schools/view/<%= schoolToView.id %>/addteacher" class="btn">
+                                    Add <b>teacher</b> to school: <%= schoolToView.name %>
+                                </a>
+
+
+
+
+                                <%- include('../../partials/footer', {title: 'Admin edit school' }) %>
     </body>
 
     </html>

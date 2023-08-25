@@ -261,12 +261,14 @@ app.get('/admin/schools/view/:id', authRole, async (req, res) => {
 	if (!id) return res.redirect('/admin/schools');
 
 	const directors = await usersController.getAllUsersByRole('director');
-	const schoolToView = await schoolsController.getByID(id);
+	const schoolToView = await schoolsController.getFullDataById(id);
+	const teachers = await usersController.getAllUsersByRoleAndSchoolId('teacher', schoolToView.id);
 
 	res.render('pages/admin/schools/school_view.ejs', {
 		user: req.user,
 		directors: directors,
 		schoolToView: schoolToView,
+		teachers: teachers,
 	});
 });
 

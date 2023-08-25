@@ -1,4 +1,4 @@
-import { School } from '../models/relationsSchema.js';
+import { School, Subject, User, Grade } from '../models/relationsSchema.js';
 
 export class SchoolsController {
 	async getAll() {
