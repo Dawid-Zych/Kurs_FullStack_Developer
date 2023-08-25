@@ -7,13 +7,18 @@ export class UsersController {
 	}
 
 	async getAllUsersByRole(role) {
-		return await User.findAll({ where: { role } });
+		return await User.findAll({
+			where: {
+				role,
+			},
+		});
 	}
 
 	async getAllUsersByRoleAndSchoolId(role, schoolId) {
 		return await User.findAll({
 			where: {
-				role: role,
+				role,
+				schoolId,
 			},
 		});
 	}
@@ -33,7 +38,7 @@ export class UsersController {
 
 	async validPassword(password, userDb) {
 		try {
-			return await brcrypt.compare(password.userDb.password);
+			return await brcrypt.compare(password, userDb.password);
 		} catch (error) {
 			throw new Error(error);
 		}
@@ -76,12 +81,25 @@ export class UsersController {
 	}
 
 	async updateById(id, userData) {
-		const updatedUser = await User.update({ ...userData }, { where: { id } });
+		const updatedUser = await User.update(
+			{
+				...userData,
+			},
+			{
+				where: {
+					id,
+				},
+			}
+		);
 
 		return updatedUser;
 	}
 
 	async getUserByEmail(email) {
-		return await User.findOne({ where: { email } });
+		return await User.findOne({
+			where: {
+				email,
+			},
+		});
 	}
 }

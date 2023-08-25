@@ -1,0 +1,44 @@
+<%- include("../partials/head", { title: "Add student to subject" }) %>
+
+    <body>
+        <h3>Add student to subject: <%= subject.name %>
+        </h3>
+        <% const selectStudentHtml=htmlHelper.getSelectIdCodeFromArr(students, "studentId" , "name" , "studentControl"
+            , "form-control" ) %>
+            <% const selectTeacherHtml=htmlHelper.getSelectIdCodeFromArr(teachers, "teacherId" , "name"
+                , "teacherControl" , "form-control" , subject.teacherId) %>
+
+                <form action="/subjects/view/<%= subject.id %>/addstudent" method="post">
+                    <div>
+                        <label for="studentControl" class="form-label">
+                            Students available in school: <%= school.name %>
+                        </label>
+                        <%- selectStudentHtml %>
+                    </div>
+                    <div>
+                        <label for="schoolControl" class="form-label">
+                            School: <%= school.name %>
+                        </label>
+                        <input type="hidden" name="schoolId" value="<%= school.id %>">
+                    </div>
+                    <div>
+                        <label for="subjectControl" class="form-label">
+                            Subject: <%= subject.name %>
+                        </label>
+                        <input type="hidden" name="subjectId" value="<%= subject.id %>">
+                    </div>
+                    <div>
+                        <label for="teacherControl" class="form-label">
+                            Teachers available in school: <%= school.name %>
+                        </label>
+                        <%- selectTeacherHtml %>
+                    </div>
+                    <button class="btn" type="submit">
+                        Add student to subject: <%= subject.name %>
+                    </button>
+                </form>
+
+                <%- include("../partials/footer", { title: "Add student to subject" }) %>
+    </body>
+
+    </html>

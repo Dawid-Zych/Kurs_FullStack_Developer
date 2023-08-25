@@ -5,6 +5,16 @@ export class SchoolsController {
 		return await School.findAll({});
 	}
 
+	async getFullDataById(id) {
+		return await School.findByPk(id, {
+			include: [
+				{
+					model: Subject,
+					include: [{ model: User, as: 'teacher' }],
+				},
+			],
+		});
+	}
 	async createSchool(schoolData, directorDB) {
 		const schoolDb = await School.create({
 			...schoolData,
@@ -25,14 +35,8 @@ export class SchoolsController {
 		return false;
 	}
 
-	async getByID(id) {
+	async getById(id) {
 		return await School.findByPk(id);
-	}
-
-	async getFullDataById(id) {
-		return await School.findByPk(id, {
-			include: [{ model: Subject, include: [{ model: User, as: 'teacher' }] }],
-		});
 	}
 
 	async updateById(id, schoolData) {

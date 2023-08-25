@@ -1,7 +1,7 @@
 import { User, School, Subject, Grade } from '../models/relationsSchema.js';
 export class GradesController {
 	async getAll() {
-		return await Grade.findAll({});
+		return await Grade.findAll();
 	}
 
 	async getAllFullData() {
@@ -15,21 +15,10 @@ export class GradesController {
 			...gradeData,
 		});
 
-		if (studentDb) {
-			await gradeDb.setUser(studentDb);
-		}
-
-		if (teacherDb) {
-			await gradeDb.setTeacher(teacherDb);
-		}
-
-		if (subjectDb) {
-			await gradeDb.setSubject(subjectDb);
-		}
-
-		if (schoolDb) {
-			await gradeDb.setSchool(schoolDb);
-		}
+		if (studentDb) await gradeDb.setUser(studentDb);
+		if (teacherDb) await gradeDb.setTeacher(teacherDb);
+		if (subjectDb) await gradeDb.setSubject(subjectDb);
+		if (schoolDb) await gradeDb.setSchool(schoolDb);
 
 		return gradeDb;
 	}
@@ -46,13 +35,16 @@ export class GradesController {
 			include: [{ model: User }, { model: Subject }, { model: School }, { model: User, as: 'teacher' }],
 		});
 	}
+
 	async updateById(id, gradeData) {
 		const updatedGrade = await Grade.update(
 			{
 				...gradeData,
 			},
 			{
-				where: { id },
+				where: {
+					id,
+				},
 			}
 		);
 

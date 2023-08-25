@@ -410,6 +410,83 @@ app.get('/subjects/view/:id', authRole, async (req, res) => {
 	});
 });
 
+// addstudent
+
+app.get('/subjects/view/:id/addstudent', authRole, async (req, res) => {
+	console.log('/subjects/view/:id/addstudent');
+	const { id } = req.params;
+	if (!id) return res.redirect('/subjects');
+
+	const subject = await subjectsController.getById(id);
+	const students = await usersController.getAllUsersByRoleAndSchoolId('student', subject.schoolId);
+	const school = await schoolsController.getById(subject.schoolId);
+	const teachers = await usersController.getAllUsersByRoleAndSchoolId('teacher', subject.schoolId);
+
+	res.render('pages/subjects/subject_addstudent.ejs', {
+		user: req.user,
+		school: school,
+		subject: subject,
+		students: students,
+		teachers: teachers,
+	});
+});
+
+app.post('/subjects/view/:id/addstudent', authRole, async (req, res) => {
+	console.log('POST /subjects/view/:id/addstudent');
+	const { id } = req.params;
+	if (!id) return res.redirect('/subjects');
+
+	const subject = await subjectsController.getById(req.body.subjectId);
+	const student = await usersController.getById(req.body.studentId);
+
+	await subjectsController.addUserToSubject(student, subject);
+	res.redirect('/subjects/view/' + id);
+});
+
+// subject addgrade
+app.get('/subjects/view/:subjectId/student/:studentId/addgrade', authRole, async (req, res) => {
+	console.log('/subjects/view/:subjectId/student/:studentId/addgrade');
+	const { subjectId, studentId } = req.params;
+	if (!subjectId || !studentId) return res.redirect('/subjects');
+
+	const subject = await subjectsController.getById(subjectId);
+	const student = await usersController.getById(studentId);
+	const school = await schoolsController.getById(subject.schoolId);
+	const teachers = await usersController.getAllUsersByRoleAndSchoolId('teacher', subject.schoolId);
+
+	res.render('pages/subjects/subject_addgrade.ejs', {
+		user: req.user,
+		school: school,
+		subject: subject,
+		student: student,
+		teachers: teachers,
+	});
+});
+
+app.post('/subjects/view/:subjectId/student/:studentId/addgrade', authRole, async (req, res) => {
+	console.log('POST /subjects/view/:subjectId/student/:studentId/addgrade');
+	const { subjectId, studentId } = req.params;
+	if (!subjectId || !studentId) return res.redirect('/subjects');
+
+	const subject = await subjectsController.getById(req.body.subjectId);
+	const student = await usersController.getById(req.body.studentId);
+	const school = await schoolsController.getById(req.body.schoolId);
+	const teacher = await usersController.getById(req.body.teacherId);
+
+	const gradeDb = await gradesController.createGrade(
+		{
+			grade: req.body.grade,
+			description: req.body.description,
+		},
+		student,
+		teacher,
+		subject,
+		school
+	);
+
+	res.redirect('/subjects/view/' + id);
+});
+
 /* Grades */
 
 app.get('/grades', authRole, async (req, res) => {

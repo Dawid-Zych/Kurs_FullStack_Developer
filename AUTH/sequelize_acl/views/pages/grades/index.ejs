@@ -1,4 +1,4 @@
-<%- include('..//partials/head', {title: 'Grades' }) %>
+<%- include('../partials/head', { title: 'Grades' }) %>
 
     <body>
         <h3>Grades list</h3>
@@ -48,18 +48,19 @@
                                         <%= grade['teacher']?.name %>
                                     </td>
                                     <td>
-                                        <a href="/grades/edit/<%= grade.id  %>">edit</a>
-                                        <a href="/grades/view/<%= grade.id  %>">view</a>
+                                        <a href="/grades/edit/<%= grade.id %>">edit</a>
+                                        <a href="/grades/view/<%= grade.id %>">view</a>
                                     </td>
                                 </tr>
                                 <% } %>
                     </table>
-                    <%} %>
+
+                    <% } %>
             </p>
 
             <a href="/grades/add" class="btn">Add grade</a>
 
-            <%- include('../partials/footer', {title: 'Grades' }) %>
+            <%- include('../partials/footer', { title: 'Grades' }) %>
     </body>
 
     </html>

@@ -39,6 +39,7 @@ export class SubjectsController {
 						{ model: School },
 						{
 							model: Grade,
+							required: false, // też userzy bez oceny
 							where: {
 								subjectId: id, // tylko oceny związane z przedmiotem o id
 							},
@@ -55,7 +56,9 @@ export class SubjectsController {
 				...subjectData,
 			},
 			{
-				where: { id },
+				where: {
+					id,
+				},
 			}
 		);
 

@@ -28,6 +28,7 @@
 
             <a href="/subjects/edit/<%= subjectToView.id %>" class="btn">Edit subject</a>
 
+
             <!-- students list -->
             <p>
                 <% const students=subjectToView["Users"] %>
@@ -44,17 +45,14 @@
                             </tr>
                             <% for (let i=0; i < students.length; i++) { %>
                                 <% const student=students[i] %>
-                                    <% const grades=student["Grades"] %>
+                                    <% const grades=student["Grades"]%>
                                         <% for (let i=0; i < grades.length; i++) { %>
                                             <% const grade=grades[i].grade %>
-
                                                 <tr>
                                                     <td>
-
                                                         <a href="/admin/users/view/<%= student.id %>">
                                                             <%= student.id %>
                                                         </a>
-
                                                     </td>
                                                     <td>
                                                         <%= student.name %>
@@ -72,16 +70,51 @@
                                                         <%= grade %>
                                                     </td>
                                                     <td>
-                                                        <a href="/grades/view/<%= grades[i].id %>">view grade</a>
+                                                        <a href="/grades/view/<%= grades[i].id %>">view</a>
+                                                        <a
+                                                            href="/subjects/view/<%= subjectToView.id %>/student/<%= student.id %>/addgrade">add</a>
                                                     </td>
                                                 </tr>
-                                                <% } %>
-                                                    <% } %>
+                                                <% } // end for %>
+
+                                                    <% if (grades.length==0) { %>
+                                                        <tr>
+                                                            <td>
+                                                                <a href="/admin/users/view/<%= student.id %>">
+                                                                    <%= student.id %>
+                                                                </a>
+                                                            </td>
+                                                            <td>
+                                                                <%= student.name %>
+                                                            </td>
+                                                            <td>
+                                                                <%= student.surname %>
+                                                            </td>
+                                                            <td>
+                                                                <%= student.role %>
+                                                            </td>
+                                                            <td>
+                                                                <%= student["School"]?.name %>
+                                                            </td>
+                                                            <td>
+                                                                <%= %>
+                                                            </td>
+                                                            <td>
+                                                                <a
+                                                                    href="/subjects/view/<%= subjectToView.id %>/student/<%= student.id %>/addgrade">add</a>
+                                                            </td>
+                                                        </tr>
+                                                        <% } %>
+
+                                                            <% } // end for %>
                         </table>
                         <% } %>
-
-
             </p>
+
+            <a href="/subjects/view/<%= subjectToView.id %>/addstudent" class="btn">Add student to subject: <%=
+                    subjectToView.name %></a>
+
+
 
             <%- include("../partials/footer", { title: "View subject" }) %>
     </body>

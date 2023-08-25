@@ -1,4 +1,4 @@
-<%- include('../partials/head', {title: 'Admin edit user' }) %>
+<%- include('../partials/head', { title: 'Admin edit user' }) %>
 
     <body>
         <h3>Admin: edit user with id: <%= userToEdit.id %>
@@ -8,6 +8,8 @@
                 , 'form-control' , userToEdit.schoolId )%>
                 <% let selectRoleHtml=htmlHelper.getSelectCodeFromArr(rolesArr, 'role' , 'roleControl' , 'form-control'
                     , userToEdit.role )%>
+
+
                     <form action="/admin/users/edit/<%= userToEdit.id %>" method="post">
                         <input type="hidden" value="<%= userToEdit.id %>" name="id">
                         <div>
@@ -34,24 +36,23 @@
                             <%- selectRoleHtml %>
                         </div>
                         <div>
-                            <label for="schoolControl" class="form-label">School:</label>
-                            <%- selectSchoolHtml %>
-                        </div>
-                        <div>
-                            <label for="addressControl" class="form-label">Adress:</label>
+                            <label for="addressControl" class="form-label">Address:</label>
                             <input type="text" id="addressControl" class="form-control" name="address"
                                 value="<%= userToEdit.address %>">
                         </div>
                         <div>
                             <label for="ageControl" class="form-label">Age:</label>
-                            <input type="text" id="ageControl" class="form-control" name="age"
+                            <input type="number" min="18" max="100" id="ageControl" class="form-control" name="age"
                                 value="<%= userToEdit.age %>">
                         </div>
-                        <br><br>
+                        <div>
+                            <label for="schoolControl" class="form-label">School:</label>
+                            <%- selectSchoolHtml %>
+                        </div>
                         <button type="submit" class="btn">Save user</button>
-
                     </form>
-                    <%- include('../partials/footer', {title: 'Admin edit user' }) %>
+
+                    <%- include('../partials/footer', { title: 'Admin edit user' }) %>
 
     </body>
 

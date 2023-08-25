@@ -1,7 +1,7 @@
+import { UsersController } from './UsersController.js';
+import { SchoolsController } from './SchoolsController.js';
 import { GradesController } from './GradesController.js';
 import { SubjectsController } from './SubjectsController.js';
-import { SchoolsController } from './SchoolsController.js';
-import { UsersController } from './UsersController.js';
 
 import { User, School, Subject, Grade } from '../models/relationsSchema.js';
 
@@ -14,7 +14,7 @@ const schoolDb = await schoolsController.createSchool({
 	name: 'University #001',
 	address: 'Wilcza 7, 00-001 Warszawa',
 });
-console.log('schooldB:', schoolDb);
+console.log('schooldB:', schoolDb.dataValues);
 
 const schoolDb2 = await schoolsController.createSchool({
 	name: 'University #002',
@@ -39,9 +39,7 @@ await schoolsController.setDirector(schoolDb, directorDb);
 console.log('directorDb:', directorDb.dataValues);
 
 const directorWithSchoolFromDb = await User.findOne({
-	where: {
-		id: directorDb.id,
-	},
+	where: { id: directorDb.id },
 	include: [{ model: School }],
 });
 console.log('Director With School:', JSON.stringify(directorWithSchoolFromDb, null, 4));
@@ -165,9 +163,7 @@ const grade2 = await gradesController.createGrade(
 );
 
 const schoolAllData = await School.findOne({
-	where: {
-		id: schoolDb.id,
-	},
+	where: { id: schoolDb.id },
 	include: [
 		{ model: User, as: 'director' },
 		{ model: User },

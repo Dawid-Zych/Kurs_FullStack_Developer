@@ -1,4 +1,4 @@
-<%- include('..//partials/head', {title: 'Edit grade' }) %>
+<%- include('../partials/head', { title: 'Edit grade' }) %>
 
     <body>
         <h3>Edit grade with id:<% gradeToEdit.id %>
@@ -18,7 +18,7 @@
                                 <div>
                                     <label for="gradeControl" class="form-label">Grade:</label>
                                     <input type="number" min="1" max="6" step="0.5" class="form-control"
-                                        id="gradeControl" name="grade" required value="<%=gradeToEdit.grade %>">
+                                        id="gradeControl" name="grade" value="<%=gradeToEdit.grade %>" required>
                                 </div>
                                 <div>
                                     <label for="descriptionControl" class="form-label">Description:</label>
@@ -26,7 +26,11 @@
                                         value="<%=gradeToEdit.description %>">
                                 </div>
                                 <div>
-                                    <label for=" subjectControl" class="form-label">Subject:</label>
+                                    <label for="schoolControl" class="form-label">School:</label>
+                                    <%- selectSchoolHtml %>
+                                </div>
+                                <div>
+                                    <label for="subjectControl" class="form-label">Subject:</label>
                                     <%- selectSubjectHtml %>
                                 </div>
                                 <div>
@@ -40,9 +44,7 @@
                                 <button class="btn" type="submit">Save grade</button>
                             </form>
 
-
-
-                            <%- include('../partials/footer', {title: 'Edit grade' }) %>
+                            <%- include('../partials/footer', { title: 'Edit grade' }) %>
     </body>
 
     </html>

@@ -1,4 +1,4 @@
-<%- include('../partials/head', {title: 'Admin add user' }) %>
+<%- include('../partials/head', { title: 'Admin add user' }) %>
 
     <body>
         <h3>Admin: add user</h3>
@@ -7,6 +7,8 @@
                 , 'form-control' )%>
                 <% let selectRoleHtml=htmlHelper.getSelectCodeFromArr(rolesArr, 'role' , 'roleControl' , 'form-control'
                     , 'student' )%>
+
+
                     <form action="/admin/users/add" method="post">
                         <div>
                             <label for="nameControl" class="form-label">Name:</label>
@@ -32,19 +34,19 @@
                             <label for="ageControl" class="form-label">Age:</label>
                             <input type="number" min="18" max="100" id="ageControl" class="form-control" name="age">
                         </div>
-                        <div>
-                            <label for="schoolControl" class="form-label">School:</label>
-                            <%- selectSchoolHtml %>
-                        </div>
+
                         <div>
                             <label for="addressControl" class="form-label">Adress:</label>
                             <input type="text" id="addressControl" class="form-control" name="address">
                         </div>
-                        <br><br>
+                        <div>
+                            <label for="schoolControl" class="form-label">School:</label>
+                            <%- selectSchoolHtml %>
+                        </div>
                         <button type="submit" class="btn">Save user</button>
 
                     </form>
-                    <%- include('../partials/footer', {title: 'Admin add user' }) %>
+                    <%- include('../partials/footer', { title: 'Admin add user' }) %>
 
     </body>
 

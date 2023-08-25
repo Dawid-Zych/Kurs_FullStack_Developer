@@ -6,21 +6,19 @@ const Grade = sequelize.define('Grade', {
 		type: DataTypes.INTEGER,
 		primaryKey: true,
 		autoIncrement: true,
-		validate: {
-			isInt: true,
-		},
+		validate: { isInt: true },
 	},
 	grade: {
 		type: DataTypes.DECIMAL(4, 2),
 		allowNull: false,
 		validate: {
 			isDecimal: true,
-			min: 1,
+			min: 0,
 			max: 6,
 		},
 	},
 	description: {
-		type: DataTypes.STRING,
+		type: DataTypes.TEXT,
 		allowNull: true,
 	},
 });

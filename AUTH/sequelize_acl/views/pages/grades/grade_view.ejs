@@ -1,7 +1,7 @@
-<%- include('..//partials/head', {title: 'View grade' }) %>
+<%- include('..//partials/head', { title: 'View grade' }) %>
 
     <body>
-        <h3>View grade with id:<% gradeToView.id %>
+        <h3>View grade with id: <%= gradeToView.id %>
         </h3>
         <%- include('../partials/navbar.ejs', {user}) %>
             <form action="/grades/view/<%=gradeToView.id%>" method="post">
@@ -35,9 +35,7 @@
 
             <a href="/grades/edit/<%- gradeToView.id %>" class="btn">Edit grade</a>
 
-
-
-            <%- include('../partials/footer', {title: 'View grade' }) %>
+            <%- include('../partials/footer', { title: 'View grade' }) %>
     </body>
 
     </html>
