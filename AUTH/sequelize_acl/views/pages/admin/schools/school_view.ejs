@@ -71,7 +71,9 @@
                     <% } %>
 
                         </p>
-
+                        <a href="/admin/schools/view/<%= schoolToView.id %>/addsubject" class="btn">
+                            Add <b>subject</b> to school: <%= schoolToView.name %>
+                        </a>
 
                         <br>
                         <br>
@@ -122,9 +124,6 @@
                                 <a href="/admin/schools/view/<%= schoolToView.id %>/addteacher" class="btn">
                                     Add <b>teacher</b> to school: <%= schoolToView.name %>
                                 </a>
-
-
-
 
                                 <%- include('../../partials/footer', {title: 'Admin edit school' }) %>
     </body>

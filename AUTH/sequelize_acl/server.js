@@ -271,6 +271,33 @@ app.get('/admin/schools/view/:id', authRole, async (req, res) => {
 		teachers: teachers,
 	});
 });
+// dodanie przedmiotu do konkretnej szkoły
+app.get('/admin/schools/view/:id/addsubject"', authRole, async (req, res) => {
+	console.log('/admin/schools/view/:id/addsubject');
+
+	const { id } = req.params;
+	if (!id) return res.redirect('/admin/schools');
+
+	const school = await schoolsController.getFullDataById(id);
+	const teachers = await usersController.getAllUsersByRoleAndSchoolId('teacher', school.id);
+
+	res.render('pages/admin/schools/school_addSubject.ejs', {
+		user: req.user,
+		schoolId: id,
+		school: school,
+		teachers: teachers,
+	});
+});
+
+app.post('/admin/schools/view/:id/addsubject"', authRole, async (req, res) => {
+	console.log('POST /admin/schools/view/:id/addsubject');
+
+	const { id } = req.params;
+	if (!id) return res.redirect('/admin/schools');
+
+	const subjectDb = await subjectsController.createSubject(req.body);
+	res.redirect('/admin/schools/view/' + id);
+});
 
 // SUBJECTS
 app.get('/subjects', authRole, async (req, res) => {
