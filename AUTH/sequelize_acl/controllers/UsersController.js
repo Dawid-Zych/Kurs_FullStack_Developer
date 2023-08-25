@@ -1,5 +1,5 @@
 import brcrypt from 'bcryptjs';
-import { User } from '../models/relationsSchema.js';
+import { User, Grade, Subject, School } from '../models/relationsSchema.js';
 
 export class UsersController {
 	async getAll() {
@@ -41,6 +41,28 @@ export class UsersController {
 
 	async getById(id) {
 		return await User.findByPk(id);
+	}
+
+	async getFullDataById(id) {
+		return await User.findByPk(id, {
+			include: [
+				{
+					model: Subject,
+					include: [
+						{ model: School },
+						{ model: User, as: 'teacher' },
+						{
+							model: Grade,
+							include: [{ model: School }, { model: User, as: 'teacher' }],
+							where: {
+								studentId: id, // ocena tylko dla usera o id
+							},
+						},
+					],
+				},
+				{ model: School },
+			],
+		});
 	}
 
 	async updateById(id, userData) {
