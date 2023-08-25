@@ -484,7 +484,7 @@ app.post('/subjects/view/:subjectId/student/:studentId/addgrade', authRole, asyn
 		school
 	);
 
-	res.redirect('/subjects/view/' + id);
+	res.redirect('/subjects/view/' + subjectId);
 });
 
 /* Grades */
