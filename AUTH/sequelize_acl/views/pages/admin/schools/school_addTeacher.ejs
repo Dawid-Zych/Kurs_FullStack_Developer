@@ -1,0 +1,49 @@
+<%- include('../../partials/head', {title: 'Admin add teacher' }) %>
+
+    <body>
+        <h3>Admin: add teacher to school <%= school.name %>
+        </h3>
+        <%- include('../../partials/navbar.ejs', {user}) %>
+
+            <form action="/admin/schools/view/<%= school.id%>/addteacher" method="post">
+                <div>
+                    <label for="nameControl" class="form-label">Name:</label>
+                    <input type="text" id="nameControl" class="form-control" name="name" required>
+                </div>
+                <div>
+                    <label for="surnameControl" class="form-label">Surname:</label>
+                    <input type="text" id="surnameControl" class="form-control" name="surname" required>
+                </div>
+                <div>
+                    <label for="passwordControl" class="form-label">Password:</label>
+                    <input type="password" id="passwordControl" class="form-control" name="password">
+                </div>
+                <div>
+                    <label for="emailControl" class="form-label">Email:</label>
+                    <input type="email" id="emailControl" class="form-control" name="email">
+                </div>
+                <div>
+                    <label for="roleControl" class="form-label">Role: teacher</label>
+                    <input type="hidden" name="role" value="teacher">
+                </div>
+                <div>
+                    <label for="ageControl" class="form-label">Age:</label>
+                    <input type="number" min="18" max="100" id="ageControl" class="form-control" name="age" required>
+                </div>
+                <div>
+                    <label for="schoolControl" class="form-label">School: <%= school.name %></label>
+                    <input type="hidden" name="schoolId" value="<%= school.id %>">
+                </div>
+                <div>
+                    <label for="addressControl" class="form-label">Adress:</label>
+                    <input type="text" id="addressControl" class="form-control" name="address">
+                </div>
+                <br><br>
+                <button type="submit" class="btn">Save teacher</button>
+
+            </form>
+            <%- include('../../partials/footer', {title: 'Admin add teacher' }) %>
+
+    </body>
+
+    </html>
