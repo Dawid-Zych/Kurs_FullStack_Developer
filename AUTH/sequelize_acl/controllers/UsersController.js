@@ -10,6 +10,14 @@ export class UsersController {
 		return await User.findAll({ where: { role } });
 	}
 
+	async getAllUsersByRoleAndSchoolId(role, schoolId) {
+		return await User.findAll({
+			where: {
+				role: role,
+			},
+		});
+	}
+
 	async createUser(userData, schoolDb) {
 		const salt = await brcrypt.genSalt(10);
 		userData.password = await brcrypt.hash(userData.password, salt);
@@ -54,7 +62,7 @@ export class UsersController {
 						{
 							model: Grade,
 							required: false, // Grade nie obowiązkowy!
-									// pobierze też przedmioty bez ocen
+							// pobierze też przedmioty bez ocen
 							include: [{ model: School }, { model: User, as: 'teacher' }],
 							where: {
 								studentId: id, // ocena tylko dla usera o id
