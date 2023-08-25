@@ -8,7 +8,8 @@
             <form action="/admin/users/edit/<%= userToView.id %>" method="post">
                 <div>
                     <label for="nameControl" class="form-label">Name:</label>
-                    <input type="text" id="nameControl" class="form-control" name="name" value="<%= userToView.name %>">
+                    <input type="text" id="nameControl" class="form-control" name="name" value="<%= userToView.name %>"
+                        disabled>
                 </div>
                 <div>
                     <label for="surnameControl" class="form-label">Surname:</label>

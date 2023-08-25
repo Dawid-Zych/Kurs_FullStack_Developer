@@ -272,7 +272,7 @@ app.get('/admin/schools/view/:id', authRole, async (req, res) => {
 	});
 });
 // dodanie przedmiotu do konkretnej szkoły
-app.get('/admin/schools/view/:id/addsubject"', authRole, async (req, res) => {
+app.get('/admin/schools/view/:id/addsubject', authRole, async (req, res) => {
 	console.log('/admin/schools/view/:id/addsubject');
 
 	const { id } = req.params;
@@ -289,11 +289,11 @@ app.get('/admin/schools/view/:id/addsubject"', authRole, async (req, res) => {
 	});
 });
 
-app.post('/admin/schools/view/:id/addsubject"', authRole, async (req, res) => {
+app.post('/admin/schools/view/:id/addsubject', authRole, async (req, res) => {
 	console.log('POST /admin/schools/view/:id/addsubject');
 
 	const { id } = req.params;
-	if (!id) return res.redirect('/admin/schools');
+	if (!id) return res.redirect('/admin/schools/');
 
 	const subjectDb = await subjectsController.createSubject(req.body);
 	res.redirect('/admin/schools/view/' + id);
