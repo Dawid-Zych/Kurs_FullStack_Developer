@@ -1,4 +1,4 @@
-import { Subject } from '../models/relationsSchema.js';
+import { Grade, School, Subject, User } from '../models/relationsSchema.js';
 
 export class SubjectsController {
 	async getAll() {
@@ -30,6 +30,25 @@ export class SubjectsController {
 		return await Subject.findByPk(id);
 	}
 
+	async getFullDataById(id) {
+		return await Subject.findByPk(id, {
+			include: [
+				{
+					model: User,
+					include: [
+						{ model: School },
+						{
+							model: Grade,
+							where: {
+								subjectId: id, // tylko oceny związane z przedmiotem o id
+							},
+						},
+					],
+				},
+				{ model: User, as: 'teacher' },
+			],
+		});
+	}
 	async updateById(id, subjectData) {
 		const updatedSubject = await Subject.update(
 			{

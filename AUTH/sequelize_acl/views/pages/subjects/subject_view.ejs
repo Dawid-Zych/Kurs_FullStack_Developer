@@ -28,6 +28,61 @@
 
             <a href="/subjects/edit/<%= subjectToView.id %>" class="btn">Edit subject</a>
 
+            <!-- students list -->
+            <p>
+                <% const students=subjectToView["Users"] %>
+                    <% if (students) { %>
+                        <table class="table">
+                            <tr>
+                                <th>student id</th>
+                                <th>name</th>
+                                <th>surname</th>
+                                <th>role</th>
+                                <th>school</th>
+                                <th>grade</th>
+                                <th>actions</th>
+                            </tr>
+                            <% for (let i=0; i < students.length; i++) { %>
+                                <% const student=students[i] %>
+                                    <% const grades=student["Grades"] %>
+                                        <% for (let i=0; i < grades.length; i++) { %>
+                                            <% const grade=grades[i].grade %>
+
+                                                <tr>
+                                                    <td>
+
+                                                        <a href="/admin/users/view/<%= student.id %>">
+                                                            <%= student.id %>
+                                                        </a>
+
+                                                    </td>
+                                                    <td>
+                                                        <%= student.name %>
+                                                    </td>
+                                                    <td>
+                                                        <%= student.surname %>
+                                                    </td>
+                                                    <td>
+                                                        <%= student.role %>
+                                                    </td>
+                                                    <td>
+                                                        <%= student["School"]?.name %>
+                                                    </td>
+                                                    <td>
+                                                        <%= grade %>
+                                                    </td>
+                                                    <td>
+                                                        <a href="/grades/view/<%= grades[i].id %>">view grade</a>
+                                                    </td>
+                                                </tr>
+                                                <% } %>
+                                                    <% } %>
+                        </table>
+                        <% } %>
+
+
+            </p>
+
             <%- include("../partials/footer", { title: "View subject" }) %>
     </body>
 
