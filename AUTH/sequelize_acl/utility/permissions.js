@@ -3,7 +3,6 @@ const usersRoles = [
 		role: 'admin',
 		priority: 5,
 		allows: [
-			{ resource: '/admin/schools', permissions: '*' },
 			{ resource: '/admin/schools/add', permissions: '*' },
 			{ resource: '/admin/schools/edit/:id', permissions: '*' },
 		],
@@ -12,6 +11,7 @@ const usersRoles = [
 		role: 'director',
 		priority: 4,
 		allows: [
+			{ resource: '/admin/schools', permissions: '*' },
 			{ resource: '/admin/schools/myschool', permissions: '*' },
 			{ resource: '/admin/schools/view/:id', permissions: '*' },
 			{ resource: '/admin/users', permissions: '*' },

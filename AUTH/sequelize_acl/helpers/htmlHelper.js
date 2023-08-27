@@ -1,3 +1,5 @@
+import { permissions } from '../utility/permissions.js';
+
 class HtmlHelper {
 	/*
     <select name="cars" id="cars-select" class="">
@@ -44,6 +46,33 @@ class HtmlHelper {
 		}
 
 		return null;
+	}
+
+	getLinkCodeForUserRoleOrHigher(
+		userRole,
+		minRoleForLink = 'admin', // np jeśli role teacher to nie widzi linka dla admina
+		href,
+		linkText,
+		className = ''
+	) {
+		const userPriority = permissions.getPriorityByRole(userRole); // teacher to 3
+		const minRolePriorityToSeeLink = permissions.getPriorityByRole(minRoleForLink); // student to 2
+
+		// czy 3 >= 2 tak, jest dostęp
+		if (userPriority >= minRolePriorityToSeeLink) {
+			return `<a href="${href}" class="${className}"> ${linkText} </a>`;
+		}
+		return ''; // nie ma dostępu, nie ma linka
+	}
+
+	hasAccessForUserRoleOrHigher(userRole, minRoleForAccess = 'admin') {
+		const userPriority = permissions.getPriorityByRole(userRole); // teacher to 3
+		const minRolePriorityToSeeLink = permissions.getPriorityByRole(minRoleForAccess); // student to 2
+
+		if (userPriority >= minRolePriorityToSeeLink) {
+			return true; // ma dostęp do jakiegoś zasobu
+		}
+		return false; // nie ma dostępu
 	}
 }
 

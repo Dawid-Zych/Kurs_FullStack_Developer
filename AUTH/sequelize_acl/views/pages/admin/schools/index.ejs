@@ -25,8 +25,18 @@
                                     <%= htmlHelper.getElValueFromArrById(directors,schools[i].directorId, "name" ) %>
                                 </td>
                                 <td>
-                                    <a href="/admin/schools/edit/<%= schools[i].id  %>">edit</a>
-                                    <a href="/admin/schools/view/<%= schools[i].id  %>">view</a>
+                                    <%- htmlHelper.getLinkCodeForUserRoleOrHigher(user.role, 'admin'
+                                        , '/admin/schools/view/' + schools[i].id, 'view' ) %>
+                                        &nbsp;
+                                        <%- htmlHelper.getLinkCodeForUserRoleOrHigher(user.role, 'admin'
+                                            , '/admin/schools/edit/' + schools[i].id, 'edit' ) %>
+
+
+
+                                            <!-- 
+                                                 <a href="/admin/schools/edit/<%= schools[i].id  %>">edit</a>
+                                                 <a href="/admin/schools/view/<%= schools[i].id  %>">view</a> 
+                                             -->
                                 </td>
                             </tr>
                             <% } %>

@@ -233,7 +233,7 @@ app.get('/admin/schools/edit/:id', authRole, async (req, res) => {
 	if (!id) return res.redirect('/admin/schools');
 
 	const directors = await usersController.getAllUsersByRole('director');
-	const schoolToEdit = await schoolsController.getByID(id);
+	const schoolToEdit = await schoolsController.getById(id);
 	res.render('pages/admin/schools/school_edit.ejs', {
 		user: req.user,
 		directors: directors,
@@ -259,6 +259,10 @@ app.get('/admin/schools/view/:id', authRole, async (req, res) => {
 
 	const { id } = req.params;
 	if (!id) return res.redirect('/admin/schools');
+
+	if (req.user.role === 'director' && req.user.schoolId != id) {
+		res.redirect('/');
+	}
 
 	const directors = await usersController.getAllUsersByRole('director');
 	const schoolToView = await schoolsController.getFullDataById(id);
@@ -324,6 +328,15 @@ app.post('/admin/schools/view/:id/addteacher', authRole, async (req, res) => {
 
 	const userDb = await usersController.createUser(req.body);
 	res.redirect('/admin/schools/view/' + id);
+});
+
+app.get('/admin/schools/myschool', authRole, async (req, res) => {
+	if (req.user.role === 'director') {
+		if (req.user.schoolId) {
+			return res.redirect('/admin/schools/view/' + req.user.schoolId);
+		}
+	}
+	res.redirect('/');
 });
 
 // SUBJECTS

@@ -72,7 +72,7 @@ const teacherDb = await usersController.createUser(
 	{
 		name: 'Alina',
 		surname: 'Kowalska',
-		email: 'alina@example.com',
+		email: 'teacher@example.com',
 		password: 'test',
 		role: 'teacher',
 	},

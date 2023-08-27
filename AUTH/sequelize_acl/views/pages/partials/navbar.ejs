@@ -11,11 +11,23 @@
                     <% } %>
         </ul>
     </nav>
-    <% if (user && user.email && user.role==='admin' ) { %>
+    <% if (user && user.email) { %>
         <nav>
-            Admin menu:
             <ul>
-                <li><a href="/admin/users">users</a></li>
+                <% if (htmlHelper.hasAccessForUserRoleOrHigher(user.role, 'admin' ) ) { %>
+                    <li>Admin options: <a href="/admin/schools">schools</a></li>
+                    <% } %>
+                        <% if (htmlHelper.hasAccessForUserRoleOrHigher(user.role, 'director' ) ) { %>
+                            <% if (user.schoolId) { %>
+
+                                <li>Director option: <a href="/admin/schools/myschool">My school</a></li>
+                                <% }%>
+                                    <% } %>
+                                        <% if (htmlHelper.hasAccessForUserRoleOrHigher(user.role, 'teacher' ) ) { %>
+                                            <li>Teacher options: <a href="/subjects">subjects</a></li>
+                                            <li>Teacher options: <a href="/grades">grades</a></li>
+                                            <% } %>
+
             </ul>
         </nav>
         <% } %>
