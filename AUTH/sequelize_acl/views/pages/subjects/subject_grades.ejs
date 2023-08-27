@@ -1,0 +1,62 @@
+<%- include("../partials/head", { title: "View grades subjects" }) %>
+
+    <body>
+        <h3>View grades for subject <%= subject.name %>
+        </h3>
+        <%- include("../partials/navbar", { user }) %>
+
+            <% if (grades) { %>
+                <h3>Subject: <%= subject.name %>
+                </h3>
+                <table class="table">
+                    <tr>
+                        <th>grade id</th>
+                        <th>name</th>
+                        <th>surname</th>
+                        <th>grade</th>
+                        <th>role</th>
+                        <th>school</th>
+                        <th>actions</th>
+                    </tr>
+                    <% for( let i=0; i < grades.length; i++ ) { %>
+                        <% const grade=grades[i] %>
+                            <% const user=grade['User'] %>
+                                <tr>
+                                    <td>
+                                        <%= grade.id %>
+                                    </td>
+                                    <td>
+                                        <%= user.name %>
+                                    </td>
+                                    <td>
+                                        <%= user.surname %>
+                                    </td>
+                                    <td>
+                                        <%= grade.grade %>
+                                    </td>
+                                    <td>
+                                        <%= user.role %>
+                                    </td>
+                                    <td>
+                                        <%= user['School']?.name %>
+                                    </td>
+                                    <td>
+                                        <a href="/subjects/view/<%= subject.id %>/student/<%= user.id %>/addgrade">Add
+                                            grade
+                                        </a>
+                                    </td>
+                                </tr>
+
+                                <% } //end for %>
+                </table>
+
+                <a href="/subjects/view/<%= subject.id %>/addstudent" class="btn">
+                    Add student to subject: <%= subject.name %>
+                </a>
+                <% } //end if %>
+
+
+                    <%- include("../partials/footer", { title: "View grades for subjects" }) %>
+    </body>
+
+    </html>
