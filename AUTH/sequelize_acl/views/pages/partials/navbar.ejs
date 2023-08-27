@@ -24,10 +24,14 @@
                                 <% }%>
                                     <% } %>
                                         <% if (htmlHelper.hasAccessForUserRoleOrHigher(user.role, 'teacher' ) ) { %>
-                                            <li>Teacher options: <a href="/subjects">subjects</a></li>
-                                            <li>Teacher options: <a href="/grades">grades</a></li>
+                                            <li>Teacher options: <a href="/teacher/mysubjects"> My subjects</a>
+                                            </li>
                                             <% } %>
-
+                                                <% if (htmlHelper.hasAccessForUserRoleOrHigher(user.role, 'student' ) )
+                                                    { %>
+                                                    <li>Student options: <a href="/student/mysubjects"> My subjects</a>
+                                                    </li>
+                                                    <% } %>
             </ul>
         </nav>
         <% } %>
