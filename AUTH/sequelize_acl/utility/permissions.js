@@ -1,19 +1,50 @@
 const usersRoles = [
 	{
 		role: 'admin',
+		priority: 5,
 		allows: [
-			{ resource: '/admin/users', permissions: '*' }, // * to wszystkie metody get, post
+			{ resource: '/admin/schools', permissions: '*' },
+			{ resource: '/admin/schools/add', permissions: '*' },
+			{ resource: '/admin/schools/edit/:id', permissions: '*' },
+		],
+	},
+	{
+		role: 'director',
+		priority: 4,
+		allows: [
+			{ resource: '/admin/schools/myschool', permissions: '*' },
+			{ resource: '/admin/schools/view/:id', permissions: '*' },
+			{ resource: '/admin/users', permissions: '*' },
 			{ resource: '/admin/users/add', permissions: '*' },
-			{ resource: '/admin/users/edit', permissions: '*' },
 			{ resource: '/admin/users/edit/:id', permissions: '*' },
+			{ resource: '/admin/users/view/:id', permissions: '*' },
+			{ resource: '/subjects/add', permissions: '*' },
+			{ resource: '/subjects/edit/:id', permissions: '*' },
+		],
+	},
+	{
+		role: 'teacher',
+		priority: 3,
+		allows: [
+			{ resource: '/dashboard', permissions: ['post', 'get'] },
+			{ resource: '/subjects', permissions: '*' },
+			{ resource: '/subjects/view/:id', permissions: '*' },
+			{ resource: '/subjects/view/:id/addstudent', permissions: '*' },
+			{ resource: '/subjects/view/:subjectId/student/:studentId/addgrade', permissions: '*' },
+			{ resource: '/grades', permissions: '*' },
+			{ resource: '/grades/add', permissions: '*' },
+			{ resource: '/grades/view/:id', permissions: '*' },
+			{ resource: '/grades/edit/:id', permissions: '*' },
 		],
 	},
 	{
 		role: 'user',
+		priority: 2,
 		allows: [{ resource: '/dashboard', permissions: ['post', 'get'] }],
 	},
 	{
 		role: 'quest',
+		priority: 1,
 		allows: [],
 	},
 ];
@@ -45,14 +76,23 @@ const permissions = {
 
 		return false; // brak dostępu
 	},
+
+	getPriorityByRole: function (role) {
+		const user = this.usersRoles.find(v => v.role === role);
+		if (user) return user.priority;
+
+		return -1;
+	},
 };
 
-permissions.addRoleParents('admin', 'user');
-console.log(JSON.stringify(permissions.usersRoles, null, 4));
+permissions.addRoleParents('teacher', 'user'); // teacher ma role user
+permissions.addRoleParents('director', 'teacher'); // director ma role teacher
+permissions.addRoleParents('admin', 'director'); // admin ma role director
 
+// console.log('permissions ', JSON.stringify(permissions.usersRoles, null, 4));
 
 //testy
-console.log(permissions.isResourceAllowedForUser('admin', '/dashboard', 'get'));    // true
+console.log(permissions.isResourceAllowedForUser('admin', '/dashboard', 'get')); // true
 console.log(permissions.isResourceAllowedForUser('admin', '/dashboard', 'delete')); //false
 console.log(permissions.isResourceAllowedForUser('admin', '/admin/users', 'get')); //true
 console.log(permissions.isResourceAllowedForUser('admin', '/api/data/10', 'get')); //false
@@ -60,7 +100,5 @@ console.log(permissions.isResourceAllowedForUser('user', '/admin/users', 'get'))
 console.log(permissions.isResourceAllowedForUser('user', '/dashboard', 'get')); //true
 console.log(permissions.isResourceAllowedForUser('user', '/api/user/1', 'get')); //false
 console.log(permissions.isResourceAllowedForUser('quest', '/dashboard', 'get')); //false
-
-
 
 export { permissions };
