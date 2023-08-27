@@ -1,0 +1,49 @@
+<%- include("../partials/head", { title: "View student subjects" }) %>
+
+    <body>
+        <h3>
+            View student <%= user.name + ' ' + user.surname %> + subjects:
+        </h3>
+        <%- include("../partials/navbar", { user }) %>
+
+            <% if (studentSubjects) { %>
+                <% for( let i=0; i < studentSubjects.length; i++ ) { %>
+                    <% const subject=studentSubjects[i] %>
+                        <% const grades=subject['Users'][0]['Grades'] %>
+                            <h3>
+                                Subject: <%= subject.name %>
+                            </h3>
+                            <table class="table">
+                                <tr>
+                                    <th>grade id</th>
+                                    <th>grade</th>
+                                    <th>subjectId</th>
+                                    <th>description</th>
+                                </tr>
+                                <% for( let i=0; i < grades.length; i++ ) { %>
+                                    <% const grade=grades[i] %>
+                                        <tr>
+                                            <td>
+                                                <%= grade.id %>
+                                            </td>
+                                            <td>
+                                                <%= grade.grade %>
+                                            </td>
+                                            <td>
+                                                <%= grade.subjectId %>
+                                            </td>
+                                            <td>
+                                                <%= grade.description %>
+                                            </td>
+                                        </tr>
+
+                                        <% } //end for %>
+                            </table>
+                            <% } // end for %>
+                                <% } //end if %>
+
+
+                                    <%- include("../partials/footer", { title: "View student subjects" }) %>
+    </body>
+
+    </html>
