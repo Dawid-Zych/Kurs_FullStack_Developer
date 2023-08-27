@@ -500,8 +500,8 @@ app.post('/subjects/view/:subjectId/student/:studentId/addgrade', authRole, asyn
 	res.redirect('/subjects/view/' + subjectId);
 });
 
-app.get('/teachers/mysubjects', authRole, async (req, res) => {
-	console.log('/teachers/subjects');
+app.get('/teacher/mysubjects', authRole, async (req, res) => {
+	console.log('/teacher/subjects');
 
 	if (req.user.role === 'teacher') {
 		const teacherSubjects = await subjectsController.getTeacherSubjects(req.user.id);

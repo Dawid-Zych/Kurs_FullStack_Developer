@@ -1,0 +1,62 @@
+<%- include("../partials/head", { title: "View teacher subjects" }) %>
+
+    <body>
+        <h3>View teacher <%= user.name + ' ' + user.surname %> subjects:</h3>
+        <%- include("../partials/navbar", { user }) %>
+
+            <% if (teacherSubjects) { %>
+                <% for( let i=0; i < teacherSubjects.length; i++ ) { %>
+                    <% const subject=teacherSubjects[i] %>
+                        <% const students=subject['Users'] %>
+                            <h3>Subject: <%= subject.name %>
+                            </h3>
+                            <table class="table">
+                                <tr>
+                                    <th>user id</th>
+                                    <th>name</th>
+                                    <th>surname</th>
+                                    <th>role</th>
+                                    <th>school</th>
+                                    <th>actions</th>
+                                </tr>
+                                <% for( let i=0; i < students.length; i++ ) { %>
+                                    <% const student=students[i] %>
+                                        <tr>
+                                            <td><a href="/admin/users/view/<% student.id %>">
+                                                    <%= student.id %>
+                                                </a></td>
+                                            <td>
+                                                <%= student.name %>
+                                            </td>
+                                            <td>
+                                                <%= student.surname %>
+                                            </td>
+                                            <td>
+                                                <%= student.role %>
+                                            </td>
+                                            <td>
+                                                <%= student['School']?.name %>
+                                            </td>
+                                            <td>
+                                                <a
+                                                    href="/subjects/view/<%= subject.id %>/student/<%= student.id %>/addgrade">Add
+                                                    grade</a>
+                                            </td>
+                                        </tr>
+                                        <% } %>
+                            </table>
+
+                            <a href="/subjects/view/<%= subject.id %>/grades" class="btn">
+                                View grades for subject: <%= subject.name %>
+                            </a>
+                            <a href="/subjects/view/<%= subject.id %>/addstudent" class="btn">
+                                Add student to subject: <%= subject.name %>
+                            </a>
+                            <% } %>
+                                <% } %>
+
+
+                                    <%- include("../partials/footer", { title: "View teacher subjects" }) %>
+    </body>
+
+    </html>

@@ -26,7 +26,7 @@ const usersRoles = [
 		role: 'teacher',
 		priority: 3,
 		allows: [
-			{ resource: '/teachers/mysubjects', permissions: '*' },
+			{ resource: '/teacher/mysubjects', permissions: '*' },
 			{ resource: '/subjects/view/:id/grades', permissions: '*' },
 			{ resource: '/subjects', permissions: '*' },
 			{ resource: '/subjects/view/:id', permissions: '*' },
