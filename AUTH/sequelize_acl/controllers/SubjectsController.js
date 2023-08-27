@@ -1,4 +1,6 @@
 import { Grade, School, Subject, User } from '../models/relationsSchema.js';
+import { Op } from 'sequelize';
+import { sequelize } from '../utility/db.js';
 
 export class SubjectsController {
 	async getAll() {
@@ -63,5 +65,56 @@ export class SubjectsController {
 		);
 
 		return updatedSubject;
+	}
+
+	async getTeacherSubjects(teacherId) {
+		return await Subject.findAll({
+			where: {
+				teacherId: teacherId,
+			},
+			include: {
+				model: User,
+				include: [{ model: School }],
+			},
+		});
+	}
+
+	async getStudentsSubjects(studentId) {
+		return await Subject.findAll({
+			include: {
+				model: User,
+				where: {
+					id: studentId,
+				},
+				include: [
+					{ model: School },
+					{
+						model: Grade,
+						required: false,
+						where: {
+							studentId: studentId,
+							subjectId: {
+								[Op.eq]: sequelize.col('Subject.id'), // bez tego przedmioty moglyby być przemieszane z przedmiotami
+							},
+						},
+					},
+				],
+			},
+		});
+	}
+
+	async getSubjectGrades(subjectId) {
+		return await Grade.findAll({
+			where: {
+				subjectId: subjectId,
+			},
+			include: [
+				{
+					model: User,
+					required: false,
+					include: [{ model: School }],
+				},
+			],
+		});
 	}
 }

@@ -26,7 +26,8 @@ const usersRoles = [
 		role: 'teacher',
 		priority: 3,
 		allows: [
-			{ resource: '/dashboard', permissions: ['post', 'get'] },
+			{ resource: '/teachers/mysubjects', permissions: '*' },
+			{ resource: '/subjects/view/:id/grades', permissions: '*' },
 			{ resource: '/subjects', permissions: '*' },
 			{ resource: '/subjects/view/:id', permissions: '*' },
 			{ resource: '/subjects/view/:id/addstudent', permissions: '*' },
@@ -38,9 +39,12 @@ const usersRoles = [
 		],
 	},
 	{
-		role: 'user',
+		role: 'student',
 		priority: 2,
-		allows: [{ resource: '/dashboard', permissions: ['post', 'get'] }],
+		allows: [
+			{ resource: '/dashboard', permissions: ['post', 'get'] },
+			{ resource: '/student/mysubjects', permissions: ['post', 'get'] },
+		],
 	},
 	{
 		role: 'quest',
@@ -85,20 +89,20 @@ const permissions = {
 	},
 };
 
-permissions.addRoleParents('teacher', 'user'); // teacher ma role user
+permissions.addRoleParents('teacher', 'student'); // teacher ma role user
 permissions.addRoleParents('director', 'teacher'); // director ma role teacher
 permissions.addRoleParents('admin', 'director'); // admin ma role director
 
 // console.log('permissions ', JSON.stringify(permissions.usersRoles, null, 4));
 
 //testy
-console.log(permissions.isResourceAllowedForUser('admin', '/dashboard', 'get')); // true
-console.log(permissions.isResourceAllowedForUser('admin', '/dashboard', 'delete')); //false
-console.log(permissions.isResourceAllowedForUser('admin', '/admin/users', 'get')); //true
-console.log(permissions.isResourceAllowedForUser('admin', '/api/data/10', 'get')); //false
-console.log(permissions.isResourceAllowedForUser('user', '/admin/users', 'get')); //false
-console.log(permissions.isResourceAllowedForUser('user', '/dashboard', 'get')); //true
-console.log(permissions.isResourceAllowedForUser('user', '/api/user/1', 'get')); //false
-console.log(permissions.isResourceAllowedForUser('quest', '/dashboard', 'get')); //false
+// console.log(permissions.isResourceAllowedForUser('admin', '/dashboard', 'get')); // true
+// console.log(permissions.isResourceAllowedForUser('admin', '/dashboard', 'delete')); //false
+// console.log(permissions.isResourceAllowedForUser('admin', '/admin/users', 'get')); //true
+// console.log(permissions.isResourceAllowedForUser('admin', '/api/data/10', 'get')); //false
+// console.log(permissions.isResourceAllowedForUser('student', '/admin/users', 'get')); //false
+// console.log(permissions.isResourceAllowedForUser('student', '/dashboard', 'get')); //true
+// console.log(permissions.isResourceAllowedForUser('student', '/api/user/1', 'get')); //false
+// console.log(permissions.isResourceAllowedForUser('student', '/dashboard', 'get')); //false
 
 export { permissions };

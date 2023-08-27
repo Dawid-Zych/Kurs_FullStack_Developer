@@ -154,6 +154,18 @@ await subjectsController.addUserToSubject(student1, subject2);
 await subjectsController.addUserToSubject(student2, subject2);
 await subjectsController.addUserToSubject(student3, subject2);
 
+const subject3 = await subjectsController.createSubject(
+	{
+		name: 'Programming',
+	},
+	teacherDb,
+	schoolDb
+);
+
+await subjectsController.addUserToSubject(student1, subject3);
+await subjectsController.addUserToSubject(student2, subject3);
+await subjectsController.addUserToSubject(student3, subject3);
+
 const grade1 = await gradesController.createGrade(
 	{
 		grade: 5.0,
@@ -167,12 +179,45 @@ const grade1 = await gradesController.createGrade(
 
 const grade2 = await gradesController.createGrade(
 	{
+		grade: 3.5,
+		description: 'ok',
+	},
+	student2,
+	teacherDb,
+	subject2,
+	schoolDb
+);
+
+const grade3 = await gradesController.createGrade(
+	{
 		grade: 4.5,
 		description: 'good work!',
 	},
 	student2,
 	teacherDb,
 	subject2,
+	schoolDb
+);
+
+const grade4 = await gradesController.createGrade(
+	{
+		grade: 5,
+		description: 'great!',
+	},
+	student2,
+	teacherDb,
+	subject3,
+	schoolDb
+);
+
+const grade5 = await gradesController.createGrade(
+	{
+		grade: 3,
+		description: 'poor',
+	},
+	student3,
+	teacherDb,
+	subject3,
 	schoolDb
 );
 
