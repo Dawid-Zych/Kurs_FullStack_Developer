@@ -10,6 +10,14 @@ const usersController = new UsersController();
 const subjectsController = new SubjectsController();
 const gradesController = new GradesController();
 
+const adminDb = await usersController.createUser({
+	name: 'Admin',
+	surname: 'Admin',
+	password: 'test',
+	email: 'admin@example.com',
+	role: 'admin',
+});
+
 const schoolDb = await schoolsController.createSchool({
 	name: 'University #001',
 	address: 'Wilcza 7, 00-001 Warszawa',
@@ -26,13 +34,16 @@ const schoolDb3 = await schoolsController.createSchool({
 	address: 'Krakowska 23, 30-201 Warszawa',
 });
 
-const directorDb = await usersController.createUser({
-	name: 'Adam',
-	surname: 'Adamski',
-	email: 'director@example.com',
-	password: 'test',
-	role: 'director',
-});
+const directorDb = await usersController.createUser(
+	{
+		name: 'Adam',
+		surname: 'Adamski',
+		email: 'director@example.com',
+		password: 'test',
+		role: 'director',
+	},
+	schoolDb
+);
 
 await schoolsController.setDirector(schoolDb, directorDb);
 // await usersController.setSchool(directorDb, schoolDb);
@@ -44,13 +55,16 @@ const directorWithSchoolFromDb = await User.findOne({
 });
 console.log('Director With School:', JSON.stringify(directorWithSchoolFromDb, null, 4));
 
-const directorDb2 = await usersController.createUser({
-	name: 'Katarzyna',
-	surname: 'Barska',
-	email: 'director2@example.com',
-	password: 'test',
-	role: 'director',
-});
+const directorDb2 = await usersController.createUser(
+	{
+		name: 'Katarzyna',
+		surname: 'Barska',
+		email: 'director2@example.com',
+		password: 'test',
+		role: 'director',
+	},
+	schoolDb2
+);
 
 await schoolsController.setDirector(schoolDb2, directorDb2);
 
